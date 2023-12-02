@@ -10,10 +10,12 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ account, profile }) {
-      if (profile && profile.email && !profile.email.endsWith('@kmitl.ac.th')) {
+      const isAllowed = profile?.email?.endsWith('@kmitl.ac.th')
+      if (isAllowed) {
+        return true
+      } else {
         return false
       }
-      return true
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
