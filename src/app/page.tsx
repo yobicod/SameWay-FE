@@ -1,3 +1,7 @@
+import { getAllDrivers } from "./api-caller/get-all-drivers";
+
 export default function Home() {
-  return <div>ayo</div>
+  console.log("sdsdsdsdsd");
+  getAllDrivers();
+  return <div>ayo</div>;
 }
