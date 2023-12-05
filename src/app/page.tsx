@@ -1,7 +1,12 @@
-import { getAllDrivers } from "./api-caller/get-all-drivers";
+import SignInButton from '@/components/SignInButton'
 
-export default function Home() {
-  console.log("sdsdsdsdsd");
-  getAllDrivers();
-  return <div>ayo</div>;
+export default async function Login() {
+  return (
+    <div className='flex h-screen justify-center items-center flex-col'>
+      <p>Sign In</p>
+      <div>
+        <SignInButton />
+      </div>
+    </div>
+  )
 }
