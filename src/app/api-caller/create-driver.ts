@@ -11,12 +11,11 @@ const test = {
 
 export const createDriver = async () => {
   try {
-    const result = await axios.post<AxiosResponse<boolean>>(
+    const { data } = await axios.post<boolean>(
       "http://localhost:3001/driver",
       test
     );
-    console.log(result.data);
-    return result.data;
+    return data;
   } catch (error) {
     console.log("🚀 ~ file: create-driver.ts:5 ~ createDriver ~ error:", error);
   }
