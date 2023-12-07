@@ -4,8 +4,11 @@ import { IDriverInfo } from "./interfaces/interfaces";
 export const getAllDrivers = async () => {
   try {
     const result: IDriverInfo = await axios.get("http://localhost:3001/driver");
-    console.log(result);
+    return result;
   } catch (error) {
-    console.log(error);
+    console.log(
+      "🚀 ~ file: get-all-drivers.ts:9 ~ getAllDrivers ~ error:",
+      error
+    );
   }
 };
