@@ -8,16 +8,6 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
     }),
   ],
-  callbacks: {
-    async signIn({ account, profile }) {
-      const isAllowed = profile?.email?.endsWith('@kmitl.ac.th')
-      if (isAllowed) {
-        return true
-      } else {
-        return false
-      }
-    },
-  },
   secret: process.env.NEXTAUTH_SECRET,
 }
 
