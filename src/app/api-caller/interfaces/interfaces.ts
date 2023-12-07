@@ -7,3 +7,11 @@ export interface IDriverInfo {
   sex: string;
   phoneNumber: string;
 }
+export interface ICreateDriver {
+  driverFirstName: string;
+  driverLastName: string;
+  plate: string;
+  carType: string;
+  sex: string;
+  phoneNumber: string;
+}

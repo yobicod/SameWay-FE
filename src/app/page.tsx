@@ -1,3 +1,4 @@
+import FormHook from '@/components/FormHook'
 import SignInButton from '@/components/SignInButton'
 
 export default async function Login() {
@@ -6,6 +7,7 @@ export default async function Login() {
       <p>Sign In</p>
       <div>
         <SignInButton />
+        <FormHook />
       </div>
     </div>
   )
