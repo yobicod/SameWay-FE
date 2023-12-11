@@ -2,6 +2,7 @@
 import { signIn, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { redirect } from 'next/navigation'
+import Button from './Button'
 
 export default function SignInButton() {
   const { data: session } = useSession()
@@ -9,8 +10,8 @@ export default function SignInButton() {
     return redirect('/home')
   } else
     return (
-      <button
-        className='p-4 shadow-sm rounded flex gap-2'
+      <Button
+        className='bg-white border border-secondary text-secondary flex gap-4 text-center'
         onClick={() => signIn('google')}>
         <Image
           src='/logo/google.png'
@@ -19,6 +20,7 @@ export default function SignInButton() {
           alt='google_logo'
         />
         Continue with Google Account
-      </button>
+      </Button>
+      // <button onClick={() => console.log('dji')}>dawdw</button>
     )
 }
