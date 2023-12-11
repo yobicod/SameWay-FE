@@ -15,6 +15,8 @@ const config: Config = {
       },
       colors: {
         secondary: '#216A61',
+        stroke: '#768592',
+        label: '#9E9E9E',
       },
       fontFamily: {
         lexendExa: 'var(--font-lexend-exa)',
