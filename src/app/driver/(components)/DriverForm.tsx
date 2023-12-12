@@ -1,7 +1,7 @@
 'use client'
 import { createDriver } from '@/app/api-caller/create-driver'
 import Button from '@/components/Button'
-import Input from '@/components/input'
+import Input from '@/components/Input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
