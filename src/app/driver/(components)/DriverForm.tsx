@@ -31,6 +31,7 @@ export default function DriverForm() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<DriverData>({
     resolver: zodResolver(driverSchema),
     defaultValues: {
@@ -38,13 +39,14 @@ export default function DriverForm() {
       driverLastName: userData?.user?.name || '',
       // dob: new Date(),
       sex: 'Male',
-      plate: '12345',
-      phoneNumber: '0954444444',
+      plate: '',
+      phoneNumber: '',
     },
   })
   console.log(errors)
   const submitForm = async (data: DriverData) => {
     await createDriver(data)
+    reset()
   }
   return (
     <div className='flex gap-6 flex-col'>
