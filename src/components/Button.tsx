@@ -1,21 +1,27 @@
 import clsx from 'clsx'
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-type Props = React.ButtonHTMLAttributes<HTMLButtonElement>
-
+// type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  startIcon?: JSX.Element
+  endIcon?: JSX.Element
+}
 const Button = forwardRef<HTMLButtonElement, Props>(
-  ({ className, children, ...props }, ref) => {
+  ({ className, startIcon, endIcon, children, ...props }, ref) => {
     return (
       <button
         ref={ref}
         {...props}
         className={twMerge(
           clsx({
-            'rounded bg-secondary w-full py-2 px-4 text-white': true,
+            'rounded flex gap-2 justify-between items-center bg-secondary w-full py-2 px-4 text-white hover:opacity-[0.85]':
+              true,
           }),
           className
         )}>
+        {startIcon}
         {children}
+        {endIcon}
       </button>
     )
   }

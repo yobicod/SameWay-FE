@@ -16,7 +16,7 @@ export default function Icon({
 }: IProps) {
   const iconClassName = twMerge(
     clsx({
-      'cursor-default text-md': true,
+      'cursor-default text-sm': true,
       'material-icons': iconStyle === 'default',
       'material-icons-outlined': iconStyle === 'outlined',
       'material-icons-round': iconStyle === 'rounded',
