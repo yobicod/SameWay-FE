@@ -7,3 +7,9 @@ export interface IDriverInfo {
   sex: string
   phoneNumber: string
 }
+
+export interface IDriverSearch {
+  nowLocation: string
+  destination: string
+  notes: string
+}
