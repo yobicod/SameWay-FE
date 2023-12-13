@@ -10,7 +10,6 @@ export default async function HomePage() {
     <div>
       <UserInfo />
       <Link href='/driver'>driver</Link>
-      <Input endIcon={<Icon name='home' />} />
     </div>
   )
 }
