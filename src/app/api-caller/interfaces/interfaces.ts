@@ -7,3 +7,14 @@ export interface IDriverInfo {
   sex: string
   phoneNumber: string
 }
+
+export interface IUpdateUser {
+  fullName?: string
+  email: string
+  role?: string
+}
+export interface ICreateUser {
+  fullName: string
+  email: string
+  role: string
+}
