@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Jura, Lexend_Exa } from 'next/font/google'
+import { Jura, Lexend_Exa } from 'next/font/google'
 import './globals.css'
 import LayoutProvider from '@/app/LayoutProvider'
 import 'material-icons/iconfont/material-icons.css'
