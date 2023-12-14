@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { Inter, Jura, Lexend_Exa } from 'next/font/google'
 import './globals.css'
 import LayoutProvider from '@/app/LayoutProvider'
+import 'material-icons/iconfont/material-icons.css'
 import '@radix-ui/themes/styles.css'
-import { Theme } from '@radix-ui/themes'
-const inter = Inter({ subsets: ['latin'] })
+
 const lexendExa = Lexend_Exa({
   preload: true,
   weight: ['200', '300', '400', '500', '600', '700', '800'],
