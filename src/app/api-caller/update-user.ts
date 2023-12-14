@@ -7,7 +7,7 @@ export const updateDriver = async (newUserInfo: IUpdateUser) => {
       `${process.env.NEXT_PUBLIC_API_URL}/user/update-user`,
       newUserInfo
     )
-    return console.log('update user success')
+    return result
   } catch (error) {
     console.log('🚀 ~ file: update-user.ts:12 ~ updateDriver ~ error:', error)
   }
