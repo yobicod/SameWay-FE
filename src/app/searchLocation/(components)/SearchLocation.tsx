@@ -1,9 +1,7 @@
 'use client'
-import Button from '@/components/Button'
 import Input from '@/components/Input'
 import Icon from '@/components/Icon'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useSession } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import Image from 'next/image'
@@ -36,6 +34,7 @@ export default function SearchLocation() {
     >
       <div className="font-bold w-4/5 rounded-[30px] ">
         <Input
+          style={{ boxShadow: '0px 4px 4px 0px rgba(164, 159, 159, 0.25)' }}
           register={register('location')}
           placeholder="Search Location"
           className="w-[311px] h-[51px]"
@@ -57,6 +56,7 @@ export default function SearchLocation() {
       <button
         className="bg-white rounded-2xl flex justify-center items-center w-[45px] h-[46px]"
         type="submit"
+        style={{ boxShadow: '0px 4px 4px 0px rgba(164, 159, 159, 0.25)' }}
       >
         <Image src="/image/send.svg" width={27} height={27} alt="app-logo" />
       </button>
