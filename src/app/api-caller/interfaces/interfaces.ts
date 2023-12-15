@@ -13,3 +13,13 @@ export interface IDriverSearch {
   destination: string
   notes: string
 }
+export interface IUpdateUser {
+  fullName?: string
+  email: string
+  role?: string
+}
+export interface ICreateUser {
+  fullName: string
+  email: string
+  role: string
+}
