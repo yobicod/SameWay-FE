@@ -1,40 +1,40 @@
-'use client'
-import Button from '@/components/Button'
-import Input from '@/components/Input'
-import Icon from '@/components/Icon'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import Image from 'next/image'
+"use client";
+import Button from "@/components/Button";
+import Input from "@/components/Input";
+import Icon from "@/components/Icon";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import Image from "next/image";
 
 export default function CurrentLocation() {
   const searchSchema = z.object({
-    locationStart: z.string().min(1, { message: 'Enter Your location' }),
-    locationEnd: z.string().min(1, { message: 'Enter Your destination' }),
+    locationStart: z.string().min(1, { message: "Enter Your location" }),
+    locationEnd: z.string().min(1, { message: "Enter Your destination" }),
     startLat: z.number(),
     startLng: z.number(),
     endLat: z.number(),
     endLng: z.number(),
-    notes: z.string()
-  })
+    notes: z.string(),
+  });
 
-  type searchData = z.infer<typeof searchSchema>
+  type searchData = z.infer<typeof searchSchema>;
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm<searchData>({
     resolver: zodResolver(searchSchema),
     defaultValues: {
-      locationStart: '',
-      locationEnd: '',
-      notes: ''
-    }
-  })
+      locationStart: "",
+      locationEnd: "",
+      notes: "",
+    },
+  });
 
   const submitForm = async (data: searchData) => {
-    console.log(data)
-  }
+    console.log(data);
+  };
   return (
     <div className="flex gap-6 flex-col w-80">
       <form
@@ -73,7 +73,7 @@ export default function CurrentLocation() {
                   className="material-symbols-outlined text-fieldOrange md-30"
                 />
               }
-              register={register('locationStart')}
+              register={register("locationStart")}
               placeholder="Enter Your location"
               btnClassName="font-bold rounded-[30px] border-white w-[294px] h-[58px] pl-12"
             />
@@ -85,7 +85,7 @@ export default function CurrentLocation() {
           </div>
           <div>
             <Input
-            startIconClassName="top-[13px] left-[13px]"
+              startIconClassName="top-[13px] left-[13px]"
               startIcon={
                 <Icon
                   name="location_on"
@@ -93,7 +93,7 @@ export default function CurrentLocation() {
                 />
               }
               btnClassName="font-bold rounded-[30px] pl-12 border-white w-[294px] h-[58px]"
-              register={register('locationEnd')}
+              register={register("locationEnd")}
               placeholder="Enter Your lng"
             />
             {errors.locationEnd && (
@@ -107,7 +107,7 @@ export default function CurrentLocation() {
           <p>Notes to driver</p>
           <Input
             btnClassName="h-[56px] w-full border rounded px-4 py-2 text-secondary border-borderGray"
-            placeholder="lakj;sfkjasfka;foeaj"
+            placeholder="Note to driver"
           />
         </div>
         <Button
@@ -118,5 +118,5 @@ export default function CurrentLocation() {
         </Button>
       </form>
     </div>
-  )
+  );
 }
