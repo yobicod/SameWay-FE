@@ -1,5 +1,5 @@
-import axios, { Axios, AxiosResponse } from 'axios'
 import { IDriverInfo } from './interfaces/interfaces'
+import { axiosClient } from '../lib/axiosInstance'
 
 const test = {
   driverFirstName: 'ccc',
@@ -12,7 +12,7 @@ const test = {
 
 export const createDriver = async (driverInfo: IDriverInfo) => {
   try {
-    const { data } = await axios.post<boolean>(
+    const { data } = await axiosClient().post<boolean>(
       `${process.env.NEXT_PUBLIC_API_URL}/driver/create`,
       driverInfo
     )
