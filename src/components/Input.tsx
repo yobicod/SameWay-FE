@@ -3,7 +3,7 @@ import { UseFormRegisterReturn } from 'react-hook-form'
 import { twMerge } from 'tailwind-merge'
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
-  btnClassName?: string
+  inputClassName?: string
   register?: UseFormRegisterReturn | null
   startIcon?: JSX.Element
   endIcon?: JSX.Element
@@ -12,7 +12,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 export default function Input({
-  btnClassName,
+  inputClassName,
   register,
   value,
   placeholder,
@@ -24,17 +24,16 @@ export default function Input({
   ...props
 }: Props) {
   return (
-    <div className="relative">
+    <div className='relative font-jura'>
       {startIcon && (
         <div
           className={twMerge(
             clsx({
-              'left-2 flex items-center justify-center absolute top-[10px]':
-                true
+              'left-2 flex items-center justify-center absolute top-0 bottom-0':
+                true,
             }),
             startIconClassName
-          )}
-        >
+          )}>
           {startIcon}
         </div>
       )}
@@ -50,20 +49,19 @@ export default function Input({
               true,
             'pl-9': startIcon,
             'pr-9': endIcon,
-            'pointer-events-none': disabled
+            'pointer-events-none': disabled,
           }),
-          btnClassName
+          inputClassName
         )}
       />
       {endIcon && (
         <div
           className={twMerge(
             clsx({
-              'absolute right-2 top-[10px] flex items-center': true
+              'absolute right-2 top-[10px] flex items-center': true,
             }),
             endIconClassName
-          )}
-        >
+          )}>
           {endIcon}
         </div>
       )}
