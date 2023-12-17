@@ -1,14 +1,14 @@
-import clsx from 'clsx'
-import { UseFormRegisterReturn } from 'react-hook-form'
-import { twMerge } from 'tailwind-merge'
+import clsx from "clsx";
+import { UseFormRegisterReturn } from "react-hook-form";
+import { twMerge } from "tailwind-merge";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
-  inputClassName?: string
-  register?: UseFormRegisterReturn | null
-  startIcon?: JSX.Element
-  endIcon?: JSX.Element
-  startIconClassName?: string
-  endIconClassName?: string
+  inputClassName?: string;
+  register?: UseFormRegisterReturn | null;
+  startIcon?: JSX.Element;
+  endIcon?: JSX.Element;
+  startIconClassName?: string;
+  endIconClassName?: string;
 }
 
 export default function Input({
@@ -24,16 +24,17 @@ export default function Input({
   ...props
 }: Props) {
   return (
-    <div className='relative font-jura'>
+    <div className="relative font-jura">
       {startIcon && (
         <div
           className={twMerge(
             clsx({
-              'left-2 flex items-center justify-center absolute top-0 bottom-0':
+              "left-2 flex items-center justify-center absolute top-0 bottom-0":
                 true,
             }),
             startIconClassName
-          )}>
+          )}
+        >
           {startIcon}
         </div>
       )}
@@ -45,11 +46,11 @@ export default function Input({
         {...register}
         className={twMerge(
           clsx({
-            'h-11 w-full border rounded border-stroke px-4 py-2 text-secondary':
+            "h-11 w-full border rounded border-stroke px-4 py-2 text-secondary":
               true,
-            'pl-9': startIcon,
-            'pr-9': endIcon,
-            'pointer-events-none': disabled,
+            "pl-9": startIcon,
+            "pr-9": endIcon,
+            "pointer-events-none": disabled,
           }),
           inputClassName
         )}
@@ -58,13 +59,14 @@ export default function Input({
         <div
           className={twMerge(
             clsx({
-              'absolute right-2 top-[10px] flex items-center': true,
+              "absolute right-2 top-[10px] flex items-center": true,
             }),
             endIconClassName
-          )}>
+          )}
+        >
           {endIcon}
         </div>
       )}
     </div>
-  )
+  );
 }
