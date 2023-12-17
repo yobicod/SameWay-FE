@@ -1,16 +1,21 @@
 "use client";
-
-import Image from "next/image";
+import { useState } from "react";
 
 export default function UploadButton() {
+  const [fileName, setFileName] = useState<string>("");
+
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
-    // Do something with the uploaded file, such as saving it or processing it
     console.log("Uploaded file:", file);
+    setFileName(file.name);
+    console.log(
+      "🚀 ~ file: FileUpload.tsx:8 ~ UploadButton ~ fileName:",
+      fileName
+    );
   };
   return (
     <>
-      <label className="flex justify-center items-center rounded-full border border-gray-300 p-2 cursor-pointer w-[25px]  h-[25px]">
+      <label className="flex justify-center flex-col items-center rounded-full border border-gray-300 p-2 cursor-pointer w-[25px]  h-[25px]">
         +
         <input
           type="file"
@@ -18,7 +23,9 @@ export default function UploadButton() {
           onChange={handleFileUpload}
           className=" bg-fuchsia-950"
         />
+        {fileName && <p className="mt-8">${fileName}</p>}
       </label>
+
       {/* <div onClick={handleFileUpload}>
         <input type="file" />
       </div> */}

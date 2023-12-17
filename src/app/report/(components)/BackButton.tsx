@@ -1,8 +1,13 @@
 "use client";
 import Image from "next/image";
-export default function BackButton() {
+import { redirect } from "next/navigation";
+interface IProps {
+  pageRoute: string;
+}
+export default function BackButton({ pageRoute }: IProps) {
   const goToPreviousPage = () => {
-    console.log("redirect...");
+    console.log("ck");
+    return redirect(`${pageRoute}`);
   };
 
   return (
