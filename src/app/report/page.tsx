@@ -3,6 +3,8 @@ import Image from "next/image";
 import BackButton from "./(components)/BackButton";
 import UploadButton from "@/components/FileUpload";
 import Button from "@/components/Button";
+import DriverForm from "../driver/(components)/DriverForm";
+import ReportForm from "./(components)/ReportForm";
 
 export default function Report() {
   return (
@@ -16,32 +18,14 @@ export default function Report() {
         className="inset-x-0  rounded-t-[50px] flex gap-6 flex-col justify-start items-center bg-white h-full "
         style={{ boxShadow: "0px -4px 4px 0px rgba(164, 159, 159, 0.25)" }}
       >
-        <div className="text-label font-bold flex-row flex justify-center items-center gap-1 h-20 w-screen  border-b-2 border-stroke border-opacity-20 relative">
-          <BackButton pageRoute="/driver" />
-          <p className="text-2xl  text-center font-lexendExa text-secondary">
-            Report
-          </p>
-        </div>
-        <div className="text-label font-bold flex-col flex gap-1 w-80">
-          <p>Please select a problem *</p>
-          <Input placeholder="Select Problem" />
-        </div>
-
-        <div className="text-label font-bold flex-col flex gap-1 w-80">
-          <p>Description *</p>
-          <textarea className="border rounded border-stroke px-4 py-2 text-secondary h-[240px]"></textarea>
-        </div>
-
-        <div className="text-label font-bold flex-col flex gap-1 w-80">
-          <p>Attachment</p>
-          <div className="flex justify-center items-center h-[166px] border-dotted border-2 rounded">
-            <UploadButton></UploadButton>
+        <div className="w-full flex flex-col">
+          <div className="text-label font-bold flex-row flex justify-center items-center gap-1 h-20 w-screen border-b-2 border-stroke border-opacity-20 relative">
+            <BackButton pageRoute="/driver" />
+            <p className="text-2xl  text-center font-lexendExa text-secondary">
+              Report
+            </p>
           </div>
-        </div>
-        <div className="text-label font-bold flex-col flex gap-1 w-80">
-          <Button type="submit" className="text-center">
-            Done
-          </Button>
+          <ReportForm></ReportForm>
         </div>
       </div>
     </div>
