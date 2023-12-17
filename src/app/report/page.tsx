@@ -1,8 +1,5 @@
-import Input from "@/components/Input";
 import Image from "next/image";
 import BackButton from "./(components)/BackButton";
-import UploadButton from "@/components/FileUpload";
-import Button from "@/components/Button";
 import ReportForm from "./(components)/ReportForm";
 
 export default function Report() {
