@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Jura, Lexend_Exa } from 'next/font/google'
+import { Jura, Lexend_Deca, Lexend_Exa } from 'next/font/google'
 import './globals.css'
 import LayoutProvider from '@/app/LayoutProvider'
 import 'material-icons/iconfont/material-icons.css'
@@ -16,6 +16,12 @@ const jura = Jura({
   weight: ['300', '400', '500', '600', '700'],
   subsets: ['latin'],
   variable: '--font-jura',
+})
+const lexendDeca = Lexend_Deca({
+  preload: true,
+  weight: ['300', '400', '500'],
+  subsets: ['latin'],
+  variable: '--font-lexend-deca',
 })
 export const metadata: Metadata = {
   title: 'Create Next App',

@@ -44,7 +44,7 @@ export default function SearchLocation() {
               className="material-symbols-outlined text-secondary"
             />
           }
-          btnClassName="rounded-2xl border-white"
+          inputClassName="rounded-2xl border-white"
         />
         {errors.location && (
           <p className="text-red-500 font-light text-sm">

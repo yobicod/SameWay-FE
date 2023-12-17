@@ -75,7 +75,7 @@ export default function CurrentLocation() {
               }
               register={register("locationStart")}
               placeholder="Enter Your location"
-              btnClassName="font-bold rounded-[30px] border-white w-[294px] h-[58px] pl-12"
+              inputClassName="font-bold rounded-[30px] border-white w-[294px] h-[58px] pl-12"
             />
             {errors.locationStart && (
               <p className="text-red-500 font-light text-sm">
@@ -92,7 +92,7 @@ export default function CurrentLocation() {
                   className="material-symbols-outlined md-24 text-secondary md-30"
                 />
               }
-              btnClassName="font-bold rounded-[30px] pl-12 border-white w-[294px] h-[58px]"
+              inputClassName="font-bold rounded-[30px] pl-12 border-white w-[294px] h-[58px]"
               register={register("locationEnd")}
               placeholder="Enter Your lng"
             />
@@ -106,8 +106,8 @@ export default function CurrentLocation() {
         <div className="text-label font-bold flex-col flex gap-1">
           <p>Notes to driver</p>
           <Input
-            btnClassName="h-[56px] w-full border rounded px-4 py-2 text-secondary border-borderGray"
-            placeholder="Note to driver"
+            inputClassName="h-[56px] w-full border rounded px-4 py-2 text-secondary border-borderGray"
+            placeholder="lakj;sfkjasfka;foeaj"
           />
         </div>
         <Button
