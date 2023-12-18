@@ -3,7 +3,7 @@ import React from "react";
 import CurrentLocation from "./(components)/CurrentLocation";
 import SearchLocation from "./(components)/SelectLocation";
 
-export default function SelectDestinationPage() {
+export default function SearchLocationPage() {
   return (
     <div className="flex flex-col gap-4 font-jura py-8 pt-0 relative h-screen">
       <div>
@@ -20,7 +20,7 @@ export default function SelectDestinationPage() {
         <SearchLocation />
       </div>
       <div
-        className="fixed bottom-0 inset-x-0 py-8 rounded-t-[50px] flex gap-6 flex-col justify-center items-center bg-black pr-8 h-90"
+        className="fixed bottom-0 inset-x-0 py-8 rounded-t-[50px] flex gap-6 flex-col justify-center items-center bg-white pr-8 h-90"
         style={{ boxShadow: "0px -4px 4px 0px rgba(164, 159, 159, 0.25)" }}
       >
         <CurrentLocation />
