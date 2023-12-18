@@ -19,7 +19,9 @@ const config: Config = {
         label: '#9E9E9E',
         borderGray: '#D9D9D9',
         fieldGray: '#F2F2F2',
-        fieldOrange: '#EF6423'
+        fieldOrange: '#EF6423',
+        bgSwitchGray: '#F0F0F0',
+        borderSwitch: '#B5B7B9'
       },
       fontFamily: {
         lexendExa: 'var(--font-lexend-exa)',
