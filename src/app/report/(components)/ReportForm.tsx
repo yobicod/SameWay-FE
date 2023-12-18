@@ -1,11 +1,12 @@
 "use client";
-import UploadButton from "@/components/FileUpload";
-import { Button } from "@radix-ui/themes";
+
 import Input from "@/components/Input";
 import { useSession } from "next-auth/react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import UploadButton from "@/components/UploadButton";
+import Button from "@/components/Button";
 
 export default function ReportForm() {
   const { data: userData } = useSession();
@@ -41,7 +42,7 @@ export default function ReportForm() {
   return (
     <form
       onSubmit={handleSubmit(submitForm)}
-      className="h-full flex flex-col justify-start items-center gap-4 mt-6 overflow-hidden"
+      className="flex flex-col items-center gap-4 mt-6"
     >
       <div className="text-label font-bold flex-col flex gap-1 w-80">
         <p>Please select a problem *</p>

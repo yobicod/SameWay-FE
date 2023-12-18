@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Image from "next/image";
 
-export default function SearchLocation() {
+export default function SelectLocation() {
   const searchSchema = z.object({
     location: z.string().min(1, { message: "Enter Your location" }),
     lat: z.number(),
