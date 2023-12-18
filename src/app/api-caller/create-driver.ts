@@ -14,7 +14,12 @@ export const createDriver = async (driverInfo: IDriverInfo) => {
   try {
     const { data } = await axiosClient().post<boolean>(
       `${process.env.NEXT_PUBLIC_API_URL}/driver/create`,
-      driverInfo
+      driverInfo,
+      {
+        headers: {
+          Authorization: 'First sud lhor',
+        },
+      }
     )
     return alert('register complete')
   } catch (error) {
