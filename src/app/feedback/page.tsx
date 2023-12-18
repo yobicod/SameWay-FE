@@ -1,4 +1,3 @@
-import Input from "@/components/Input";
 import BackButton from "../../components/BackButton";
 import Image from "next/image";
 import FeedbackForm from "./components/FeedbackForm";
