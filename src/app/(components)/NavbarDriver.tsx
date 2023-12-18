@@ -3,7 +3,7 @@ import Icon from '@/components/Icon'
 import Switch from '@/components/Switch'
 import Image from 'next/image'
 
-export default function Navbar() {
+export default function NavbarDriver() {
   return (
     <div className='h-24 flex justify-between items-center rounded-t-4xl px-7 fixed top-0 w-full bg-white'>
       <div>

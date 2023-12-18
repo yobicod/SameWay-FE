@@ -35,7 +35,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={`${jura.variable} ${lexendExa.variable}`}>
+      <body
+        className={`${jura.variable} ${lexendExa.variable} ${lexendDeca.variable}`}>
         <LayoutProvider>{children}</LayoutProvider>
       </body>
     </html>
