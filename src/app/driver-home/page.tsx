@@ -1,13 +1,13 @@
 import Image from 'next/image'
 import React from 'react'
 import DriverInfo from './(components)/DriverInfo'
-import Navber from '../../components/Navbar'
+import NavbarDriver from '../../components/NavbarDriver'
 
 export default function DriverPage() {
   return (
     <div className="flex flex-col gap-4 font-jura py-8 pt-0 relative">
       <div>
-        <Navber />
+        <NavbarDriver />
       </div>
       <div>
         <Image

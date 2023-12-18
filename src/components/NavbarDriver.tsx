@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import SwitchDemo from '@/components/Switch'
 
-export default function Navber() {
+export default function NavbarDriver() {
   return (
       <div className="w-full h-[91px] fixed bg-white flex justify-between items-center pl-5 pr-5">
         <div className="flex flex-col gap-1.5">
