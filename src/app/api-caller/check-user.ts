@@ -1,13 +1,8 @@
-import axios from 'axios'
+import axiosServer from '../lib/axiosServer'
 export const checkUser = async (email: string) => {
   try {
-    const { data } = await axios.get<boolean>(
-      `${process.env.NEXT_PUBLIC_API_URL}/user/has-user-in-system/${email}`,
-      {
-        headers: {
-          Authorization: '',
-        },
-      }
+    const { data } = await axiosServer.get<boolean>(
+      `${process.env.NEXT_PUBLIC_API_URL}/user/has-user-in-system/${email}`
     )
     return data
   } catch (error) {

@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
   // console.log('cookie', cookie)
   const response = NextResponse.next()
   response.headers.set('Authorization', cookie)
-
+  response.cookies.set('auth_token', cookie)
   // console.log('cookie', cookie)
   return response
 }

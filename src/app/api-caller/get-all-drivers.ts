@@ -1,9 +1,9 @@
-import axios, { AxiosResponse } from 'axios'
+import axiosServer from '../lib/axiosServer'
 import { IDriverInfo } from './interfaces/interfaces'
 
 export const getAllDrivers = async () => {
   try {
-    const result: IDriverInfo = await axios.get(
+    const result: IDriverInfo = await axiosServer.get(
       `${process.env.NEXT_PUBLIC_API_URL}/driver`
     )
     return result
