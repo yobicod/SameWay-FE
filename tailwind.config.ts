@@ -20,6 +20,8 @@ const config: Config = {
         borderGray: '#D9D9D9',
         fieldGray: '#F2F2F2',
         fieldOrange: '#EF6423',
+        bgSwitchGray: '#F0F0F0',
+        borderSwitch: '#B5B7B9',
         primary: '#848181',
       },
       fontFamily: {
