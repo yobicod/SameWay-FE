@@ -1,11 +1,11 @@
 import Image from 'next/image'
-import Navbar from './(components)/Navbar'
 import DriverDetail from './(components)/DriverDetail'
+import NavbarDriver from '../(components)/NavbarDriver'
 
 export default function DriverPage() {
   return (
     <div className='relative'>
-      <Navbar />
+      <NavbarDriver />
       <Image
         src='https://cdn.discordapp.com/attachments/1180138826778284083/1185222861766541426/map.png?ex=658ed3ce&is=657c5ece&hm=0601dcadc9d71df6ea994d74692e6782d865a6bdf6e1c7842c7090a970380d42&'
         width={0}
