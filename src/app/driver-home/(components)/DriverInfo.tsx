@@ -1,4 +1,4 @@
-'use client'
+"use client";
 export default function DriverInfo() {
   return (
     <div className="text-secondary w-full h-full flex flex-col justify-center items-center">
@@ -25,5 +25,5 @@ export default function DriverInfo() {
         </div>
       </div>
     </div>
-  )
+  );
 }
