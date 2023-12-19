@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function CurrentLocation() {
   const searchSchema = z.object({
@@ -107,11 +108,15 @@ export default function CurrentLocation() {
             placeholder='lakj;sfkjasfka;foeaj'
           />
         </div>
+        <Link href='' className='text-secondary font-bold'>
         <Button
           type='submit'
           className='font-lexendExa flex items-center justify-center'>
+              
+              
+          
           BOOK
-        </Button>
+        </Button></Link>
       </form>
     </div>
   )

@@ -1,6 +1,7 @@
-import Image from 'next/image'
-import DriverDetail from './(components)/DriverDetail'
-import NavbarDriver from '../(components)/NavbarDriver'
+import Image from "next/image"
+import DriverDetail from "./(components)/DriverDetail"
+import NavbarDriver from "../(components)/NavbarDriver"
+import Pickup from "./(components)/Pickup"
 
 export default function DriverPage() {
   return (
@@ -16,7 +17,8 @@ export default function DriverPage() {
       />
       <div
         className='fixed bottom-0 bg-white rounded-t-[50px] min-h-[355px] w-full'
-        style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}>
+        style={{ boxShadow: "0px -4px 4px 0px rgba(164, 159, 159, 0.25)" }}
+      >
         {/* condition render check from api ... something */}
         <DriverDetail />
         {/* <Pickup /> */}

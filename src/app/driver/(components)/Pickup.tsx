@@ -1,6 +1,7 @@
-import Button from '@/components/Button'
-import Icon from '@/components/Icon'
-import Input from '@/components/Input'
+import Button from "@/components/Button"
+import Icon from "@/components/Icon"
+import Input from "@/components/Input"
+import Link from "next/link"
 
 export default function Pickup() {
   return (
@@ -32,7 +33,10 @@ export default function Pickup() {
           <Button className='bg-white border-2 border-secondary text-secondary'>
             I&apos;M HERE
           </Button>
-          <Button>PICK-UP</Button>
+          {/* pick up --> drop off  */}
+          <Link href='/driver'>
+            <Button>PICK-UP</Button>
+          </Link>
         </div>
       </div>
     </div>

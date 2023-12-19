@@ -1,6 +1,7 @@
-import Button from '@/components/Button'
-import Icon from '@/components/Icon'
-import Input from '@/components/Input'
+import Button from "@/components/Button"
+import Icon from "@/components/Icon"
+import Input from "@/components/Input"
+import Link from "next/link"
 
 export default function DropOff() {
   return (
@@ -25,7 +26,10 @@ export default function DropOff() {
           <Input value='fja;kdjfldjflasjd;fsadfsafsadfsafsf' disabled />
         </div>
         <div className='flex w-full justify-between gap-2'>
-          <Button>DROP-OFF</Button>
+          {/* drop-off --> map */}
+          <Link href=''>
+            <Button>DROP-OFF</Button>
+          </Link>
         </div>
       </div>
     </div>

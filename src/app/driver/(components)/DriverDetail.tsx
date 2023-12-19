@@ -1,7 +1,8 @@
-import Button from '@/components/Button'
-import Icon from '@/components/Icon'
-import Input from '@/components/Input'
-import Image from 'next/image'
+import Button from "@/components/Button"
+import Icon from "@/components/Icon"
+import Input from "@/components/Input"
+import Image from "next/image"
+import Link from "next/link"
 
 export default function DriverDetail() {
   return (
@@ -48,10 +49,16 @@ export default function DriverDetail() {
           <Input value='fja;kdjfldjflasjd;fsadfsafsadfsafsf' disabled />
         </div>
         <div className='flex justify-between gap-2'>
-          <Button className='bg-white border-2 border-secondary text-secondary'>
-            CANCEL
-          </Button>
-          <Button>ACCEPT JOB</Button>
+          <Link href='/driver-home' >
+            <Button className='bg-white border-2 border-secondary text-secondary'>
+              CANCEL
+            </Button>
+          </Link>
+
+          {/* ACCEPT JOB --> pick up */}
+          <Link href='/driver' className="w-full">
+            <Button>ACCEPT JOB</Button>
+          </Link>
         </div>
       </div>
     </div>
