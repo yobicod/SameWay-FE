@@ -1,9 +1,9 @@
-import axios from 'axios'
 import { IUpdateUser } from './interfaces/interfaces'
+import axiosClient from '../lib/axiosClient'
 
 export const updateDriver = async (newUserInfo: IUpdateUser) => {
   try {
-    const result = await axios.patch(
+    const result = await axiosClient.patch(
       `${process.env.NEXT_PUBLIC_API_URL}/user/update-user`,
       newUserInfo
     )

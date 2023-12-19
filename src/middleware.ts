@@ -24,7 +24,6 @@ export function middleware(request: NextRequest) {
 const auth = (req: NextRequest) => {
   // let cookie = req.cookies.get('next-auth.session-token')
   const cookie = document.cookie
-
   // const isAuth = req.
 }
 // See "Matching Paths" below to learn more
