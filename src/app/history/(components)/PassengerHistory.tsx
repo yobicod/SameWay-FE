@@ -52,7 +52,7 @@ export default function PassengerHistory({ setTab }: IProps) {
 
       <div>
         {data.map((datas: any) => (
-          <div className='mt-3'>
+          <div className='mt-3' key={datas.id}>
             <div className='w-[367px] min-h-[135px] border border-[#EEEEEE] rounded-[20px]'>
               <div className='flex'>
                 <div className='w-2/3 ml-5 mt-5 text-base font-lexendExa text-primary'>
