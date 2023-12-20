@@ -1,3 +1,4 @@
+import { addMonths } from 'date-fns'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
@@ -6,21 +7,26 @@ export function middleware(request: NextRequest) {
   // const cookie = document.cookie
   const cookie = request.cookies.get('next-auth.session-token')?.value || ''
   // const cookie = document.cookie
-  // console.log('cookie', cookie)
   const response = NextResponse.next()
-  response.headers.set('Authorization', cookie)
-  response.cookies.set('auth_token', cookie)
-  // console.log('cookie', cookie)
-  return response
+  if (cookie) {
+    response.headers.set('Authorization', cookie)
+    response.cookies.set({
+      name: 'auth_token',
+      value: cookie,
+      expires: addMonths(new Date(), 1),
+    })
+    return response
+  }
+
+  return NextResponse.redirect(new URL('/login', request.url))
 }
 
 const auth = (req: NextRequest) => {
   // let cookie = req.cookies.get('next-auth.session-token')
   const cookie = document.cookie
-  console.log('cookie', cookie)
   // const isAuth = req.
 }
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: '/:path*',
+  matcher: ['/((?!api|_next/static|_next/image|login).*)'],
 }
