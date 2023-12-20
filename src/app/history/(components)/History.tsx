@@ -1,7 +1,23 @@
+"use client"
 import Button from "@/components/Button"
-const data = [
+import clsx from "clsx"
+import { useState } from "react"
+
+interface IMockData {
+  id: string
+  locationStart: string
+  locationEnd: string
+  dateTime: string
+  price: number
+  report: boolean
+  feedback: boolean
+  rate: number
+}
+
+const DataListPassenger = [
   {
-    locationStart: "Airport rail link",
+    id: "1",
+    locationStart: "Passenger Test",
     locationEnd: "Union mall",
     dateTime: "Feb 14, 2023 18:42",
     price: 120,
@@ -10,6 +26,7 @@ const data = [
     rate: 0
   },
   {
+    id: "2",
     locationStart: "Airport rail link",
     locationEnd: "Union mall",
     dateTime: "Feb 14, 2023 18:42",
@@ -19,6 +36,7 @@ const data = [
     rate: 5
   },
   {
+    id: "3",
     locationStart: "Airport rail link",
     locationEnd: "Union mall",
     dateTime: "Feb 14, 2023 18:42",
@@ -29,31 +47,76 @@ const data = [
   }
 ]
 
-interface IProps {
-  setTab: (value: string) => void
-}
-export default function PassengerHistory({ setTab }: IProps) {
-  function handleClick() {
-    setTab("Driver")
+const DataListDriver = [
+  {
+    id: "1",
+    locationStart: "Driver test",
+    locationEnd: "Union mall",
+    dateTime: "Feb 14, 2023 18:42",
+    price: 120,
+    report: false,
+    feedback: false,
+    rate: 0
+  },
+  {
+    id: "2",
+    locationStart: "Airport rail link",
+    locationEnd: "Union mall",
+    dateTime: "Feb 14, 2023 18:42",
+    price: 80,
+    report: false,
+    feedback: true,
+    rate: 5
+  },
+  {
+    id: "3",
+    locationStart: "Airport rail link",
+    locationEnd: "Union mall",
+    dateTime: "Feb 14, 2023 18:42",
+    price: 60,
+    report: true,
+    feedback: false,
+    rate: 0
+  }
+]
+
+export default function History() {
+  const [tab, setTab] = useState("Passenger")
+  const [data, setData] = useState(DataListPassenger)
+  function handleClick(tab: string) {
+    setTab(tab)
+    if (tab === "Passenger") {
+      setData(DataListPassenger)
+    } else {
+      setData(DataListDriver)
+    }
   }
   return (
     <div>
-      <div className='w-[367px] h-[46px] bg-[#EEEEEE] rounded-xl flex justify-between items-center gap-1 text-secondary font-bold'>
-        <Button className='w-4/5 flex items-center justify-center bg-white h-4/5 ml-1.5 rounded-xl text-secondary font-jura'>
+      <div className='w-[367px] h-[46px] bg-bgTab rounded-xl flex justify-between items-center gap-1 text-secondary font-bold'>
+        <Button
+          className={clsx(
+            "w-4/5 flex items-center justify-center bg-bgTab h-4/5 ml-1.5 rounded-xl text-secondary font-jura",
+            { "bg-white": tab === "Passenger" }
+          )}
+          onClick={() => handleClick("Passenger")}
+        >
           <p>Passenger</p>
         </Button>
         <Button
-          className='w-4/5 flex items-center justify-center bg-[#EEEEEE] h-4/5 mr-1.5 rounded-xl text-secondary font-jura '
-          onClick={handleClick}
+          className={clsx(
+            "w-4/5 flex items-center justify-center bg-bgTab h-4/5 mr-1.5 rounded-xl text-secondary font-jura",
+            { "bg-white": tab === "Driver" }
+          )}
+          onClick={() => handleClick("Driver")}
         >
           <p>Driver</p>
         </Button>
       </div>
-
       <div>
-        {data.map((datas: any) => (
+        {data.map((datas: IMockData) => (
           <div className='mt-3' key={datas.id}>
-            <div className='w-[367px] min-h-[135px] border border-[#EEEEEE] rounded-[20px]'>
+            <div className='w-[367px] min-h-[135px] border border-bgTab rounded-[20px]'>
               <div className='flex'>
                 <div className='w-2/3 ml-5 mt-5 text-base font-lexendExa text-primary'>
                   <div className='flex mb-[-6px]'>
@@ -97,9 +160,6 @@ export default function PassengerHistory({ setTab }: IProps) {
                     </div>
                   )}
                 </div>
-
-                {/* <Button className="min-w-20 min-h-6">Report</Button> */}
-                {/* <Button>Feedback</Button> */}
               </div>
             </div>
           </div>
