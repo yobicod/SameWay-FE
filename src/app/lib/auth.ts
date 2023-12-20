@@ -18,7 +18,6 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ account, profile }) {
-      console.log(account, profile)
       if (!profile?.email) {
         throw new Error('no profile')
       }
