@@ -1,12 +1,9 @@
-import Icon from '@/components/Icon'
-import LoadFindDriver from './(component)/LoadingFindDriver'
+import LoadingFindDriver from './(component)/LoadingFindDriver';
 
-import Link from 'next/link'
-
-export default async function LoadingFindDriver() {
+export default async function LoadingFindDriverPage() {
   return (
     <div>
-      <LoadFindDriver />
+      <LoadingFindDriver></LoadingFindDriver>
     </div>
-  )
-  }
+  );
+}
