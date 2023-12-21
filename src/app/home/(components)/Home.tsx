@@ -1,6 +1,6 @@
-import Icon from "@/components/Icon"
-import Input from "@/components/Input"
-import Image from "next/image"
+import Icon from '@/components/Icon';
+import Input from '@/components/Input';
+import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -34,9 +34,9 @@ export default function Home() {
       </div>
       <div
         className='font-bold text-xl mt-[-32px] py-8 rounded-t-[50px] flex gap-6 flex-col justify-center items-center bg-white'
-        style={{ boxShadow: "0px -4px 4px 0px rgba(164, 159, 159, 0.25)" }}
+        style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}
       >
-        <div className='flex justify-center items-center w-full gap-8'>
+        <div className='flex justify-center items-center  gap-8'>
           <div className='relative text-secondary border border-secondary rounded-4xl h-[168px] w-[156px] flex flex-col justify-start items-center cursor-pointer'>
             <Image
               src='/image/passenger.svg'
@@ -71,43 +71,41 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className='w-full flex flex-col justify-center items-center gap-8'>
-          <div>
-            <div className='bg-white text-secondary border border-secondary rounded-4xl w-[347px] h-[98px] flex justify-between cursor-pointer'>
-              <p className='mt-[55px] ml-6'>History</p>
+        <div>
+          <div className='bg-white text-secondary border border-secondary rounded-4xl w-[347px] h-[98px] flex justify-between cursor-pointer'>
+            <p className='mt-[55px] ml-6'>History</p>
+            <Image
+              src='/image/clock.png'
+              width={111}
+              height={111}
+              alt='app-logo'
+              className='z-10 mr-2'
+            />
+            <div className='flex absolute'>
               <Image
-                src='/image/clock.png'
-                width={111}
-                height={111}
+                src='/image/lineHistory1.png'
+                width={174}
+                height={63}
                 alt='app-logo'
-                className='z-10 mr-2'
               />
-              <div className='flex absolute'>
-                <Image
-                  src='/image/lineHistory1.png'
-                  width={174}
-                  height={63}
-                  alt='app-logo'
-                />
-                <Image
-                  src='/image/lineHistory2.png'
-                  width={174}
-                  height={63}
-                  alt='app-logo'
-                />
-              </div>
+              <Image
+                src='/image/lineHistory2.png'
+                width={174}
+                height={63}
+                alt='app-logo'
+              />
             </div>
           </div>
-          <div className='bg-[#83BA90] text-secondary rounded-4xl w-[347px] h-[177px] flex justify-end items-end cursor-pointer'>
-            <Image
-              src='/image/lineman.png'
-              width={346}
-              height={145}
-              alt='app-logo'
-            />
-          </div>
+        </div>
+        <div className='bg-[#83BA90] text-secondary rounded-4xl w-[347px] h-[177px] flex justify-end items-end cursor-pointer'>
+          <Image
+            src='/image/lineman.png'
+            width={346}
+            height={145}
+            alt='app-logo'
+          />
         </div>
       </div>
     </div>
-  )
+  );
 }
