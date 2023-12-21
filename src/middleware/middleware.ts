@@ -18,7 +18,7 @@ export function middleware(request: NextRequest) {
     return response;
   }
 
-  return NextResponse.redirect(new URL('/login', request.url));
+  // return NextResponse.redirect(new URL('/login', request.url));
 }
 
 const auth = (req: NextRequest) => {
