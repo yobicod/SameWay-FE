@@ -8,6 +8,11 @@ export interface IDriverInfo {
   phoneNumber: string
 }
 
+export interface IDriverSearch {
+  nowLocation: string
+  destination: string
+  notes: string
+}
 export interface IUpdateUser {
   fullName?: string
   email: string

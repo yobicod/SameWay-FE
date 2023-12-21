@@ -1,12 +1,12 @@
 'use client'
 import { createDriver } from '@/app/api-caller/create-driver'
+import { IDriverInfo } from '@/app/api-caller/interfaces/interfaces'
 import Button from '@/components/Button'
 import Input from '@/components/Input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -14,15 +14,16 @@ export default function DriverForm() {
   const { data: userData } = useSession()
 
   const driverSchema = z.object({
-    driverFirstName: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ครบเด้' }),
-    driverLastName: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ครบเด้' }),
+    driverFullName: z.string().refine((val) => val.split(' ')[1], {
+      message: 'กรุณากรอกข้อมูลให้ถูกต้อง',
+    }),
+    // driverLastName: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ครบเด้' }),
     // dob: z.coerce.date(),
     sex: z.enum(['Male', 'Female']),
-    plate: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ครบเด้' }),
+    plate: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
     phoneNumber: z
       .string()
-      .length(10)
-      .min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
+      .length(10, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
     carType: z.string(),
   })
 
@@ -35,18 +36,30 @@ export default function DriverForm() {
   } = useForm<DriverData>({
     resolver: zodResolver(driverSchema),
     defaultValues: {
-      driverFirstName: userData?.user?.name || '',
-      driverLastName: userData?.user?.name || '',
+      driverFullName: userData?.user?.name || '',
+      // driverLastName: userData?.user?.name || '',
       // dob: new Date(),
       sex: 'Male',
       plate: '',
       phoneNumber: '',
+      carType: '',
     },
   })
-  console.log(errors)
-  const submitForm = async (data: DriverData) => {
-    await createDriver(data)
-    reset()
+  const submitForm = async (formData: DriverData) => {
+    const driverData: IDriverInfo = {
+      driverFirstName: formData.driverFullName.split(' ')[0],
+      driverLastName: formData.driverFullName.split(' ')[1],
+      carType: formData.carType,
+      phoneNumber: formData.phoneNumber,
+      plate: formData.plate,
+      sex: formData.sex,
+    }
+    await createDriver(driverData).then((res) => {
+      if (res) {
+        alert('register success!')
+        reset()
+      }
+    })
   }
   return (
     <div className='flex gap-6 flex-col'>
@@ -63,16 +76,16 @@ export default function DriverForm() {
         <div className='text-label font-bold flex-col flex gap-1'>
           <p>First Name</p>
           <Input
-            register={register('driverFirstName')}
+            register={register('driverFullName')}
             placeholder='First Name'
           />
-          {errors.driverFirstName && (
+          {errors.driverFullName && (
             <p className='text-red-500 font-light text-sm'>
-              {errors.driverFirstName.message}
+              {errors.driverFullName.message}
             </p>
           )}
         </div>
-        <div className='text-label font-bold flex-col flex gap-1'>
+        {/* <div className='text-label font-bold flex-col flex gap-1'>
           <p>Last Name</p>
           <Input
             register={register('driverLastName')}
@@ -83,7 +96,7 @@ export default function DriverForm() {
               {errors.driverLastName.message}
             </p>
           )}
-        </div>
+        </div> */}
         {/* <div className='text-label font-bold flex-col flex gap-1'>
           <p>Date of Birth</p>
           <Input
@@ -105,7 +118,7 @@ export default function DriverForm() {
           <p>Gender</p>
           {/* <Input register={register('sex')} placeholder='Full Name' /> */}
           <select
-            className='rounded px-4 py-2 font-bold border border-stroke h-11 text-secondary'
+            className='rounded px-4 py-2 font-bold border border-stroke h-11 text-secondary z-10'
             {...register('sex')}>
             <option>Male</option>
             <option>Female</option>
@@ -113,15 +126,25 @@ export default function DriverForm() {
         </div>
         <div className='text-label font-bold flex-col flex gap-1'>
           <p>License plate</p>
-          <Input register={register('plate')} placeholder='Full Name' />
+          <Input register={register('plate')} placeholder='License plate' />
+          {errors.plate && (
+            <p className='text-red-500 font-light text-sm'>
+              {errors.plate.message}
+            </p>
+          )}
         </div>
         <div className='text-label font-bold flex-col flex gap-1'>
           <p>Tel.</p>
           <Input
             type='number'
             register={register('phoneNumber')}
-            placeholder='Full Name'
+            placeholder='Phone Number'
           />
+          {errors.phoneNumber && (
+            <p className='text-red-500 font-light text-sm'>
+              {errors.phoneNumber.message}
+            </p>
+          )}
         </div>
         <Button type='submit'>SIGN UP</Button>
       </form>

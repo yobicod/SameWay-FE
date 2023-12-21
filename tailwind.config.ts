@@ -17,10 +17,21 @@ const config: Config = {
         secondary: '#216A61',
         stroke: '#768592',
         label: '#9E9E9E',
+        borderGray: '#D9D9D9',
+        fieldGray: '#F2F2F2',
+        fieldOrange: '#EF6423',
+        bgSwitchGray: '#F0F0F0',
+        borderSwitch: '#B5B7B9',
+        primary: '#848181',
+        bgTab: '#EEEEEE'
       },
       fontFamily: {
         lexendExa: 'var(--font-lexend-exa)',
         jura: 'var(--font-jura)',
+        lexendDeca: 'var(--font-lexend-deca)',
+      },
+      borderRadius: {
+        '4xl': '30px',
       },
     },
   },
