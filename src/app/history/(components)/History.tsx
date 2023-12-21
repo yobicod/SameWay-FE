@@ -14,7 +14,7 @@ interface IMockData {
   rate: number
 }
 
-const DataListPassenger = [
+const DataListPassenger: IMockData[] = [
   {
     id: "1",
     locationStart: "Passenger Test",
@@ -47,7 +47,7 @@ const DataListPassenger = [
   }
 ]
 
-const DataListDriver = [
+const DataListDriver: IMockData[] = [
   {
     id: "1",
     locationStart: "Driver test",
@@ -82,13 +82,13 @@ const DataListDriver = [
 
 export default function History() {
   const [tab, setTab] = useState("Passenger")
-  const [data, setData] = useState(DataListPassenger)
+  const [datas, setDatas] = useState(DataListPassenger)
   function handleClick(tab: string) {
     setTab(tab)
     if (tab === "Passenger") {
-      setData(DataListPassenger)
+      setDatas(DataListPassenger)
     } else {
-      setData(DataListDriver)
+      setDatas(DataListDriver)
     }
   }
   return (
@@ -114,8 +114,8 @@ export default function History() {
         </Button>
       </div>
       <div>
-        {data.map((datas: IMockData) => (
-          <div className='mt-3' key={datas.id}>
+        {datas.map((data) => (
+          <div className='mt-3' key={data.id}>
             <div className='w-[367px] min-h-[135px] border border-bgTab rounded-[20px]'>
               <div className='flex'>
                 <div className='w-2/3 ml-5 mt-5 text-base font-lexendExa text-primary'>
@@ -123,38 +123,38 @@ export default function History() {
                     <div className='flex justify-center pt-2'>
                       <div className='rounded-full border border-[#E07C58] w-2 h-2 mr-2 ' />
                     </div>
-                    <p className='break-words w-full'>{datas.locationStart}</p>
+                    <p className='break-words w-full'>{data.locationStart}</p>
                   </div>
                   <div className='w-0.5 min-h-[15px] bg-borderSwitch ml-[2.5px] mb-[-6px] '></div>
                   <div className='flex '>
                     <div className='flex justify-center pt-2'>
                       <div className='rounded-full bg-secondary w-2 h-2 mr-2' />
                     </div>
-                    <p className='break-words w-full'>{datas.locationEnd}</p>
+                    <p className='break-words w-full'>{data.locationEnd}</p>
                   </div>
                 </div>
                 <div className='w-1/3 flex flex-col justify-center items-center text-xl text-secondary'>
                   <p>
-                    {datas.price} <span className='text-sm'>THB</span>
+                    {data.price} <span className='text-sm'>THB</span>
                   </p>
-                  {datas.rate != 0 && (
+                  {data.rate != 0 && (
                     <p className=' text-xs pr-5'>⭐️ ⭐️ ⭐️ ⭐️ ⭐️</p>
                   )}
                 </div>
               </div>
               <div className='flex text-sm pt-5 font-light'>
                 <div className='w-full pr-2 mr-2 pl-5'>
-                  <p>{datas.dateTime}</p>
+                  <p>{data.dateTime}</p>
                 </div>
                 <div className='flex justify-end w-full pr-4'>
-                  {!datas.report && (
+                  {!data.report && (
                     <div>
                       <Button className='w-20 h-7 mr-2 text-secondary bg-white border border-secondary'>
                         Report
                       </Button>
                     </div>
                   )}
-                  {!datas.feedback && (
+                  {!data.feedback && (
                     <div>
                       <Button className='w-24 px-0.5 h-7 '>Feedback</Button>
                     </div>
