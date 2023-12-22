@@ -30,7 +30,7 @@ export default function LoadingFindDriver() {
         </div>
       </div>
       <Button className='flex w-80 font-bold justify-center absolute bottom-10 bg-transparent text-[#216A61] border-2 border-[#216A61]'>
-        <p className='font-jura '>CANCEL</p>
+        <p className='font-jura'>CANCEL</p>
       </Button>
     </div>
   );
