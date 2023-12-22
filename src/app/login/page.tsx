@@ -20,14 +20,14 @@ export default function page() {
         <SignInButton />
       </div>
       <Image
-        src='/image/login-left.svg'
+        src='/background/login-left.svg'
         width={197}
         height={284}
         alt='login-login-left'
         className='absolute bottom-0 left-0 w-1/3'
       />
       <Image
-        src='/image/login-right.svg'
+        src='/background/login-right.svg'
         width={0}
         height={0}
         alt='login-login-right'
