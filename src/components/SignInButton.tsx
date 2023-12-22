@@ -11,16 +11,17 @@ export default function SignInButton() {
   } else
     return (
       <Button
-        className='bg-white border border-secondary text-secondary flex gap-4 text-center'
-        onClick={() => signIn('google')}>
-        <Image
-          src='/logo/google.png'
-          width={25}
-          height={25}
-          alt='google_logo'
-        />
-        Continue with Google Account
+        className='bg-white border border-secondary text-secondary font-jura'
+        onClick={() => signIn('google')}
+        startIcon={
+          <Image
+            src='/logo/google.png'
+            width={25}
+            height={25}
+            alt='google_logo'
+          />
+        }>
+        Sign in with Google
       </Button>
-      // <button onClick={() => console.log('dji')}>dawdw</button>
     )
 }
