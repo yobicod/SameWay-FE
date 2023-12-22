@@ -7,7 +7,7 @@ export const createDriver = async (driverInfo: IDriverInfo) => {
       `${process.env.NEXT_PUBLIC_API_URL}/driver/create`,
       driverInfo
     )
-    return alert('register complete')
+    return data
   } catch (error) {
     console.log('🚀 ~ file: create-driver.ts:5 ~ createDriver ~ error:', error)
   }

@@ -1,18 +1,18 @@
 import axios from 'axios'
-import { cookies } from 'next/headers'
 const baseURL = process.env.NEXT_PUBLIC_API_URL
 const isServer = typeof window === 'undefined'
 
-const axiosServer = axios.create({
+const axiosClient = axios.create({
   baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
 })
 
-axiosServer.interceptors.request.use(async (config) => {
-  if (isServer) {
-    const token = cookies().get('next-auth.session-token')?.value || ''
+axiosClient.interceptors.request.use(async (config) => {
+  if (!isServer) {
+    const token = document.cookie.split('=')[1]
+
     if (token) {
       config.headers['Authorization'] = token
     }
@@ -20,4 +20,4 @@ axiosServer.interceptors.request.use(async (config) => {
 
   return config
 })
-export default axiosServer
+export default axiosClient
