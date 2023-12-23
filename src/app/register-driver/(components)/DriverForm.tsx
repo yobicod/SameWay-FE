@@ -3,6 +3,7 @@ import { createDriver } from '@/app/api-caller/create-driver'
 import { IDriverInfo } from '@/app/api-caller/interfaces/interfaces'
 import Button from '@/components/Button'
 import Input from '@/components/Input'
+import SelectDemo from '@/components/Select'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
@@ -148,6 +149,11 @@ export default function DriverForm() {
         </div>
         <Button type='submit'>SIGN UP</Button>
       </form>
+      <SelectDemo
+        items={['daw', 'czxmcklmxl']}
+        onChange={(e) => console.log(e)}
+        selectedItem='test1'
+      />
       <div>
         <p className='font-medium'>
           Already have any account?{' '}

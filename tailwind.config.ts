@@ -23,7 +23,7 @@ const config: Config = {
         bgSwitchGray: '#F0F0F0',
         borderSwitch: '#B5B7B9',
         primary: '#848181',
-        bgTab: '#EEEEEE'
+        bgTab: '#EEEEEE',
       },
       fontFamily: {
         lexendExa: 'var(--font-lexend-exa)',

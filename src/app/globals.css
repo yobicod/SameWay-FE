@@ -19,22 +19,23 @@
 body {
   background: #fff;
 }
-
+.SelectContent {
+  width: var(--radix-select-trigger-width);
+  max-height: var(--radix-select-content-available-height);
+}
 .animate-ping1 {
   animation: ping 1.2s cubic-bezier(0, 0, 0.9, 1) infinite;
-
 }
 .animate-ping2 {
   animation: ping 1.5s cubic-bezier(0, 0, 0.5, 1) infinite;
-
 }
 .animate-ping {
   animation: ping 1.5s cubic-bezier(0, 0, 0.1, 1) infinite;
-
 }
 
 @keyframes ping {
-  85%, 100% {
+  85%,
+  100% {
     transform: scale(2);
     opacity: 0;
   }
