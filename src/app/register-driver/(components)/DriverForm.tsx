@@ -18,8 +18,6 @@ export default function DriverForm() {
     driverFullName: z.string().refine((val) => val.split(' ')[1], {
       message: 'กรุณากรอกข้อมูลให้ถูกต้อง',
     }),
-    // driverLastName: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ครบเด้' }),
-    // dob: z.coerce.date(),
     sex: z.string(),
     plate: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
     phoneNumber: z
@@ -39,8 +37,6 @@ export default function DriverForm() {
     resolver: zodResolver(driverSchema),
     defaultValues: {
       driverFullName: userData?.user?.name || '',
-      // driverLastName: userData?.user?.name || '',
-      // dob: new Date(),
       sex: '',
       plate: '',
       phoneNumber: '',
@@ -56,13 +52,12 @@ export default function DriverForm() {
       plate: formData.plate,
       sex: formData.sex,
     }
-    console.log(formData)
-    // await createDriver(driverData).then((res) => {
-    //   if (res) {
-    //     alert('register success!')
-    //     reset()
-    //   }
-    // })
+    await createDriver(driverData).then((res) => {
+      if (res) {
+        alert('register success!')
+        reset()
+      }
+    })
   }
   return (
     <div className='flex gap-6 flex-col'>
@@ -88,26 +83,7 @@ export default function DriverForm() {
             </p>
           )}
         </div>
-        {/* <div className='text-label font-bold flex-col flex gap-1'>
-          <p>Last Name</p>
-          <Input
-            register={register('driverLastName')}
-            placeholder='Last Name'
-          />
-          {errors.driverLastName && (
-            <p className='text-red-500 font-light text-sm'>
-              {errors.driverLastName.message}
-            </p>
-          )}
-        </div> */}
-        {/* <div className='text-label font-bold flex-col flex gap-1'>
-          <p>Date of Birth</p>
-          <Input
-            register={register('dob')}
-            placeholder='Full Name'
-            type='date'
-          />
-        </div> */}
+
         <div className='text-label font-bold flex-col flex gap-1'>
           <p>Car Type</p>
           <Input register={register('carType')} placeholder='Car Type' />
