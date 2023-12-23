@@ -11,7 +11,11 @@ import Link from 'next/link'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-export default function DriverForm() {
+interface IProps {
+  genderEnum: string[]
+}
+
+export default function DriverForm({ genderEnum }: IProps) {
   const { data: userData } = useSession()
 
   const driverSchema = z.object({
@@ -101,7 +105,7 @@ export default function DriverForm() {
             render={({ field: { onChange, value } }) => {
               return (
                 <SelectDemo
-                  items={['Male', 'Female']}
+                  items={genderEnum}
                   onChange={onChange}
                   selectedItem={value}
                 />
