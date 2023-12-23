@@ -7,7 +7,10 @@ export interface IDriverInfo {
   sex: string
   phoneNumber: string
 }
-
+export interface IEnumGender {
+  value: string
+  description?: string
+}
 export interface IDriverSearch {
   nowLocation: string
   destination: string

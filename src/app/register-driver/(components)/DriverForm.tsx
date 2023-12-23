@@ -3,23 +3,26 @@ import { createDriver } from '@/app/api-caller/create-driver'
 import { IDriverInfo } from '@/app/api-caller/interfaces/interfaces'
 import Button from '@/components/Button'
 import Input from '@/components/Input'
+import SelectDemo from '@/components/Select'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-export default function DriverForm() {
+interface IProps {
+  genderEnum: string[]
+}
+
+export default function DriverForm({ genderEnum }: IProps) {
   const { data: userData } = useSession()
 
   const driverSchema = z.object({
     driverFullName: z.string().refine((val) => val.split(' ')[1], {
       message: 'กรุณากรอกข้อมูลให้ถูกต้อง',
     }),
-    // driverLastName: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ครบเด้' }),
-    // dob: z.coerce.date(),
-    sex: z.enum(['Male', 'Female']),
+    sex: z.string(),
     plate: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
     phoneNumber: z
       .string()
@@ -33,13 +36,12 @@ export default function DriverForm() {
     handleSubmit,
     formState: { errors },
     reset,
+    control,
   } = useForm<DriverData>({
     resolver: zodResolver(driverSchema),
     defaultValues: {
       driverFullName: userData?.user?.name || '',
-      // driverLastName: userData?.user?.name || '',
-      // dob: new Date(),
-      sex: 'Male',
+      sex: '',
       plate: '',
       phoneNumber: '',
       carType: '',
@@ -74,10 +76,10 @@ export default function DriverForm() {
       </div>
       <form className='flex flex-col gap-5' onSubmit={handleSubmit(submitForm)}>
         <div className='text-label font-bold flex-col flex gap-1'>
-          <p>First Name</p>
+          <p>Full Name</p>
           <Input
             register={register('driverFullName')}
-            placeholder='First Name'
+            placeholder='Full Name'
           />
           {errors.driverFullName && (
             <p className='text-red-500 font-light text-sm'>
@@ -85,26 +87,7 @@ export default function DriverForm() {
             </p>
           )}
         </div>
-        {/* <div className='text-label font-bold flex-col flex gap-1'>
-          <p>Last Name</p>
-          <Input
-            register={register('driverLastName')}
-            placeholder='Last Name'
-          />
-          {errors.driverLastName && (
-            <p className='text-red-500 font-light text-sm'>
-              {errors.driverLastName.message}
-            </p>
-          )}
-        </div> */}
-        {/* <div className='text-label font-bold flex-col flex gap-1'>
-          <p>Date of Birth</p>
-          <Input
-            register={register('dob')}
-            placeholder='Full Name'
-            type='date'
-          />
-        </div> */}
+
         <div className='text-label font-bold flex-col flex gap-1'>
           <p>Car Type</p>
           <Input register={register('carType')} placeholder='Car Type' />
@@ -116,13 +99,19 @@ export default function DriverForm() {
         </div>
         <div className='text-label font-bold flex-col flex gap-1'>
           <p>Gender</p>
-          {/* <Input register={register('sex')} placeholder='Full Name' /> */}
-          <select
-            className='rounded px-4 py-2 font-bold border border-stroke h-11 text-secondary z-10'
-            {...register('sex')}>
-            <option>Male</option>
-            <option>Female</option>
-          </select>
+          <Controller
+            name='sex'
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <SelectDemo
+                  items={genderEnum}
+                  onChange={onChange}
+                  selectedItem={value}
+                />
+              )
+            }}
+          />
         </div>
         <div className='text-label font-bold flex-col flex gap-1'>
           <p>License plate</p>
@@ -148,6 +137,7 @@ export default function DriverForm() {
         </div>
         <Button type='submit'>SIGN UP</Button>
       </form>
+
       <div>
         <p className='font-medium'>
           Already have any account?{' '}
