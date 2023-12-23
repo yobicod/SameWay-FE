@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 export default function DriverForm() {
@@ -20,7 +20,7 @@ export default function DriverForm() {
     }),
     // driverLastName: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ครบเด้' }),
     // dob: z.coerce.date(),
-    sex: z.enum(['Male', 'Female']),
+    sex: z.string(),
     plate: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
     phoneNumber: z
       .string()
@@ -34,13 +34,14 @@ export default function DriverForm() {
     handleSubmit,
     formState: { errors },
     reset,
+    control,
   } = useForm<DriverData>({
     resolver: zodResolver(driverSchema),
     defaultValues: {
       driverFullName: userData?.user?.name || '',
       // driverLastName: userData?.user?.name || '',
       // dob: new Date(),
-      sex: 'Male',
+      sex: '',
       plate: '',
       phoneNumber: '',
       carType: '',
@@ -55,12 +56,13 @@ export default function DriverForm() {
       plate: formData.plate,
       sex: formData.sex,
     }
-    await createDriver(driverData).then((res) => {
-      if (res) {
-        alert('register success!')
-        reset()
-      }
-    })
+    console.log(formData)
+    // await createDriver(driverData).then((res) => {
+    //   if (res) {
+    //     alert('register success!')
+    //     reset()
+    //   }
+    // })
   }
   return (
     <div className='flex gap-6 flex-col'>
@@ -75,10 +77,10 @@ export default function DriverForm() {
       </div>
       <form className='flex flex-col gap-5' onSubmit={handleSubmit(submitForm)}>
         <div className='text-label font-bold flex-col flex gap-1'>
-          <p>First Name</p>
+          <p>Full Name</p>
           <Input
             register={register('driverFullName')}
-            placeholder='First Name'
+            placeholder='Full Name'
           />
           {errors.driverFullName && (
             <p className='text-red-500 font-light text-sm'>
@@ -117,13 +119,19 @@ export default function DriverForm() {
         </div>
         <div className='text-label font-bold flex-col flex gap-1'>
           <p>Gender</p>
-          {/* <Input register={register('sex')} placeholder='Full Name' /> */}
-          <select
-            className='rounded px-4 py-2 font-bold border border-stroke h-11 text-secondary z-10'
-            {...register('sex')}>
-            <option>Male</option>
-            <option>Female</option>
-          </select>
+          <Controller
+            name='sex'
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <SelectDemo
+                  items={['Male', 'Female']}
+                  onChange={onChange}
+                  selectedItem={value}
+                />
+              )
+            }}
+          />
         </div>
         <div className='text-label font-bold flex-col flex gap-1'>
           <p>License plate</p>
@@ -149,11 +157,7 @@ export default function DriverForm() {
         </div>
         <Button type='submit'>SIGN UP</Button>
       </form>
-      <SelectDemo
-        items={['daw', 'czxmcklmxl']}
-        onChange={(e) => console.log(e)}
-        selectedItem='test1'
-      />
+
       <div>
         <p className='font-medium'>
           Already have any account?{' '}
