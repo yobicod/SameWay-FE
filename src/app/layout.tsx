@@ -36,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${jura.variable} ${lexendExa.variable} ${lexendDeca.variable}`}>
+        className={`${jura.variable} ${lexendExa.variable} ${lexendDeca.variable} min-h-screen`}>
         <LayoutProvider>{children}</LayoutProvider>
       </body>
     </html>
