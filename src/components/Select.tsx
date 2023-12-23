@@ -17,7 +17,7 @@ export default function SelectDemo({
   return (
     <Select.Root value={selectedItem} onValueChange={onChange}>
       <Select.Trigger className='border px-4 py-2 flex justify-between items-center rounded text-secondary border-stroke'>
-        <Select.Value />
+        <Select.Value placeholder={'Choose your style'} />
         <Select.Icon />
       </Select.Trigger>
 
@@ -32,7 +32,7 @@ export default function SelectDemo({
               <Select.Item
                 key={`select-item-${item}`}
                 value={item}
-                className='hover:bg-secondary hover:text-white px-2 py-1 rounded cursor-pointer'>
+                className='hover:bg-secondary hover:text-white px-2 py-1 rounded cursor-pointer outline-none'>
                 <Select.ItemText>{item}</Select.ItemText>
               </Select.Item>
             ))}
