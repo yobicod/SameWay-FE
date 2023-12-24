@@ -6,8 +6,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function CurrentLocation() {
+  const router = useRouter();
   const searchSchema = z.object({
     locationStart: z.string().min(1, { message: 'Enter Your location' }),
     locationEnd: z.string().min(1, { message: 'Enter Your destination' }),
@@ -35,6 +37,11 @@ export default function CurrentLocation() {
   const submitForm = async (data: searchData) => {
     console.log(data);
   };
+
+  const handleFindDriver = () => {
+    router.push('loading');
+  };
+
   return (
     <div className='flex gap-6 flex-col w-80'>
       <form
@@ -108,7 +115,11 @@ export default function CurrentLocation() {
             placeholder='บอกอะไรก้บอกอิอิ'
           />
         </div>
-        <Button type='submit' className='flex items-center justify-center'>
+        <Button
+          type='submit'
+          className='flex items-center justify-center'
+          onClick={handleFindDriver}
+        >
           ค้นหาคนขับ
         </Button>
       </form>

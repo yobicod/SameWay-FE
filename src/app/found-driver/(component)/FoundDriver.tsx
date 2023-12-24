@@ -1,8 +1,8 @@
-"use client"
-import Image from "next/image"
-import Button from "@/components/Button"
-import Icon from "@/components/Icon"
-import Link from "next/link"
+'use client';
+import Image from 'next/image';
+import Button from '@/components/Button';
+import Icon from '@/components/Icon';
+import Link from 'next/link';
 
 export default function FoundDriver() {
   return (
@@ -28,15 +28,13 @@ export default function FoundDriver() {
                 </div>
               </div>
             </div>
-            <div className='p-1.5 h-8 space-x-1 flex justify-center items-center border-2 text-[#ced0d2] rounded-full'>
+            <div className='p-1.5 h-8 space-x-1 flex justify-center items-center border-2 text-[#ced0d2] rounded-full cursor-pointer'>
               <Icon name='report' className='material-symbols-outlined' />
-              <p className='text-sm text-[#B5B7B9]'>
-                รายงาน
-              </p>
+              <p className='text-sm text-border-switch'>รายงาน</p>
             </div>
           </div>
-          <div className='flex py-3 px-4 rounded-2xl bg-[#F2F2F2] space-x-4 justify-center items-center'>
-            <div className='flex items-center border rounded-full border-[#B5B7B9] h-8 px-2'>
+          <div className='flex py-3 px-4 rounded-2xl bg-fieldGray space-x-4 justify-center items-center'>
+            <div className='flex items-center border rounded-full border-border-switch h-8 px-2'>
               <p className='font-light text-secondary text-xl'>5กม.</p>
             </div>
             <div className='flex space-x-2'>
@@ -52,7 +50,7 @@ export default function FoundDriver() {
                 <p>ยูเนี่ยนมอลล์</p>
               </div>
             </div>
-            <div className='border-l-2 border-[#B5B7B9] h-12'></div>
+            <div className='border-l-2 border-borderSwitch h-12'></div>
             <div className='text-secondary'>
               <p className='text-xl'>120</p>
               <p>บาท</p>
@@ -60,12 +58,12 @@ export default function FoundDriver() {
           </div>
           <Link
             href=''
-            className='flex w-80 justify-center bg-transparent text-[#216A61] border-2 border-[#216A61]'
+            className='flex w-80 justify-center bg-transparent text-secondary border-2 border-secondary cursor-pointer'
           >
             <p>รายละเอียดคนขับ</p>
           </Link>
         </div>
       </div>
     </div>
-  )
+  );
 }
