@@ -27,6 +27,7 @@ export default function SelectLocation() {
   const submitForm = async (data: searchData) => {
     console.log(data);
   };
+
   return (
     <form
       className='w-full flex justify-center gap-4'
