@@ -125,7 +125,7 @@ export default function History() {
                     </div>
                     <p className='break-words w-full'>{data.locationStart}</p>
                   </div>
-                  <div className='w-0.5 min-h-[15px] bg-borderSwitch ml-[2.5px] mb-[-6px] '></div>
+                  <div className='w-0.5 min-h-[15px] bg-borderSwitch ml-[2.5px] mb-[-6px] '/>
                   <div className='flex '>
                     <div className='flex justify-center pt-2'>
                       <div className='rounded-full bg-secondary w-2 h-2 mr-2' />

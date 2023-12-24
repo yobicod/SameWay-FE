@@ -17,7 +17,7 @@ export default function DriverPage() {
         className='w-full object-cover h-full'
       />
       <div
-        className='fixed bottom-0 bg-white rounded-t-[50px] min-h-[355px] w-full'
+        className='fixed bottom-0 bg-white rounded-t-5xl min-h-[355px] w-full'
         style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}
       >
         {/* condition render check from api ... something */}

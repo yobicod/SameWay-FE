@@ -11,7 +11,7 @@ export default async function RegisterDriverPage() {
     <div className='flex flex-col gap-4 py-8'>
       <NavbarUser/>
       <div
-        className='py-8 rounded-t-[50px] flex gap-6 flex-col justify-center items-center'
+        className='py-8 rounded-t-5xl flex gap-6 flex-col justify-center items-center'
         style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}
       >
         <p className='text-3xl text-secondary'>ลงทะเบียน</p>

@@ -32,7 +32,8 @@ const config: Config = {
         prompt: "var(--font-prompt)"
       },
       borderRadius: {
-        "4xl": "30px"
+        "4xl": "30px",
+        "5xl": "50px"
       }
     }
   },

@@ -20,7 +20,7 @@ export default function DriverHomePage() {
         />
       </div>
       <div
-        className='fixed bottom-0 inset-x-0 py-8 rounded-t-[50px] flex gap-6 flex-col justify-center items-center bg-white  h-[286px]'
+        className='fixed bottom-0 inset-x-0 py-8 rounded-t-5xl flex gap-6 flex-col justify-center items-center bg-white  h-[286px]'
         style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}>
         <DriverInfo />
       </div>

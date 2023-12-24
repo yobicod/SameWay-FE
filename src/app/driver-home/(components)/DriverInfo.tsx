@@ -13,12 +13,12 @@ export default function DriverInfo() {
           <p className="text-2xl">100.0%</p>
           <p className="text-label">การยอมรับ</p>
         </div>
-        <div className="border border-borderSwitch h-3/5"></div>
+        <div className="border border-borderSwitch h-3/5"/>
         <div className="flex flex-col items-center justify-center">
           <p className="text-2xl">4.5</p>
           <p className="text-label">คะแนน</p>
         </div>
-        <div className="border border-borderSwitch h-3/5"></div>
+        <div className="border border-borderSwitch h-3/5"/>
         <div className="flex flex-col items-center justify-center">
           <p className="text-2xl">0.0%</p>
           <p className="text-label">การยกเลิก</p>

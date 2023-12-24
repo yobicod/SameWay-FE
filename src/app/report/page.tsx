@@ -8,7 +8,7 @@ export default function ReportPage() {
     <div className='flex flex-col gap-4 py-8'>
       <NavbarUser/>
       <div
-        className='inset-x-0 rounded-t-[50px] flex flex-col justify-start items-center gap-6  '
+        className='inset-x-0 rounded-t-5xl flex flex-col justify-start items-center gap-6  '
         style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}
       >
         <div className='flex flex-col'>

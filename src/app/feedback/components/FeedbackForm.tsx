@@ -60,7 +60,7 @@ export default function FeedbackForm() {
         <textarea
           className="border rounded border-stroke px-4 py-2 text-secondary h-[124px]"
           {...register("description")}
-        ></textarea>
+        />
         {errors.description && (
           <p className="text-red-500">{errors.description.message}</p>
         )}

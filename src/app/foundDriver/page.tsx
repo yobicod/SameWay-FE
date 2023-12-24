@@ -5,7 +5,7 @@ import Image from "next/image";
 export default async function FoundDriverPage() {
   return (
     <div className="flex flex-col justify-between h-screen w-full">
-      <Navbar></Navbar>
+      <Navbar/>
       <div className="absolute w-full h-full -z-10">
         <Image
           src="/imgFoundDriver/bg_foundDriver.svg"
@@ -15,7 +15,7 @@ export default async function FoundDriverPage() {
           className="w-full object-cover h-full"
         />
       </div>
-        <FoundDriver></FoundDriver>
+        <FoundDriver/>
     </div>
   );
 }
