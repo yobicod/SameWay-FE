@@ -40,8 +40,8 @@ export default function CurrentLocation() {
       <form
         className='flex flex-col gap-5 w-[354px]'
         onSubmit={handleSubmit(submitForm)}>
-        <p className='text-3xl text-secondary font-jura'>
-          Where would you like to go <span className='font-bold'>today ?</span>
+        <p className='text-3xl text-secondary font-light'>
+        วันนี้คุณปุยปุยอยาก <span className='font-medium'>ไปที่ไหน ?</span>
         </p>
         <div className='relative h-[162px] rounded-[25px] flex gap-3 flex-col justify-center items-center bg-fieldGray pl-10 '>
           <div className='absolute left-[23px]'>
@@ -72,8 +72,8 @@ export default function CurrentLocation() {
                 />
               }
               register={register('locationStart')}
-              placeholder='Enter Your location'
-              inputClassName='font-bold rounded-[30px] border-white w-[294px] h-[58px] pl-12'
+              placeholder='เลือกสถานที่ต้นทาง'
+              inputClassName=' rounded-[30px] border-white w-[294px] h-[58px] pl-12'
             />
             {errors.locationStart && (
               <p className='text-red-500 font-light text-sm'>
@@ -89,9 +89,9 @@ export default function CurrentLocation() {
                   className='material-symbols-outlined md-24 text-secondary md-30'
                 />
               }
-              inputClassName='font-bold rounded-[30px] pl-12 border-white w-[294px] h-[58px]'
+              inputClassName=' rounded-[30px] pl-12 border-white w-[294px] h-[58px]'
               register={register('locationEnd')}
-              placeholder='Enter Your lng'
+              placeholder='เลือกสถานที่ปลายทาง'
             />
             {errors.locationEnd && (
               <p className='text-red-500 font-light text-sm'>
@@ -100,17 +100,17 @@ export default function CurrentLocation() {
             )}
           </div>
         </div>
-        <div className='text-label font-bold flex-col flex gap-1'>
-          <p>Notes to driver</p>
+        <div className='text-label  flex-col flex gap-1'>
+          <p>รายละเอียดเพิ่มเติม</p>
           <Input
             inputClassName='h-[56px] w-full border rounded px-4 py-2 text-secondary border-borderGray'
-            placeholder='lakj;sfkjasfka;foeaj'
+            placeholder='บอกอะไรก้บอกอิอิ'
           />
         </div>
         <Button
           type='submit'
-          className='font-lexendExa flex items-center justify-center'>
-          BOOK
+          className='flex items-center justify-center'>
+          ค้นหาคนขับ
         </Button>
       </form>
     </div>

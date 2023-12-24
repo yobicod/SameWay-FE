@@ -24,7 +24,7 @@ export default function Input({
   ...props
 }: Props) {
   return (
-    <div className='relative font-jura'>
+    <div className='relative'>
       {startIcon && (
         <div
           className={twMerge(

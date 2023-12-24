@@ -10,14 +10,14 @@ interface IProps {
 }
 export default function SelectDemo({
   items,
-  placeholder,
+  placeholder = 'กรุณาเลือก',
   selectedItem,
   onChange,
 }: IProps) {
   return (
     <Select.Root value={selectedItem} onValueChange={onChange}>
       <Select.Trigger className='border px-4 py-2 flex justify-between items-center rounded text-secondary border-stroke'>
-        <Select.Value placeholder={'Choose your style'} />
+        <Select.Value placeholder={placeholder}/>
         <Select.Icon />
       </Select.Trigger>
 

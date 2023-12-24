@@ -11,7 +11,7 @@ export default function SignInButton() {
   } else
     return (
       <Button
-        className='bg-white border border-secondary text-secondary font-jura'
+        className='bg-white border border-secondary text-secondary'
         onClick={() => signIn('google')}
         startIcon={
           <Image
@@ -21,7 +21,7 @@ export default function SignInButton() {
             alt='google_logo'
           />
         }>
-        Sign in with Google
+        เข้าสู่ระบบผ่าน Google
       </Button>
     )
 }

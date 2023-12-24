@@ -32,11 +32,11 @@ export default function SelectLocation() {
       className="w-full flex justify-center gap-4"
       onSubmit={handleSubmit(submitForm)}
     >
-      <div className="font-bold w-4/5 rounded-[30px] ">
+      <div className=" w-4/5 rounded-[30px] ">
         <Input
           style={{ boxShadow: "0px 4px 4px 0px rgba(164, 159, 159, 0.25)" }}
           register={register("location")}
-          placeholder="Search Location"
+          placeholder="ค้นหาสถานที่"
           className="w-[311px] h-[51px]"
           startIcon={
             <Icon

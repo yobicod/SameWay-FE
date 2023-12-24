@@ -3,7 +3,7 @@ export interface IDriverInfo {
   driverFirstName: string
   driverLastName: string
   plate: string
-  carType: string
+  lastName: string
   sex: string
   phoneNumber: string
 }
