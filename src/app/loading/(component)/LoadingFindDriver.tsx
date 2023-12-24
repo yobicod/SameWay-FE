@@ -1,8 +1,19 @@
 'use client';
 import Image from 'next/image';
 import Button from '@/components/Button';
+import { useRouter } from 'next/navigation';
 
 export default function LoadingFindDriver() {
+  const router = useRouter();
+
+  const handleCancelFindDriver = () => {
+    router.push('search-location');
+  };
+  // mock => fetch then catch
+  setTimeout(() => {
+    router.push('found-driver');
+  }, 4000);
+
   return (
     <div className='h-screen w-full flex justify-center items-center '>
       <div className='absolute'>
@@ -29,7 +40,10 @@ export default function LoadingFindDriver() {
           />
         </div>
       </div>
-      <Button className='flex w-80 font-bold justify-center absolute bottom-10 bg-transparent text-[#216A61] border-2 border-[#216A61]'>
+      <Button
+        className='flex w-80 font-bold justify-center absolute bottom-10 bg-transparent text-[#216A61] border-2 border-[#216A61]'
+        onClick={handleCancelFindDriver}
+      >
         <p>ยกเลิก</p>
       </Button>
     </div>
