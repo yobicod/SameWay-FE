@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+// import React from 'react';
 import * as Select from '@radix-ui/react-select';
-import Icon from './Icon';
 
 interface IProps {
   items: string[];
@@ -8,7 +7,7 @@ interface IProps {
   selectedItem: string;
   onChange: (value: string) => void;
 }
-export default function SelectDemo({
+export default function SelectedDropdown({
   items,
   placeholder = 'กรุณาเลือก',
   selectedItem,

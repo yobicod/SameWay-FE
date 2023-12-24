@@ -1,6 +1,3 @@
-import UserInfo from "./(components)/UserInfo"
-import Link from "next/link"
-import Image from "next/image"
 import Home from "./(components)/Home"
 import NavbarUser from "../(components)/NavbarUser"
 
@@ -10,5 +7,5 @@ export default async function HomePage() {
       <NavbarUser/>
       <Home />
     </div>
-  )
+  );
 }

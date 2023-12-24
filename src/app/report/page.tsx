@@ -9,7 +9,8 @@ export default function ReportPage() {
       <NavbarUser/>
       <div
         className='inset-x-0 rounded-t-[50px] flex flex-col justify-start items-center gap-6  '
-        style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}>
+        style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}
+      >
         <div className='flex flex-col'>
           <div className='text-label font-bold  flex justify-center items-center gap-1 h-20 w-screen border-b-2 border-stroke border-opacity-20 relative'>
             <BackButton pageRoute='/driver' />
@@ -21,5 +22,5 @@ export default function ReportPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
