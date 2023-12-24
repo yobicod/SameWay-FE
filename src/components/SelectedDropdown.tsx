@@ -8,7 +8,7 @@ interface IProps {
   selectedItem: string;
   onChange: (value: string) => void;
 }
-export default function SelectDemo({
+export default function SelectedDropdown({
   items,
   placeholder = 'กรุณาเลือก',
   selectedItem,

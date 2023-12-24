@@ -3,7 +3,7 @@ import { createDriver } from '@/app/api-caller/create-driver';
 import { IDriverInfo } from '@/app/api-caller/interfaces/interfaces';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
-import SelectDemo from '@/components/Select';
+import SelectedDropdown from '@/components/SelectedDropdown';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -117,7 +117,7 @@ export default function DriverForm({ genderEnum }: IProps) {
             control={control}
             render={({ field: { onChange, value } }) => {
               return (
-                <SelectDemo
+                <SelectedDropdown
                   items={genderEnum}
                   onChange={onChange}
                   selectedItem={value}
