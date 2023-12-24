@@ -8,7 +8,7 @@ export default function UserInfo() {
   const { data: session } = useSession()
 
   return (
-    <div>
+    <div className='w-full'>
       {/* <Switch />
       {session?.user?.name}
       {session?.user?.email} */}

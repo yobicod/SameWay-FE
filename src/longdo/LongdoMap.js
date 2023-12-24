@@ -1,55 +1,64 @@
-import React, { useEffect } from 'react'
+'use client'
+import Button from '@/components/Button'
+import Input from '@/components/Input'
+import React, { useEffect, useState } from 'react'
 
-const Map = () => {
-  useEffect(() => {
-    // Load Longdo Map script dynamically
-    const script = document.createElement('script')
-    script.src = 'https://api.longdo.com/map/?key=YOUR_API_KEY'
-    script.async = true
+export default function Map() {
+  let suggest = document.getElementById('suggest')
+  let search = document.getElementById('search')
+  const map = new window.longdo.Map({
+    placeholder: document.getElementById('map'),
+    language: 'th',
+    placeholderHtml: '<p>Loading map...</p>',
+  })
+  function querySearch() {
+    map.Search.search(search.value)
+  }
+  // Customize the map as needed
+  map.Search.placeholder(document.getElementById('result'))
+  map.Search.suggest(search?.value || '')
 
-    // Callback function to execute after the script has loaded
-    script.onload = () => {
-      if (window.longdo) {
-        const map = new window.longdo.Map({
-          placeholder: document.getElementById('map'),
-          language: 'th',
-          placeholderHtml: '<p>Loading map...</p>',
-        })
+  map.Event.bind('suggest', function (result) {
+    if (result.meta.keyword != search?.value) return
 
-        // Customize the map as needed
-
-        // Example: Add a marker
-        // const marker = new window.longdo.Marker(
-        //   { lon: 100.516, lat: 13.736 },
-        //   {
-        //     title: 'Marker Title',
-        //     icon: {
-        //       url: 'https://example.com/marker-icon.png',
-        //       offset: { x: 12, y: 45 },
-        //     },
-        //   }
-        // )
-
-        // map.Overlays.add(marker)
-
-        map.Event.bind('click', function (location) {
-          console.log('Clicked at:', location.lon, location.lat)
-        })
-      } else {
-        console.error('Longdo Map library is not available.')
-      }
+    suggest.innerHTML = ''
+    for (var i = 0, item; (item = result.data[i]); ++i) {
+      longdo.Util.append(suggest, 'a', {
+        innerHTML: item.d,
+        href: "javascript:doSuggest('" + item.w + "')",
+      })
     }
+    suggest.style.display = 'block'
+  })
+  function doSuggest(value) {
+    search.value = value
+    querySearch()
+  }
+  // Example: Add a marker
+  // const marker = new window.longdo.Marker(
+  //   { lon: 100.516, lat: 13.736 },
+  //   {
+  //     title: 'Marker Title',
+  //     icon: {
+  //       url: 'https://example.com/marker-icon.png',
+  //       offset: { x: 12, y: 45 },
+  //     },
+  //   }
+  // )
 
-    // Append the script to the document
-    document.head.appendChild(script)
+  // map.Overlays.add(marker)
+  // map.Search.placeholder(search)
 
-    // Cleanup: Remove the script when the component unmounts
-    return () => {
-      document.head.removeChild(script)
-    }
-  }, []) // Run only once on component mount
+  return (
+    <div className='flex flex-col gap-2'>
+      <div id='map' style={{ height: 500 }} />
+      <div id='result' />
 
-  return <div id='map' style={{ width: '100%', height: '400px' }} />
+      <div>
+        <Input id='search' />
+        <div id='suggest' className='flex flex-col gap-2' />
+        <Button onClick={querySearch}>search</Button>
+      </div>
+    </div>
+  )
 }
-
-export default Map
