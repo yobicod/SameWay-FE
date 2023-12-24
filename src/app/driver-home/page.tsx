@@ -5,7 +5,7 @@ import NavbarDriver from '../(components)/NavbarDriver'
 
 export default function DriverHomePage() {
   return (
-    <div className='flex flex-col gap-4 font-jura py-8 pt-0 relative'>
+    <div className='flex flex-col gap-4 py-8 pt-0 relative'>
       <div>
         <NavbarDriver />
       </div>

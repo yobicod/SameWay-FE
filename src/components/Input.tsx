@@ -1,14 +1,14 @@
-import clsx from 'clsx'
-import { UseFormRegisterReturn } from 'react-hook-form'
-import { twMerge } from 'tailwind-merge'
+import clsx from 'clsx';
+import { UseFormRegisterReturn } from 'react-hook-form';
+import { twMerge } from 'tailwind-merge';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
-  inputClassName?: string
-  register?: UseFormRegisterReturn | null
-  startIcon?: JSX.Element
-  endIcon?: JSX.Element
-  startIconClassName?: string
-  endIconClassName?: string
+  inputClassName?: string;
+  register?: UseFormRegisterReturn | null;
+  startIcon?: JSX.Element;
+  endIcon?: JSX.Element;
+  startIconClassName?: string;
+  endIconClassName?: string;
 }
 
 export default function Input({
@@ -23,8 +23,9 @@ export default function Input({
   endIconClassName,
   ...props
 }: Props) {
+  console.log(props);
   return (
-    <div className='relative font-jura'>
+    <div className='relative'>
       {startIcon && (
         <div
           className={twMerge(
@@ -33,7 +34,8 @@ export default function Input({
                 true,
             }),
             startIconClassName
-          )}>
+          )}
+        >
           {startIcon}
         </div>
       )}
@@ -61,10 +63,11 @@ export default function Input({
               'absolute right-2 top-[10px] flex items-center': true,
             }),
             endIconClassName
-          )}>
+          )}
+        >
           {endIcon}
         </div>
       )}
     </div>
-  )
+  );
 }

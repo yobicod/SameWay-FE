@@ -4,12 +4,12 @@ import Image from 'next/image';
 
 export default function Home() {
   return (
-    <div className='relative font-lexendExa text-secondary'>
+    <div className='relative text-secondary'>
       <div className=' font-light text-xl min-h-[294px] py-8 rounded-t-[50px] flex gap-6 flex-col items-center bg-[#216A5824] pt-12'>
         <div className='w-4/5'>
-          <p>Hi Pop </p>
+          <p>สวัสดี คุณป๊อบ:) </p>
           <p>
-            Welcometo <span className=' font-medium'>SameWay!</span>
+          ยินดีต้อนรับเข้าสู่ <span className=' font-medium'>SameWay!</span>
           </p>
         </div>
         <div className='w-4/5'>
@@ -22,7 +22,7 @@ export default function Home() {
           />
           <Input
             inputClassName='rounded-2xl border-white py-6'
-            placeholder='PJCJ+RW8, Suan Luang, Bangkok'
+            placeholder='หมู่บ้านบิบิ, สวนหลวง, พัฒนาการ 10250'
             startIcon={
               <Icon
                 name='location_on'
@@ -33,7 +33,7 @@ export default function Home() {
         </div>
       </div>
       <div
-        className='font-bold text-xl mt-[-32px] py-8 rounded-t-[50px] flex gap-6 flex-col justify-center items-center bg-white'
+        className='font-semibold text-xl mt-[-32px] py-8 rounded-t-[50px] flex gap-6 flex-col justify-center items-center bg-white'
         style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}
       >
         <div className='flex justify-center items-center  gap-8'>
@@ -44,7 +44,7 @@ export default function Home() {
               height={125}
               alt='app-logo'
             />
-            <p className='mt-[-14px]'>Passenger</p>
+            <p className='mt-[-14px]'>ผู้โดยสาร</p>
             <Image
               src='/image/linePassenger.png'
               width={156}
@@ -61,7 +61,7 @@ export default function Home() {
               height={125}
               alt='app-logo'
             />
-            <p className='mt-[-19px]'>Driver</p>
+            <p className='mt-[-15px]'>คนขับ</p>
             <Image
               src='/image/lineDriver.png'
               width={156}
@@ -73,7 +73,7 @@ export default function Home() {
         </div>
         <div>
           <div className='bg-white text-secondary border border-secondary rounded-4xl w-[347px] h-[98px] flex justify-between cursor-pointer'>
-            <p className='mt-[55px] ml-6'>History</p>
+            <p className='mt-[55px] ml-6'>ประวัติการเดินทาง</p>
             <Image
               src='/image/clock.png'
               width={111}

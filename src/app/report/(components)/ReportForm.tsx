@@ -43,8 +43,8 @@ export default function ReportForm() {
     <form
       onSubmit={handleSubmit(submitForm)}
       className='flex flex-col items-center gap-4 mt-6'>
-      <div className='text-label font-bold flex-col flex gap-1 w-80'>
-        <p>Please select a problem *</p>
+      <div className='text-label flex-col flex gap-1 w-80'>
+        <p>เลือกปัญหาที่พบเจอ *</p>
         <Input
           placeholder='Select Problem'
           register={register('problemType')}
@@ -53,8 +53,8 @@ export default function ReportForm() {
           <p className='text-red-500'>{errors.problemType.message}</p>
         )}
       </div>
-      <div className='text-label font-bold flex-col flex gap-1 w-80'>
-        <p>Description *</p>
+      <div className='text-label flex-col flex gap-1 w-80'>
+        <p>รายละเอียดเพิ่มเติม *</p>
         <textarea
           className='border rounded border-stroke px-4 py-2 text-secondary h-[240px]'
           {...register('description')}></textarea>
@@ -62,15 +62,15 @@ export default function ReportForm() {
           <p className='text-red-500'>{errors.description.message}</p>
         )}
       </div>
-      <div className='text-label font-bold flex-col flex gap-1 w-80'>
-        <p>Attachment</p>
+      <div className='text-label flex-col flex gap-1 w-80'>
+        <p>แนบรูปภาพเพิ่มเติม*</p>
         <div className='flex justify-center items-center h-[166px] border-dotted border-2 rounded'>
           <UploadButton />
         </div>
       </div>
-      <div className='text-label font-bold flex-col flex gap-1 w-80'>
+      <div className='text-label flex-col flex gap-1 w-80'>
         <Button type='submit' className='text-center'>
-          Done
+        บันทึกรายงาน
         </Button>
       </div>
     </form>

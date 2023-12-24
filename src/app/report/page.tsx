@@ -4,7 +4,7 @@ import ReportForm from './(components)/ReportForm'
 
 export default function ReportPage() {
   return (
-    <div className='flex flex-col gap-4 py-8 font-jura'>
+    <div className='flex flex-col gap-4 py-8'>
       <div className='flex items-center gap-[14px] px-9'>
         <Image src='/logo/logo.svg' width={70} height={37} alt='app-logo' />
         <div className='border border-secondary w-full'></div>
@@ -15,8 +15,8 @@ export default function ReportPage() {
         <div className='flex flex-col'>
           <div className='text-label font-bold  flex justify-center items-center gap-1 h-20 w-screen border-b-2 border-stroke border-opacity-20 relative'>
             <BackButton pageRoute='/driver' />
-            <p className='text-2xl  text-center font-lexendExa text-secondary'>
-              Report
+            <p className='text-xl  text-center text-secondary font-semibold'>
+              รายงาน
             </p>
           </div>
           <ReportForm />

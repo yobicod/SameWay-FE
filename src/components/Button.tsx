@@ -14,7 +14,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(
         {...props}
         className={twMerge(
           clsx({
-            'rounded flex gap-2 items-center font-lexendExa bg-secondary w-full py-2 px-4 text-white hover:opacity-[0.85]':
+            'rounded flex gap-2 items-center bg-secondary w-full py-2 px-4 text-white hover:opacity-[0.85]':
               true,
             'justify-between': startIcon || endIcon,
             'justify-center': !startIcon || !endIcon,
