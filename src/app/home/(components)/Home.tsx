@@ -1,15 +1,57 @@
+'use client';
+import { checkDriver } from '@/app/api-caller/check-driver';
 import Icon from '@/components/Icon';
 import Input from '@/components/Input';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+  const { data: userData } = useSession();
+  const router = useRouter();
+  const [driverStatus, setDriverStatus] = useState<boolean | undefined>(false);
+
+  useEffect(() => {
+    const fetchCheckDriver = async () => {
+      if (userData?.user?.email) {
+        try {
+          const isDriverInSystem = await checkDriver(userData.user.email);
+          setDriverStatus(isDriverInSystem);
+        } catch (error) {
+          console.log(
+            '🚀 ~ file: Home.tsx:21 ~ fetchCheckDriver ~ error:',
+            error
+          );
+        }
+      }
+    };
+    fetchCheckDriver();
+  }, [userData]);
+
+  const handleClickDriverButton = () => {
+    if (driverStatus) {
+      router.push('driver-home');
+    } else {
+      router.push('register-driver');
+    }
+  };
+
+  const handleClickPassengerButton = () => {
+    router.push('search-location');
+  };
+
+  const handleClickHistoryButton = () => {
+    router.push('history');
+  };
+
   return (
     <div className='relative text-secondary'>
       <div className=' font-light text-xl min-h-[294px] py-8 rounded-t-[50px] flex gap-6 flex-col items-center bg-[#216A5824] pt-12'>
         <div className='w-4/5'>
           <p>สวัสดี คุณป๊อบ:) </p>
           <p>
-          ยินดีต้อนรับเข้าสู่ <span className=' font-medium'>SameWay!</span>
+            ยินดีต้อนรับเข้าสู่ <span className=' font-medium'>SameWay!</span>
           </p>
         </div>
         <div className='w-4/5'>
@@ -37,7 +79,10 @@ export default function Home() {
         style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}
       >
         <div className='flex justify-center items-center  gap-8'>
-          <div className='relative text-secondary border border-secondary rounded-4xl h-[168px] w-[156px] flex flex-col justify-start items-center cursor-pointer'>
+          <div
+            className='relative text-secondary border border-secondary rounded-4xl h-[168px] w-[156px] flex flex-col justify-start items-center cursor-pointer'
+            onClick={handleClickPassengerButton}
+          >
             <Image
               src='/image/passenger.svg'
               width={125}
@@ -54,7 +99,10 @@ export default function Home() {
             />
           </div>
 
-          <div className='relative text-secondary border border-secondary rounded-4xl h-[168px] w-[156px] flex flex-col items-center cursor-pointer'>
+          <div
+            className='relative text-secondary border border-secondary rounded-4xl h-[168px] w-[156px] flex flex-col items-center cursor-pointer'
+            onClick={handleClickDriverButton}
+          >
             <Image
               src='/image/driver.png'
               width={125}
@@ -72,7 +120,10 @@ export default function Home() {
           </div>
         </div>
         <div>
-          <div className='bg-white text-secondary border border-secondary rounded-4xl w-[347px] h-[98px] flex justify-between cursor-pointer'>
+          <div
+            className='bg-white text-secondary border border-secondary rounded-4xl w-[347px] h-[98px] flex justify-between cursor-pointer'
+            onClick={handleClickHistoryButton}
+          >
             <p className='mt-[55px] ml-6'>ประวัติการเดินทาง</p>
             <Image
               src='/image/clock.png'
