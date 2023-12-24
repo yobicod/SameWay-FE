@@ -1,77 +1,74 @@
-"use client"
-import { createDriver } from "@/app/api-caller/create-driver"
-import { IDriverInfo } from "@/app/api-caller/interfaces/interfaces"
-import Button from "@/components/Button"
-import Input from "@/components/Input"
-import SelectDemo from "@/components/Select"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useSession } from "next-auth/react"
-import Image from "next/image"
-import Link from "next/link"
-import { Controller, useForm } from "react-hook-form"
-import { z } from "zod"
+'use client';
+import { createDriver } from '@/app/api-caller/create-driver';
+import { IDriverInfo } from '@/app/api-caller/interfaces/interfaces';
+import Button from '@/components/Button';
+import Input from '@/components/Input';
+import SelectDemo from '@/components/Select';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Controller, useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 interface IProps {
-  genderEnum: string[]
+  genderEnum: string[];
 }
 
 export default function DriverForm({ genderEnum }: IProps) {
-  const { data: userData } = useSession()
+  const router = useRouter();
+  const { data: userData } = useSession();
 
   const driverSchema = z.object({
-    driverFullName: z.string().refine((val) => val.split(" ")[1], {
-      message: "กรุณากรอกข้อมูลให้ถูกต้อง"
-    }),
-    driverLastName: z.string().refine((val) => val.split(" ")[1], {
-      message: "กรุณากรอกข้อมูลให้ถูกต้อง"
-    }),
-    sex: z.string(),
-    plate: z.string().min(5, { message: "กรุณากรอกข้อมูลให้ถูกต้อง" }),
-    phoneNumber: z
+    driverFirstName: z
       .string()
-      .length(10, { message: "กรุณากรอกข้อมูลให้ถูกต้อง" }),
-    carType: z.string()
-  })
+      .min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
+    driverLastName: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
+    sex: z.string(),
+    plate: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
+    phoneNumber: z.string().min(10, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
+    carType: z.string(),
+  });
 
-  type DriverData = z.infer<typeof driverSchema>
+  type DriverData = z.infer<typeof driverSchema>;
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
-    control
+    control,
   } = useForm<DriverData>({
     resolver: zodResolver(driverSchema),
     defaultValues: {
-      driverFullName: userData?.user?.name || "",
-      driverLastName: "",
-      sex: "",
-      plate: "",
-      phoneNumber: "",
-      carType: ""
-    }
-  })
+      driverFirstName: '',
+      driverLastName: '',
+      sex: '',
+      plate: '',
+      phoneNumber: '',
+      carType: '',
+    },
+  });
   const submitForm = async (formData: DriverData) => {
     const driverData: IDriverInfo = {
-      driverFirstName: formData.driverFullName.split(" ")[0],
-      driverLastName: formData.driverLastName.split(" ")[0],
+      fullName: `${formData.driverFirstName} ${formData.driverLastName}`,
       carType: formData.carType,
       phoneNumber: formData.phoneNumber,
       plate: formData.plate,
-      sex: formData.sex
-    }
-    await createDriver(driverData).then((res) => {
-      if (res) {
-        alert("register success!")
-        reset()
+      sex: formData.sex,
+      userEmail: userData?.user?.email || '',
+    };
+
+    await createDriver(driverData).then((result) => {
+      if (result) {
+        router.push('driver-home');
       }
-    })
-  }
+    });
+  };
   return (
     <div className='flex gap-6 flex-col'>
       <div className='flex justify-center items-center'>
         <Image
-          src={userData?.user?.image || ""}
+          src={userData?.user?.image || ''}
           width={86}
           height={86}
           alt='user-photo'
@@ -81,17 +78,20 @@ export default function DriverForm({ genderEnum }: IProps) {
       <form className='flex flex-col gap-5' onSubmit={handleSubmit(submitForm)}>
         <div className='text-label flex-col flex gap-1'>
           <p>ชื่อจริง</p>
-          <Input register={register("driverFullName")} placeholder='ชื่อจริง' />
-          {errors.driverFullName && (
+          <Input
+            register={register('driverFirstName')}
+            placeholder='ชื่อจริง'
+          />
+          {errors.driverFirstName && (
             <p className='text-red-500 font-light text-sm'>
-              {errors.driverFullName.message}
+              {errors.driverFirstName.message}
             </p>
           )}
         </div>
 
         <div className='text-label flex-col flex gap-1'>
           <p>นามสกุล</p>
-          <Input register={register("driverLastName")} placeholder='นามสกุล' />
+          <Input register={register('driverLastName')} placeholder='นามสกุล' />
           {errors.driverLastName && (
             <p className='text-red-500 font-light text-sm'>
               {errors.driverLastName.message}
@@ -101,7 +101,7 @@ export default function DriverForm({ genderEnum }: IProps) {
 
         <div className='text-label flex-col flex gap-1'>
           <p>ประเภทรถ</p>
-          <Input register={register("carType")} placeholder='ประเภทรถ' />
+          <Input register={register('carType')} placeholder='ประเภทรถ' />
           {errors.carType && (
             <p className='text-red-500 font-light text-sm'>
               {errors.carType.message}
@@ -121,13 +121,13 @@ export default function DriverForm({ genderEnum }: IProps) {
                   selectedItem={value}
                   placeholder='--เลือกเพศ--'
                 />
-              )
+              );
             }}
           />
         </div>
         <div className='text-label flex-col flex gap-1'>
           <p>ทะเบียนรถยนต์</p>
-          <Input register={register("plate")} placeholder='ทะเบียนรถยนต์' />
+          <Input register={register('plate')} placeholder='ทะเบียนรถยนต์' />
           {errors.plate && (
             <p className='text-red-500 font-light text-sm'>
               {errors.plate.message}
@@ -138,8 +138,9 @@ export default function DriverForm({ genderEnum }: IProps) {
           <p>เบอร์โทรศัพท์</p>
           <Input
             type='number'
-            register={register("phoneNumber")}
+            register={register('phoneNumber')}
             placeholder='เบอร์โทรศัพท์'
+            maxLength={10}
           />
           {errors.phoneNumber && (
             <p className='text-red-500 font-light text-sm'>
@@ -159,5 +160,5 @@ export default function DriverForm({ genderEnum }: IProps) {
         </p>
       </div>
     </div>
-  )
+  );
 }
