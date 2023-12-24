@@ -53,10 +53,8 @@ export default function DriverForm({ genderEnum }: IProps) {
   })
   const submitForm = async (formData: DriverData) => {
     const driverData: IDriverInfo = {
-      driverFirstName:
-        formData.driverFullName.split(" ")[0] +
-        " " +
-        formData.driverLastName.split(" ")[0],
+      driverFirstName: formData.driverFullName.split(" ")[0],
+      driverLastName: formData.driverLastName.split(" ")[0],
       carType: formData.carType,
       phoneNumber: formData.phoneNumber,
       plate: formData.plate,
