@@ -1,6 +1,7 @@
 'use client'
 
 import Switch from '@/components/Switch'
+import Map from '@/longdo/LongdoMap'
 import { useSession } from 'next-auth/react'
 
 export default function UserInfo() {
@@ -8,9 +9,10 @@ export default function UserInfo() {
 
   return (
     <div>
-      <Switch />
+      {/* <Switch />
       {session?.user?.name}
-      {session?.user?.email}
+      {session?.user?.email} */}
+      <Map />
     </div>
   )
 }
