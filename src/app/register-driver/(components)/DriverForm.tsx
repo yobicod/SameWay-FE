@@ -22,12 +22,15 @@ export default function DriverForm({ genderEnum }: IProps) {
     driverFullName: z.string().refine((val) => val.split(" ")[1], {
       message: "กรุณากรอกข้อมูลให้ถูกต้อง"
     }),
+    driverLastName: z.string().refine((val) => val.split(" ")[1], {
+      message: "กรุณากรอกข้อมูลให้ถูกต้อง"
+    }),
     sex: z.string(),
     plate: z.string().min(5, { message: "กรุณากรอกข้อมูลให้ถูกต้อง" }),
     phoneNumber: z
       .string()
       .length(10, { message: "กรุณากรอกข้อมูลให้ถูกต้อง" }),
-    lastName: z.string()
+    carType: z.string()
   })
 
   type DriverData = z.infer<typeof driverSchema>
@@ -41,17 +44,20 @@ export default function DriverForm({ genderEnum }: IProps) {
     resolver: zodResolver(driverSchema),
     defaultValues: {
       driverFullName: userData?.user?.name || "",
+      driverLastName: "",
       sex: "",
       plate: "",
       phoneNumber: "",
-      lastName: ""
+      carType: ""
     }
   })
   const submitForm = async (formData: DriverData) => {
     const driverData: IDriverInfo = {
-      driverFirstName: formData.driverFullName.split(" ")[0],
-      driverLastName: formData.driverFullName.split(" ")[1],
-      lastName: formData.lastName,
+      driverFirstName:
+        formData.driverFullName.split(" ")[0] +
+        " " +
+        formData.driverLastName.split(" ")[0],
+      carType: formData.carType,
       phoneNumber: formData.phoneNumber,
       plate: formData.plate,
       sex: formData.sex
@@ -87,10 +93,20 @@ export default function DriverForm({ genderEnum }: IProps) {
 
         <div className='text-label flex-col flex gap-1'>
           <p>นามสกุล</p>
-          <Input register={register("lastName")} placeholder='นามสกุล' />
-          {errors.lastName && (
+          <Input register={register("driverLastName")} placeholder='นามสกุล' />
+          {errors.driverLastName && (
             <p className='text-red-500 font-light text-sm'>
-              {errors.lastName.message}
+              {errors.driverLastName.message}
+            </p>
+          )}
+        </div>
+
+        <div className='text-label flex-col flex gap-1'>
+          <p>ประเภทรถ</p>
+          <Input register={register("carType")} placeholder='ประเภทรถ' />
+          {errors.carType && (
+            <p className='text-red-500 font-light text-sm'>
+              {errors.carType.message}
             </p>
           )}
         </div>
@@ -138,7 +154,7 @@ export default function DriverForm({ genderEnum }: IProps) {
 
       <div>
         <p className='font-medium'>
-          คุณมีบัญชีอยู่แล้วใช่หรือไม่ ?{" "}
+          คุณมีบัญชีอยู่แล้วใช่หรือไม่ ?&nbsp;
           <Link href='' className='text-secondary'>
             เข้าสู่ระบบ
           </Link>
