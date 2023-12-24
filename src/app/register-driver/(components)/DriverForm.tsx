@@ -152,15 +152,6 @@ export default function DriverForm({ genderEnum }: IProps) {
         </div>
         <Button type='submit'>ลงทะเบียน</Button>
       </form>
-
-      <div>
-        <p className='font-medium'>
-          คุณมีบัญชีอยู่แล้วใช่หรือไม่ ?&nbsp;
-          <Link href='' className='text-secondary'>
-            เข้าสู่ระบบ
-          </Link>
-        </p>
-      </div>
     </div>
   );
 }
