@@ -18,14 +18,14 @@ export default function DriverInfo() {
         </div>
         <div className="flex flex-col justify-around w-2/3 ">
           <div>
-            <p className="font-lexendExa  text-secondary w-56 font-normal">
-              First, Visal
+            <p className="text-secondary w-56 font-medium">
+            สมศรี หมีอ้วน
             </p>
           </div>
           <div>⭐️ ⭐️ ⭐️ ⭐️ ⭐️</div>
-          <div className="font-jura  font-semibold  text-[#216A61] ">
-            Taycan | RICH
-          </div>
+          <p className="  text-[#216A61] text-sm">
+          Mazda3 | <span className="font-light">กท1234</span>
+          </p>
         </div>
       </div>
     </>

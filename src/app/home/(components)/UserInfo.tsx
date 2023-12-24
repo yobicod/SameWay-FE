@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import Switch from '@/components/Switch'
-import { useSession } from 'next-auth/react'
+import Switch from '@/components/Switch';
+import { useSession } from 'next-auth/react';
 
 export default function UserInfo() {
-  const { data: session } = useSession()
+  const { data: session } = useSession();
 
   return (
     <div>
@@ -12,5 +12,5 @@ export default function UserInfo() {
       {session?.user?.name}
       {session?.user?.email}
     </div>
-  )
+  );
 }

@@ -39,18 +39,24 @@ export default function FeedbackForm() {
       onSubmit={handleSubmit(submitForm)}
       className="flex flex-col items-center gap-4 mt-6"
     >
-      <div className="font-bold flex flex-col  justify-center items-center  w-80  ">
+      <div className="text-xl flex flex-col justify-center items-center  w-80  ">
         <p
-          className="text-center font-jura text-secondary font-bold
+          className="text-center text-secondary 
         "
         >
-          Your feedback will imporve our delivery experience.
+          ความคิดเห็นของคุณจะถูกนำไป
+        </p>
+        <p
+          className="text-center text-secondary 
+        "
+        >
+          พัฒนาการบริการของเรา
         </p>
         <p className="mt-4">⭐️ ⭐️ ⭐️ ⭐️ ⭐️</p>
       </div>
 
-      <div className="text-label font-bold flex-col flex gap-1 w-80">
-        <p>Description </p>
+      <div className="text-label  flex-col flex gap-1 w-80">
+        <p>รายละเอียดเพิ่มเติม</p>
         <textarea
           className="border rounded border-stroke px-4 py-2 text-secondary h-[124px]"
           {...register("description")}
@@ -60,9 +66,9 @@ export default function FeedbackForm() {
         )}
       </div>
 
-      <div className="text-label font-bold flex-col flex gap-1 w-80 mt-4">
+      <div className="text-label  flex-col flex gap-1 w-80 mt-4">
         <Button type="submit" className="text-center">
-          Done
+        บันทึกข้อเสนอแนะ
         </Button>
       </div>
     </form>

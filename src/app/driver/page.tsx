@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import DriverDetail from './(components)/DriverDetail';
 import NavbarDriver from '../(components)/NavbarDriver';
+import Pickup from './(components)/Pickup';
+import DropOff from './(components)/DropOff';
 
 export default function DriverPage() {
   return (
@@ -19,9 +21,9 @@ export default function DriverPage() {
         style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}
       >
         {/* condition render check from api ... something */}
-        <DriverDetail />
+        {/* <DriverDetail /> */}
         {/* <Pickup /> */}
-        {/* <DropOff /> */}
+        <DropOff />
       </div>
     </div>
   );

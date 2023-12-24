@@ -17,9 +17,9 @@ interface IMockData {
 const DataListPassenger: IMockData[] = [
   {
     id: "1",
-    locationStart: "Passenger Test",
-    locationEnd: "Union mall",
-    dateTime: "Feb 14, 2023 18:42",
+    locationStart: "แอพอร์ตเรลลิ้ง ผู้โดยสาร",
+    locationEnd: "ยูเนี่ยนมอลล์",
+    dateTime: "13กพ,2023 18:42",
     price: 120,
     report: false,
     feedback: false,
@@ -27,9 +27,9 @@ const DataListPassenger: IMockData[] = [
   },
   {
     id: "2",
-    locationStart: "Airport rail link",
-    locationEnd: "Union mall",
-    dateTime: "Feb 14, 2023 18:42",
+    locationStart: "แอพอร์ตเรลลิ้ง",
+    locationEnd: "ยูเนี่ยนมอลล์",
+    dateTime: "13กพ,2023 18:42",
     price: 80,
     report: false,
     feedback: true,
@@ -37,9 +37,9 @@ const DataListPassenger: IMockData[] = [
   },
   {
     id: "3",
-    locationStart: "Airport rail link",
-    locationEnd: "Union mall",
-    dateTime: "Feb 14, 2023 18:42",
+    locationStart: "แอพอร์ตเรลลิ้ง",
+    locationEnd: "ยูเนี่ยนมอลล์",
+    dateTime: "13กพ,2023 18:42",
     price: 60,
     report: true,
     feedback: false,
@@ -50,9 +50,9 @@ const DataListPassenger: IMockData[] = [
 const DataListDriver: IMockData[] = [
   {
     id: "1",
-    locationStart: "Driver test",
-    locationEnd: "Union mall",
-    dateTime: "Feb 14, 2023 18:42",
+    locationStart: "แอพอร์ตเรลลิ้ง คนขับ",
+    locationEnd: "ยูเนี่ยนมอลล์",
+    dateTime: "13กพ,2023 18:42",
     price: 120,
     report: false,
     feedback: false,
@@ -60,9 +60,9 @@ const DataListDriver: IMockData[] = [
   },
   {
     id: "2",
-    locationStart: "Airport rail link",
-    locationEnd: "Union mall",
-    dateTime: "Feb 14, 2023 18:42",
+    locationStart: "แอพอร์ตเรลลิ้ง",
+    locationEnd: "ยูเนี่ยนมอลล์",
+    dateTime: "13กพ,2023 18:42",
     price: 80,
     report: false,
     feedback: true,
@@ -70,9 +70,9 @@ const DataListDriver: IMockData[] = [
   },
   {
     id: "3",
-    locationStart: "Airport rail link",
-    locationEnd: "Union mall",
-    dateTime: "Feb 14, 2023 18:42",
+    locationStart: "แอพอร์ตเรลลิ้ง",
+    locationEnd: "ยูเนี่ยนมอลล์",
+    dateTime: "13กพ,2023 18:42",
     price: 60,
     report: true,
     feedback: false,
@@ -93,24 +93,24 @@ export default function History() {
   }
   return (
     <div>
-      <div className='w-[367px] h-[46px] bg-bgTab rounded-xl flex justify-between items-center gap-1 text-secondary font-bold'>
+      <div className='w-[367px] h-[46px] bg-bgTab rounded-xl flex justify-between items-center gap-1 text-secondary '>
         <Button
           className={clsx(
-            "w-4/5 flex items-center justify-center bg-bgTab h-4/5 ml-1.5 rounded-xl text-secondary font-jura",
+            "w-4/5 flex items-center justify-center bg-bgTab h-4/5 ml-1.5 rounded-xl text-secondary",
             { "bg-white": tab === "Passenger" }
           )}
           onClick={() => handleClick("Passenger")}
         >
-          <p>Passenger</p>
+          <p>ผู้โดยสาร</p>
         </Button>
         <Button
           className={clsx(
-            "w-4/5 flex items-center justify-center bg-bgTab h-4/5 mr-1.5 rounded-xl text-secondary font-jura",
+            "w-4/5 flex items-center justify-center bg-bgTab h-4/5 mr-1.5 rounded-xl text-secondary",
             { "bg-white": tab === "Driver" }
           )}
           onClick={() => handleClick("Driver")}
         >
-          <p>Driver</p>
+          <p>คนขับ</p>
         </Button>
       </div>
       <div>
@@ -118,7 +118,7 @@ export default function History() {
           <div className='mt-3' key={data.id}>
             <div className='w-[367px] min-h-[135px] border border-bgTab rounded-[20px]'>
               <div className='flex'>
-                <div className='w-2/3 ml-5 mt-5 text-base font-lexendExa text-primary'>
+                <div className='w-2/3 ml-5 mt-5 text-base text-primary'>
                   <div className='flex mb-[-6px]'>
                     <div className='flex justify-center pt-2'>
                       <div className='rounded-full border border-[#E07C58] w-2 h-2 mr-2 ' />
@@ -135,10 +135,10 @@ export default function History() {
                 </div>
                 <div className='w-1/3 flex flex-col justify-center items-center text-xl text-secondary'>
                   <p>
-                    {data.price} <span className='text-sm'>THB</span>
+                    {data.price} <span className='text-sm'>บาท</span>
                   </p>
                   {data.rate != 0 && (
-                    <p className=' text-xs pr-5'>⭐️ ⭐️ ⭐️ ⭐️ ⭐️</p>
+                    <p className='text-sm pr-5'>⭐️ ⭐️ ⭐️ ⭐️ ⭐️</p>
                   )}
                 </div>
               </div>
@@ -150,13 +150,13 @@ export default function History() {
                   {!data.report && (
                     <div>
                       <Button className='w-20 h-7 mr-2 text-secondary bg-white border border-secondary'>
-                        Report
+                        รายงาน
                       </Button>
                     </div>
                   )}
                   {!data.feedback && (
                     <div>
-                      <Button className='w-24 px-0.5 h-7 '>Feedback</Button>
+                      <Button className='w-24 px-0.5 h-7 '>ข้อเสนอแนะ</Button>
                     </div>
                   )}
                 </div>

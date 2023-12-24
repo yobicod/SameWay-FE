@@ -1,15 +1,15 @@
-'use client'
+'use client';
 
-import Input from '@/components/Input'
-import { useSession } from 'next-auth/react'
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import UploadButton from '@/components/UploadButton'
-import Button from '@/components/Button'
+import Input from '@/components/Input';
+import { useSession } from 'next-auth/react';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import UploadButton from '@/components/UploadButton';
+import Button from '@/components/Button';
 
 export default function ReportForm() {
-  const { data: userData } = useSession()
+  const { data: userData } = useSession();
 
   const reportSchema = z.object({
     problemType: z
@@ -18,9 +18,9 @@ export default function ReportForm() {
     description: z
       .string()
       .min(5, { message: 'Please enter complete information.' }),
-  })
+  });
 
-  type ReportData = z.infer<typeof reportSchema>
+  type ReportData = z.infer<typeof reportSchema>;
   const {
     register,
     handleSubmit,
@@ -32,19 +32,20 @@ export default function ReportForm() {
       problemType: '',
       description: '',
     },
-  })
+  });
 
   const submitForm = (data: ReportData) => {
-    console.log('Form data:', data)
-    reset()
-  }
+    console.log('Form data:', data);
+    reset();
+  };
 
   return (
     <form
       onSubmit={handleSubmit(submitForm)}
-      className='flex flex-col items-center gap-4 mt-6'>
-      <div className='text-label font-bold flex-col flex gap-1 w-80'>
-        <p>Please select a problem *</p>
+      className='flex flex-col items-center gap-4 mt-6'
+    >
+      <div className='text-label flex-col flex gap-1 w-80'>
+        <p>เลือกปัญหาที่พบเจอ *</p>
         <Input
           placeholder='Select Problem'
           register={register('problemType')}
@@ -53,26 +54,27 @@ export default function ReportForm() {
           <p className='text-red-500'>{errors.problemType.message}</p>
         )}
       </div>
-      <div className='text-label font-bold flex-col flex gap-1 w-80'>
-        <p>Description *</p>
+      <div className='text-label flex-col flex gap-1 w-80'>
+        <p>รายละเอียดเพิ่มเติม *</p>
         <textarea
           className='border rounded border-stroke px-4 py-2 text-secondary h-[240px]'
-          {...register('description')}></textarea>
+          {...register('description')}
+        ></textarea>
         {errors.description && (
           <p className='text-red-500'>{errors.description.message}</p>
         )}
       </div>
-      <div className='text-label font-bold flex-col flex gap-1 w-80'>
-        <p>Attachment</p>
+      <div className='text-label flex-col flex gap-1 w-80'>
+        <p>แนบรูปภาพเพิ่มเติม*</p>
         <div className='flex justify-center items-center h-[166px] border-dotted border-2 rounded'>
           <UploadButton />
         </div>
       </div>
-      <div className='text-label font-bold flex-col flex gap-1 w-80'>
+      <div className='text-label flex-col flex gap-1 w-80'>
         <Button type='submit' className='text-center'>
-          Done
+          บันทึกรายงาน
         </Button>
       </div>
     </form>
-  )
+  );
 }

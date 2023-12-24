@@ -5,7 +5,7 @@ import SearchLocation from "./(components)/SelectLocation";
 
 export default function SearchLocationPage() {
   return (
-    <div className="flex flex-col gap-4 font-jura py-8 pt-0 relative h-screen">
+    <div className="flex flex-col gap-4 py-8 pt-0 relative h-screen">
       <div>
         <Image
           src="https://cdn.discordapp.com/attachments/1180138826778284083/1185222861766541426/map.png?ex=658ed3ce&is=657c5ece&hm=0601dcadc9d71df6ea994d74692e6782d865a6bdf6e1c7842c7090a970380d42&"
