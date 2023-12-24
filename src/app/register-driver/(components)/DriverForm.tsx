@@ -27,7 +27,9 @@ export default function DriverForm({ genderEnum }: IProps) {
     driverLastName: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
     sex: z.string(),
     plate: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
-    phoneNumber: z.string().min(10, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
+    phoneNumber: z
+      .string()
+      .length(10, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
     carType: z.string(),
   });
 
