@@ -23,7 +23,6 @@ export default function Input({
   endIconClassName,
   ...props
 }: Props) {
-  console.log(props);
   return (
     <div className='relative'>
       {startIcon && (
