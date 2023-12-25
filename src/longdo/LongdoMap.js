@@ -11,7 +11,7 @@ export default function Map() {
   const test = [];
   setTimeout(async () => {
     await initMap();
-  }, 2500);
+  }, 4500);
 
   async function initMap() {
     suggest = document.getElementById('suggest');
@@ -29,10 +29,10 @@ export default function Map() {
     });
 
     map.location(longdo.LocationMode.Geolocation);
-    map.zoomRange({ min: 4, max: 15 });
+    map.zoomRange({ min: 16, max: 18 });
     map.Ui.DPad.visible(false);
     map.Ui.Scale.visible(false);
-    map.Ui.Crosshair.visible(false);
+    // map.Ui.Crosshair.visible(false);
     const myLatlng = map.location();
     console.log('🚀 ~ file: LongdoMap.js:18 ~ Map ~ myLatlng:', myLatlng);
     // const currentLocationMarker = new longdo.Marker(myLatlng);
