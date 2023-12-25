@@ -16,7 +16,9 @@ export default function Home() {
     const fetchCheckDriver = async () => {
       if (userData?.user?.email) {
         try {
-          const isDriverInSystem = await checkDriver(userData.user.email);
+          const isDriverInSystem = await checkDriver(
+            userData?.user?.email?.split('@')[0]
+          );
           setDriverStatus(isDriverInSystem);
         } catch (error) {
           console.log(
