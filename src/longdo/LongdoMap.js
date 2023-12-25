@@ -8,13 +8,11 @@ export default function Map() {
   let search;
   let map;
 
-  const [geos, setGeos] = useState([]);
-  console.log('🚀 ~ file: LongdoMap.js:12 ~ Map ~ geos:', geos);
   setTimeout(async () => {
     await initMap();
   }, 1000);
 
-  function initMap() {
+  async function initMap() {
     suggest = document.getElementById('suggest');
     search = document.getElementById('search');
     map = new window.longdo.Map({
@@ -39,6 +37,7 @@ export default function Map() {
         weight: longdo.OverlayWeight.Top,
       });
     }, 1500);
+
     map.Event.bind('location', function () {
       let selectedLocation = map.location(); // Cross hair location
       console.log(selectedLocation);
@@ -46,14 +45,9 @@ export default function Map() {
 
     map.Event.bind('click', function () {
       let mouseLocation = map.location(longdo.LocationMode.Pointer);
-      const arrCpy = [];
-      if (mouseLocation) arrCpy.push(mouseLocation);
-      if (arrCpy.length >= 1) {
-        // for(for const el of )
-      }
-      console.log('🚀 ~ file: LongdoMap.js:51 ~ arrCpy:', arrCpy);
-      // console.log('🚀 ~ file: LongdoMap.js:53 ~ mouseLocation:', mouseLocation);
+      console.log('🚀 ~ file: LongdoMap.js:53 ~ mouseLocation:', mouseLocation);
       map.Overlays.drop(new longdo.Marker(mouseLocation));
+      map.Overlays.clear();
     });
   }
 
