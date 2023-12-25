@@ -8,46 +8,61 @@ export default function Map() {
   let search;
   let map;
 
+  const test = [];
   setTimeout(async () => {
     await initMap();
-  }, 1000);
+  }, 2500);
 
   async function initMap() {
     suggest = document.getElementById('suggest');
     search = document.getElementById('search');
     map = new window.longdo.Map({
       placeholder: document.getElementById('map'),
-
+      layer: [longdo.Layers.GRAY, longdo.Layers.TRAFFIC],
+      // layer: [longdo.Layers.POI_TRANSPARENT, longdo.Layers.TRAFFIC],
       ui: longdo.UiComponent.Mobile,
+      // ui: longdo.UiComponent.None,
+      lastView: false,
       language: 'th',
       placeholderHtml: '<p>Loading map...</p>',
+      zoom: 15,
     });
 
     map.location(longdo.LocationMode.Geolocation);
+    map.zoomRange({ min: 4, max: 15 });
+    map.Ui.DPad.visible(false);
+    map.Ui.Scale.visible(false);
+    map.Ui.Crosshair.visible(false);
     const myLatlng = map.location();
     console.log('🚀 ~ file: LongdoMap.js:18 ~ Map ~ myLatlng:', myLatlng);
-    const currentLocationMarker = new longdo.Marker(myLatlng);
+    // const currentLocationMarker = new longdo.Marker(myLatlng);
 
-    setTimeout(() => {
-      map.Overlays.drop(currentLocationMarker, {
-        title: 'my current location',
-        detail: 'hello form my location',
-        visibleRange: { min: 7, max: 9 },
-        draggable: true,
-        weight: longdo.OverlayWeight.Top,
-      });
-    }, 1500);
+    // setTimeout(() => {
+    //   map.Overlays.drop(currentLocationMarker, {
+    //     title: 'my current location',
+    //     detail: 'hello form my location',
+    //     visibleRange: { min: 7, max: 9 },
+    //     draggable: true,
+    //     weight: longdo.OverlayWeight.Top,
+    //   });
+    // }, 1500);
 
     map.Event.bind('location', function () {
       let selectedLocation = map.location(); // Cross hair location
-      console.log(selectedLocation);
+      // console.log(selectedLocation);
     });
 
     map.Event.bind('click', function () {
       let mouseLocation = map.location(longdo.LocationMode.Pointer);
+      test.push(mouseLocation);
+      console.log('🚀 ~ file: LongdoMap.js:50 ~ test:', test);
       console.log('🚀 ~ file: LongdoMap.js:53 ~ mouseLocation:', mouseLocation);
-      map.Overlays.drop(new longdo.Marker(mouseLocation));
-      map.Overlays.clear();
+      const marker = new longdo.Marker(mouseLocation);
+      map.Overlays.drop(marker);
+
+      map.Route.placeholder(document.getElementById('result'));
+      map.Route.add(marker);
+      // map.Overlays.clear();
     });
   }
 
@@ -83,7 +98,6 @@ export default function Map() {
     <div className='flex flex-col gap-2'>
       <div id='map' style={{ height: 500 }} />
       <div id='result' />
-
       <div>
         <Input id='search' />
         <div id='suggest' className='flex flex-col gap-2' />
