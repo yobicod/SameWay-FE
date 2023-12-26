@@ -46,10 +46,8 @@ export default function ReportForm() {
       driverEmail: 'driver@kmitl.ac.th'
     };
 
-    await createReport(feedbackData).then((res) => {
+    await createReport(feedbackData).then(() => {
       router.push('history');
-      console.log(res);
-      console.log(feedbackData);
     });
     reset();
   };
