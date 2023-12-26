@@ -7,9 +7,13 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import UploadButton from '@/components/UploadButton';
 import Button from '@/components/Button';
+import { useRouter } from 'next/navigation';
+import { ICreateReport } from '@/app/api-caller/interfaces/interfaces';
+import { createReport } from '@/app/api-caller/create-report';
 
 export default function ReportForm() {
   const { data: userData } = useSession();
+  const router = useRouter();
 
   const reportSchema = z.object({
     problemType: z
@@ -17,25 +21,36 @@ export default function ReportForm() {
       .min(5, { message: 'Please enter complete information.' }),
     description: z
       .string()
-      .min(5, { message: 'Please enter complete information.' }),
+      .min(5, { message: 'Please enter complete information.' })
   });
 
-  type ReportData = z.infer<typeof reportSchema>;
+  type IReportData = z.infer<typeof reportSchema>;
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
-  } = useForm<ReportData>({
+    reset
+  } = useForm<IReportData>({
     resolver: zodResolver(reportSchema),
     defaultValues: {
       problemType: '',
-      description: '',
-    },
+      description: ''
+    }
   });
 
-  const submitForm = (data: ReportData) => {
-    console.log('Form data:', data);
+  const submitForm = async (data: IReportData) => {
+    const feedbackData: ICreateReport = {
+      problemType: data.problemType,
+      description: data.description,
+      userEmail: userData?.user?.email || '',
+      driverEmail: 'driver@kmitl.ac.th'
+    };
+
+    await createReport(feedbackData).then((res) => {
+      router.push('history');
+      console.log(res);
+      console.log(feedbackData);
+    });
     reset();
   };
 

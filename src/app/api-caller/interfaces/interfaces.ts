@@ -25,3 +25,17 @@ export interface ICreateUser {
   email: string;
   role: string;
 }
+
+export interface ICreateFeedback {
+  driverEmail: string;
+  userEmail: string;
+  ratingScore: number;
+  description: string;
+}
+
+export interface ICreateReport {
+  problemType: string;
+  description: string;
+  userEmail: string;
+  driverEmail: string;
+}
