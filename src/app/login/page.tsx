@@ -10,7 +10,7 @@ export default function page() {
         height={62}
         alt='login_logo'
       />
-      <div className='text-2xl mt-40 mb-32 text-center font-lexendExa text-secondary'>
+      <div className='text-2xl mt-40 mb-32 text-center text-secondary'>
         <p className='font-extralight'>Welcome</p>
         <p className='font-normal'>
           <span className='font-extralight'>to</span> SameWay!
