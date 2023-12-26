@@ -1,44 +1,41 @@
 'use client';
 import { useSession } from 'next-auth/react';
 import { z } from 'zod';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Button from '@/components/Button';
 import ReactStars from 'react-stars';
 import { createFeedback } from '@/app/api-caller/create-feedback';
 import { ICreateFeedback } from '@/app/api-caller/interfaces/interfaces';
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function FeedbackForm() {
   const { data: userData } = useSession();
-  const [rating, setRating] = useState(0);
-  const ratingChanged = (newRating: number) => {
-    setRating(newRating);
-  };
   const router = useRouter();
   const reportSchema = z.object({
+    ratingScore: z.number().max(5),
     description: z.string()
   });
 
-  type IReportData = z.infer<typeof reportSchema>;
+  type ReportData = z.infer<typeof reportSchema>;
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset
-  } = useForm<IReportData>({
+    reset,
+    control
+  } = useForm<ReportData>({
     resolver: zodResolver(reportSchema),
     defaultValues: {
       description: ''
     }
   });
 
-  const submitForm = async (data: IReportData) => {
+  const submitForm = async (data: ReportData) => {
     const feedbackData: ICreateFeedback = {
       driverEmail: 'driver@kmitl.ac.th',
       userEmail: userData?.user?.email || '',
-      ratingScore: rating,
+      ratingScore: data.ratingScore,
       description: data.description
     };
     await createFeedback(feedbackData).then(() => {
@@ -65,13 +62,22 @@ export default function FeedbackForm() {
         >
           พัฒนาการบริการของเรา
         </p>
-        <ReactStars
-          count={5}
-          onChange={ratingChanged}
-          size={24}
-          value={rating}
-          color2='#ffd700'
-          half={false}
+
+        <Controller
+          name='ratingScore'
+          control={control}
+          render={({ field: { onChange, value } }) => {
+            return (
+              <ReactStars
+                count={5}
+                onChange={onChange}
+                size={24}
+                value={value}
+                color2='#ffd700'
+                half={false}
+              />
+            );
+          }}
         />
       </div>
 

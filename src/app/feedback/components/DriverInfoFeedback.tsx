@@ -32,7 +32,7 @@ export default function DriverInfo() {
               edit={false}
             />
           </div>
-          <p className='  text-[#216A61] text-sm'>
+          <p className='text-secondary text-sm'>
             Mazda3 | <span className='font-light'>กท1234</span>
           </p>
         </div>

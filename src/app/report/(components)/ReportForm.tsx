@@ -24,13 +24,13 @@ export default function ReportForm() {
       .min(5, { message: 'Please enter complete information.' })
   });
 
-  type IReportData = z.infer<typeof reportSchema>;
+  type ReportData = z.infer<typeof reportSchema>;
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset
-  } = useForm<IReportData>({
+  } = useForm<ReportData>({
     resolver: zodResolver(reportSchema),
     defaultValues: {
       problemType: '',
@@ -38,7 +38,7 @@ export default function ReportForm() {
     }
   });
 
-  const submitForm = async (data: IReportData) => {
+  const submitForm = async (data: ReportData) => {
     const feedbackData: ICreateReport = {
       problemType: data.problemType,
       description: data.description,
