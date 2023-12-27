@@ -18,10 +18,10 @@ export default function ReportForm() {
   const reportSchema = z.object({
     problemType: z
       .string()
-      .min(5, { message: 'Please enter complete information.' }),
+      .min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
     description: z
       .string()
-      .min(5, { message: 'Please enter complete information.' })
+      .min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' })
   });
 
   type ReportData = z.infer<typeof reportSchema>;
