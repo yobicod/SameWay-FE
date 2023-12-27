@@ -1,28 +1,45 @@
 'use client';
-
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 
 export default function DriverInfo() {
-  const handleConnectedSocket = () => {
-    console.log('Connect to server...');
-  };
+  const socket = io('http://localhost:3001', { transports: ['websocket'] });
+
+  const [driverStatus, setDriverStatus] = useState<any>();
   useEffect(() => {
-    const socket = io('http://localhost:3001');
     socket.on('connect', () => {
-      handleConnectedSocket();
+      console.log('Connect to server successful✅');
     });
 
-    socket.emit('test', 'Hello from client...');
+    socket.on('driverStatus', (data) => {
+      console.log('Data from server => ', data);
+      setDriverStatus(data);
+    });
 
-    socket.on('customEvent', (data) => {
-      console.log('Data from server...', data);
+    socket.emit('waitForPassenger', {
+      fullName: 'Visal Suwanarat',
+      driverEmail: '63070158@kmitl.ac.th',
+      driverLat: 10.0,
+      driverLong: 10.0,
+      time: 12.0,
+      status: 'open',
+      capacity: 4,
+      carType: 'car',
+      plate: 'aasd213',
+      sex: 'Male',
+      phoneNumber: '0658386230',
     });
   }, []);
+
+  // useEffect(() => {
+  //   console.log(dataSta);
+  // }, [dataS]);
+
   return (
     <div className='text-secondary w-full h-full flex flex-col justify-center items-center'>
       <div>
-        <p className='text-5xl font-light'>44.55</p>
+        <p className='text-5xl font-light'>{driverStatus}</p>
+        {/* <p className='text-5xl font-light'>44.55</p> */}
       </div>
       <div>
         <p className='text-xl'>ยอดเครดิต</p>
