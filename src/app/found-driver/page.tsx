@@ -14,6 +14,7 @@ export default async function FoundDriverPage() {
           alt='app-logo'
           className='w-full object-cover h-full'
         />
+        
       </div>
       <FoundDriver />
     </div>
