@@ -1,16 +1,18 @@
-'use client';
+'use client'
 
-import Switch from '@/components/Switch';
-import { useSession } from 'next-auth/react';
+import Switch from '@/components/Switch'
+import Map from '@/longdo/LongdoMap'
+import { useSession } from 'next-auth/react'
 
 export default function UserInfo() {
-  const { data: session } = useSession();
+  const { data: session } = useSession()
 
   return (
-    <div>
-      <Switch />
+    <div className='w-full'>
+      {/* <Switch />
       {session?.user?.name}
-      {session?.user?.email}
+      {session?.user?.email} */}
+      <Map />
     </div>
-  );
+  )
 }

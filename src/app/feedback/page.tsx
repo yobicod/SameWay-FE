@@ -1,7 +1,7 @@
 import BackButton from "../../components/BackButton";
 import Image from "next/image";
 import FeedbackForm from "./components/FeedbackForm";
-import DriverInfo from "./components/DriverInfo";
+import DriverInfo from "./components/DriverInfoFeedback";
 
 export default function FeedBackPage() {
   return (

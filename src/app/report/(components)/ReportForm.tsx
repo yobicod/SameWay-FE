@@ -7,17 +7,21 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import UploadButton from '@/components/UploadButton';
 import Button from '@/components/Button';
+import { useRouter } from 'next/navigation';
+import { ICreateReport } from '@/app/api-caller/interfaces/interfaces';
+import { createReport } from '@/app/api-caller/create-report';
 
 export default function ReportForm() {
   const { data: userData } = useSession();
+  const router = useRouter();
 
   const reportSchema = z.object({
     problemType: z
       .string()
-      .min(5, { message: 'Please enter complete information.' }),
+      .min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
     description: z
       .string()
-      .min(5, { message: 'Please enter complete information.' }),
+      .min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' })
   });
 
   type ReportData = z.infer<typeof reportSchema>;
@@ -25,17 +29,26 @@ export default function ReportForm() {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
+    reset
   } = useForm<ReportData>({
     resolver: zodResolver(reportSchema),
     defaultValues: {
       problemType: '',
-      description: '',
-    },
+      description: ''
+    }
   });
 
-  const submitForm = (data: ReportData) => {
-    console.log('Form data:', data);
+  const submitForm = async (data: ReportData) => {
+    const feedbackData: ICreateReport = {
+      problemType: data.problemType,
+      description: data.description,
+      userEmail: userData?.user?.email || '',
+      driverEmail: 'driver@kmitl.ac.th'
+    };
+
+    await createReport(feedbackData).then(() => {
+      router.push('history');
+    });
     reset();
   };
 

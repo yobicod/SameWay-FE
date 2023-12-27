@@ -2,6 +2,7 @@
 import Button from "@/components/Button"
 import clsx from "clsx"
 import { useState } from "react"
+import ReactStars from "react-stars"
 
 interface IMockData {
   id: string
@@ -138,7 +139,14 @@ export default function History() {
                     {data.price} <span className='text-sm'>บาท</span>
                   </p>
                   {data.rate != 0 && (
-                    <p className='text-sm pr-5'>⭐️ ⭐️ ⭐️ ⭐️ ⭐️</p>
+                    <ReactStars
+                      count={5}
+                      size={24}
+                      value={data.rate}
+                      color2='#ffd700'
+                      half={false}
+                      edit={false}
+                    />
                   )}
                 </div>
               </div>
