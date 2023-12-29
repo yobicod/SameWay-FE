@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 
 export default function Home() {
   const { data: userData } = useSession();
+  const userFirstName: string = userData?.user?.name?.split(' ')[0] || '';
   const router = useRouter();
   const [driverStatus, setDriverStatus] = useState<boolean | undefined>(false);
 
@@ -51,7 +52,7 @@ export default function Home() {
     <div className='relative text-secondary'>
       <div className=' font-light text-xl min-h-[294px] py-8 rounded-t-5xl flex gap-6 flex-col items-center bg-[#216A5824] pt-12'>
         <div className='w-4/5'>
-          <p>สวัสดี คุณป๊อบ:) </p>
+          <p>สวัสดี คุณ {userFirstName} :) </p>
           <p>
             ยินดีต้อนรับเข้าสู่ <span className=' font-medium'>SameWay!</span>
           </p>

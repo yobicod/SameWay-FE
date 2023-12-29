@@ -7,12 +7,15 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 export default function CurrentLocation() {
+  const { data: userData } = useSession();
+  const userFirstName: string = userData?.user?.name?.split(' ')[0] || '';
   const router = useRouter();
   const searchSchema = z.object({
-    locationStart: z.string().min(1, { message: 'Enter Your location' }),
-    locationEnd: z.string().min(1, { message: 'Enter Your destination' }),
+    locationStart: z.string().min(1, { message: 'กรุณาเลือกจุดเริ่มต้น' }),
+    locationEnd: z.string().min(1, { message: 'กรุณาเลือกปลายทาง' }),
     startLat: z.number(),
     startLng: z.number(),
     endLat: z.number(),
@@ -48,8 +51,9 @@ export default function CurrentLocation() {
         className='flex flex-col gap-5 w-[354px]'
         onSubmit={handleSubmit(submitForm)}
       >
-        <p className='text-3xl text-secondary font-light'>
-          วันนี้คุณปุยปุยอยาก <span className='font-medium'>ไปที่ไหน ?</span>
+        <p className='text-2xl text-secondary font-light text-center'>
+          วันนี้คุณ {userFirstName} อยาก
+          <span className='font-medium'>ไปที่ไหน ?</span>
         </p>
         <div className='relative h-[162px] rounded-[25px] flex gap-3 flex-col justify-center items-center bg-fieldGray pl-10 '>
           <div className='absolute left-[23px]'>
@@ -112,7 +116,7 @@ export default function CurrentLocation() {
           <p>รายละเอียดเพิ่มเติม</p>
           <Input
             inputClassName='h-[56px] w-full border rounded px-4 py-2 text-secondary border-borderGray'
-            placeholder='บอกอะไรก้บอกอิอิ'
+            placeholder='ข้อความเพิ่มเติมถึงคนขับ'
           />
         </div>
         <Button

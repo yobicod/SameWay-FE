@@ -16,7 +16,25 @@ export default function DriverInfo() {
       setDriverStatus(data);
     });
 
+    socket.on('waitingForDriver', (data: any) => {
+      console.log(data);
+    });
+
     socket.emit('waitForPassenger', {
+      fullName: 'Visal Suwanarat',
+      driverEmail: '63070158@kmitl.ac.th',
+      driverLat: 10.0,
+      driverLong: 10.0,
+      time: 12.0,
+      status: 'open',
+      capacity: 4,
+      carType: 'car',
+      plate: 'aasd213',
+      sex: 'Male',
+      phoneNumber: '0658386230',
+    });
+
+    socket.emit('findDriver', {
       fullName: 'Visal Suwanarat',
       driverEmail: '63070158@kmitl.ac.th',
       driverLat: 10.0,
