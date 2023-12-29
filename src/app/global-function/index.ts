@@ -4,10 +4,16 @@ import { utcToZonedTime } from 'date-fns-tz';
 
 export function convertToThaiDate(dateString: string): string {
   const utcDate = new Date(dateString);
+
+  const modifiedDate = new Date(
+    utcDate.getFullYear() + 543,
+    utcDate.getMonth(),
+    utcDate.getDate()
+  );
+
   const thaiDate = format(
-    utcToZonedTime(utcDate, 'Asia/Bangkok'),
+    utcToZonedTime(modifiedDate, 'Asia/Bangkok'),
     'dd MMMM yyyy',
-    // 'EEEE dd MMMM yyyy',
     {
       locale: th,
     }
