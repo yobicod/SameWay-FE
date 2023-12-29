@@ -112,7 +112,7 @@ export default function CurrentLocation() {
           <p>รายละเอียดเพิ่มเติม</p>
           <Input
             inputClassName='h-[56px] w-full border rounded px-4 py-2 text-secondary border-borderGray'
-            placeholder='บอกอะไรก้บอกอิอิ'
+            placeholder='ข้อความเพิ่มเติมถึงคนขับ'
           />
         </div>
         <Button
