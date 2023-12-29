@@ -1,21 +1,21 @@
-'use client'
-import Button from '@/components/Button'
-import Input from '@/components/Input'
-import React, { useEffect, useState } from 'react'
+'use client';
+import Button from '@/components/Button';
+import Input from '@/components/Input';
+import React, { useEffect, useState } from 'react';
 
-export default function Map({ onChange }) {
-  let suggest
-  let search
-  let map
+export default function Map() {
+  let suggest;
+  let search;
+  let map;
 
-  const test = []
+  const test = [];
   setTimeout(async () => {
-    await initMap()
-  }, 4500)
+    await initMap();
+  }, 4500);
 
   async function initMap() {
-    suggest = document.getElementById('suggest')
-    search = document.getElementById('search')
+    suggest = document.getElementById('suggest');
+    search = document.getElementById('search');
     map = new window.longdo.Map({
       placeholder: document.getElementById('map'),
       layer: [longdo.Layers.GRAY, longdo.Layers.TRAFFIC],
@@ -26,15 +26,15 @@ export default function Map({ onChange }) {
       language: 'th',
       placeholderHtml: '<p>Loading map...</p>',
       zoom: 15,
-    })
+    });
 
-    map.location(longdo.LocationMode.Geolocation)
-    map.zoomRange({ min: 16, max: 18 })
-    map.Ui.DPad.visible(false)
-    map.Ui.Scale.visible(false)
+    map.location(longdo.LocationMode.Geolocation);
+    map.zoomRange({ min: 16, max: 18 });
+    map.Ui.DPad.visible(false);
+    map.Ui.Scale.visible(false);
     // map.Ui.Crosshair.visible(false);
-    const myLatlng = map.location()
-    console.log('🚀 ~ file: LongdoMap.js:18 ~ Map ~ myLatlng:', myLatlng)
+    const myLatlng = map.location();
+    console.log('🚀 ~ file: LongdoMap.js:18 ~ Map ~ myLatlng:', myLatlng);
     // const currentLocationMarker = new longdo.Marker(myLatlng);
 
     // setTimeout(() => {
@@ -48,33 +48,27 @@ export default function Map({ onChange }) {
     // }, 1500);
 
     map.Event.bind('location', function () {
-      let selectedLocation = map.location() // Cross hair location
+      let selectedLocation = map.location(); // Cross hair location
       // console.log(selectedLocation);
-    })
+    });
 
     map.Event.bind('click', function () {
-      let mouseLocation = map.location(longdo.LocationMode.Pointer)
-      const marker = new longdo.Marker(mouseLocation)
-      if (test.length === 2) {
-        // map.Route.add(marker)
-        map.Route.removeAt(1)
-        test.splice(1, 1)
-      } else {
-        // map.Overlays.drop(marker)
-        map.Route.add(marker)
-        test.push(mouseLocation)
-      }
-      // console.log('🚀 ~ file: LongdoMap.js:50 ~ test:', test)
-      // console.log('🚀 ~ file: LongdoMap.js:53 ~ mouseLocation:', mouseLocation)
-      onChange(test)
-      map.Route.placeholder(document.getElementById('result'))
+      let mouseLocation = map.location(longdo.LocationMode.Pointer);
+      test.push(mouseLocation);
+      console.log('🚀 ~ file: LongdoMap.js:50 ~ test:', test);
+      console.log('🚀 ~ file: LongdoMap.js:53 ~ mouseLocation:', mouseLocation);
+      const marker = new longdo.Marker(mouseLocation);
+      map.Overlays.drop(marker);
 
+      map.Route.placeholder(document.getElementById('result'));
+      map.Route.add(marker);
       // map.Overlays.clear();
-    })
+    });
   }
 
   // Customize the map as needed
   // map.Search.placeholder(document.getElementById('result'));
+  // map.Search.suggest(search?.value || '');
 
   // map.Event.bind('suggest', function (result) {
   //   if (result.meta.keyword != search?.value) return;
@@ -92,7 +86,7 @@ export default function Map({ onChange }) {
   // map.Search.placeholder(search);
 
   function querySearch() {
-    map.Search.search(search.value)
+    map.Search.search(search.value);
   }
 
   // function doSuggest(value) {
@@ -101,14 +95,14 @@ export default function Map({ onChange }) {
   // }
 
   return (
-    <div className='w-full'>
+    <div className='flex flex-col gap-2'>
       <div id='map' style={{ height: 500 }} />
       <div id='result' />
-      {/* <div>
+      <div>
         <Input id='search' />
         <div id='suggest' className='flex flex-col gap-2' />
         <Button onClick={querySearch}>search</Button>
-      </div> */}
+      </div>
     </div>
-  )
+  );
 }
