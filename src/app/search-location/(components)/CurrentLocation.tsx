@@ -11,7 +11,7 @@ import { useSession } from 'next-auth/react';
 
 export default function CurrentLocation() {
   const { data: userData } = useSession();
-  const userFirstName: string = userData?.user?.name?.split(' ')[0];
+  const userFirstName: string = userData?.user?.name?.split(' ')[0] || '';
   const router = useRouter();
   const searchSchema = z.object({
     locationStart: z.string().min(1, { message: 'กรุณาเลือกจุดเริ่มต้น' }),
