@@ -26,7 +26,7 @@ export default function DriverForm({ genderEnum }: IProps) {
       .min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
     dob: z.coerce.date(),
     driverLastName: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
-    sex: z.string(),
+    gender: z.string(),
     plate: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
     phoneNumber: z
       .string()
@@ -46,7 +46,7 @@ export default function DriverForm({ genderEnum }: IProps) {
       driverFirstName: '',
       dob: new Date(),
       driverLastName: '',
-      sex: '',
+      gender: '',
       plate: '',
       phoneNumber: '',
       carType: '',
@@ -58,7 +58,7 @@ export default function DriverForm({ genderEnum }: IProps) {
       carType: formData.carType,
       phoneNumber: formData.phoneNumber,
       plate: formData.plate,
-      sex: formData.sex,
+      gender: formData.gender,
       userEmail: userData?.user?.email || '',
     }
     await createDriver(driverData).then((result) => {
@@ -120,7 +120,7 @@ export default function DriverForm({ genderEnum }: IProps) {
         <div className='text-label flex-col flex gap-1'>
           <p>เพศ</p>
           <Controller
-            name='sex'
+            name='gender'
             control={control}
             render={({ field: { onChange, value } }) => {
               return (
