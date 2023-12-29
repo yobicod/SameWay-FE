@@ -1,38 +1,40 @@
-'use client';
-import { createDriver } from '@/app/api-caller/create-driver';
-import { IDriverInfo } from '@/app/api-caller/interfaces/interfaces';
-import Button from '@/components/Button';
-import Input from '@/components/Input';
-import SelectedDropdown from '@/components/SelectedDropdown';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useSession } from 'next-auth/react';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { Controller, useForm } from 'react-hook-form';
-import { z } from 'zod';
+'use client'
+import { createDriver } from '@/app/api-caller/create-driver'
+import { IDriverInfo } from '@/app/api-caller/interfaces/interfaces'
+import Button from '@/components/Button'
+import DatePicker from '@/components/DatePicker'
+import Input from '@/components/Input'
+import SelectedDropdown from '@/components/SelectedDropdown'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useSession } from 'next-auth/react'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { Controller, useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 interface IProps {
-  genderEnum: string[];
+  genderEnum: string[]
 }
 
 export default function DriverForm({ genderEnum }: IProps) {
-  const router = useRouter();
-  const { data: userData } = useSession();
+  const router = useRouter()
+  const { data: userData } = useSession()
 
   const driverSchema = z.object({
     driverFirstName: z
       .string()
       .min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
+    dob: z.coerce.date(),
     driverLastName: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
-    sex: z.string(),
+    gender: z.string(),
     plate: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
     phoneNumber: z
       .string()
       .length(10, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
     carType: z.string(),
-  });
+  })
 
-  type DriverData = z.infer<typeof driverSchema>;
+  type DriverData = z.infer<typeof driverSchema>
   const {
     register,
     handleSubmit,
@@ -42,29 +44,29 @@ export default function DriverForm({ genderEnum }: IProps) {
     resolver: zodResolver(driverSchema),
     defaultValues: {
       driverFirstName: '',
+      dob: new Date(),
       driverLastName: '',
-      sex: '',
+      gender: '',
       plate: '',
       phoneNumber: '',
       carType: '',
     },
-  });
+  })
   const submitForm = async (formData: DriverData) => {
     const driverData: IDriverInfo = {
       fullName: `${formData.driverFirstName} ${formData.driverLastName}`,
       carType: formData.carType,
       phoneNumber: formData.phoneNumber,
       plate: formData.plate,
-      sex: formData.sex,
+      gender: formData.gender,
       userEmail: userData?.user?.email || '',
-    };
-
+    }
     await createDriver(driverData).then((result) => {
       if (result) {
-        router.push('driver-home');
+        router.push('driver-home')
       }
-    });
-  };
+    })
+  }
   return (
     <div className='flex gap-6 flex-col'>
       <div className='flex justify-center items-center'>
@@ -99,20 +101,26 @@ export default function DriverForm({ genderEnum }: IProps) {
             </p>
           )}
         </div>
-
-        <div className='text-label flex-col flex gap-1'>
-          <p>ประเภทรถ</p>
-          <Input register={register('carType')} placeholder='ประเภทรถ' />
-          {errors.carType && (
+        <div className=' flex-col flex gap-1'>
+          <p className='text-label'>วัน/เดือน/ปี เกิด</p>
+          <Controller
+            name='dob'
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <DatePicker selectedDate={value} onChange={onChange} />
+            )}
+          />
+          {errors.driverLastName && (
             <p className='text-red-500 font-light text-sm'>
-              {errors.carType.message}
+              {errors.driverLastName.message}
             </p>
           )}
         </div>
+
         <div className='text-label flex-col flex gap-1'>
           <p>เพศ</p>
           <Controller
-            name='sex'
+            name='gender'
             control={control}
             render={({ field: { onChange, value } }) => {
               return (
@@ -122,9 +130,18 @@ export default function DriverForm({ genderEnum }: IProps) {
                   selectedItem={value}
                   placeholder='--เลือกเพศ--'
                 />
-              );
+              )
             }}
           />
+        </div>
+        <div className='text-label flex-col flex gap-1'>
+          <p>ประเภทรถ</p>
+          <Input register={register('carType')} placeholder='ประเภทรถ' />
+          {errors.carType && (
+            <p className='text-red-500 font-light text-sm'>
+              {errors.carType.message}
+            </p>
+          )}
         </div>
         <div className='text-label flex-col flex gap-1'>
           <p>ทะเบียนรถยนต์</p>
@@ -152,5 +169,5 @@ export default function DriverForm({ genderEnum }: IProps) {
         <Button type='submit'>ลงทะเบียน</Button>
       </form>
     </div>
-  );
+  )
 }
