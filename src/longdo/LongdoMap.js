@@ -3,19 +3,44 @@ import Button from '@/components/Button'
 import Input from '@/components/Input'
 import React, { useEffect, useState } from 'react'
 
-export default function Map({ onChange }) {
+export default function Map({ onChange, value }) {
   let suggest
   let search
   let map
-
+  const [mounted, setMounted] = useState(false)
+  const [location, setLocation] = useState([])
+  const [isStart, setIsStart] = useState(false)
+  // const [map, setMap] = useState({})
   const test = []
-  setTimeout(async () => {
-    await initMap()
-  }, 4500)
+  // setTimeout(async () => {
+  //   await initMap()
+  // }, 4500)
 
-  async function initMap() {
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+  useEffect(() => {
+    // const existingScript = document.getElementById('long-do')
+    // if (!existingScript) {
+    //   const script = document.createElement('script')
+    //   script.src = `https://api.longdo.com/map3/?key=15f064efea8a51cdfad9503113d16614`
+    //   script.id = 'long-do'
+    //   document.body.appendChild(script)
+    // }
+    if (mounted && window && window.longdo) {
+      setTimeout(() => {
+        initMap()
+      }, 1000)
+    }
+  }, [mounted])
+  // useEffect(() => {
+  //   if (window && window.longdo) initMap()
+  // }, [window.longdo])
+  function initMap() {
+    setIsStart(true)
     suggest = document.getElementById('suggest')
     search = document.getElementById('search')
+
     map = new window.longdo.Map({
       placeholder: document.getElementById('map'),
       layer: [longdo.Layers.GRAY, longdo.Layers.TRAFFIC],
@@ -36,7 +61,12 @@ export default function Map({ onChange }) {
     const myLatlng = map.location()
     console.log('🚀 ~ file: LongdoMap.js:18 ~ Map ~ myLatlng:', myLatlng)
     // const currentLocationMarker = new longdo.Marker(myLatlng);
-
+    function addDefaultRoute(value) {
+      const defaultStart = new longdo.Marker(value[0])
+      const defaultEnd = new longdo.Marker(value[1])
+      map.Route.add(defaultStart)
+      map.Route.add(defaultEnd)
+    }
     // setTimeout(() => {
     //   map.Overlays.drop(currentLocationMarker, {
     //     title: 'my current location',

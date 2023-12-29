@@ -3,7 +3,7 @@ import Button from '@/components/Button'
 import Input from '@/components/Input'
 import Icon from '@/components/Icon'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -16,6 +16,12 @@ export default function CurrentLocation() {
     locationStart: z.string().min(1, { message: 'Enter Your location' }),
     locationEnd: z.string().min(1, { message: 'Enter Your destination' }),
     startLat: z.number(),
+    location: z
+      .object({
+        lon: z.number(),
+        lat: z.number(),
+      })
+      .array(),
     startLng: z.number(),
     endLat: z.number(),
     endLng: z.number(),
@@ -28,6 +34,7 @@ export default function CurrentLocation() {
     handleSubmit,
     setValue,
     getValues,
+    control,
     formState: { errors },
   } = useForm<searchData>({
     resolver: zodResolver(searchSchema),
@@ -60,8 +67,15 @@ export default function CurrentLocation() {
   return (
     <>
       <div className='flex items-center justify-center'>
-        <Map onChange={(map) => console.log(map)} />
+        <Controller
+          name='location'
+          control={control}
+          render={({ field: { onChange, value } }) => {
+            return <Map onChange={onChange} value={value} />
+          }}
+        />
       </div>
+      <Button onClick={() => console.log(getValues('location'))}>daw</Button>
       <div
         className='py-8 rounded-t-[50px] flex gap-6 flex-col justify-center items-center bg-white pr-8 h-90'
         style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}>
