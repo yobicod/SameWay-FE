@@ -1,7 +1,7 @@
-import Button from '@/components/Button'
-import Icon from '@/components/Icon'
-import Input from '@/components/Input'
-import Image from 'next/image'
+import Button from '@/components/Button';
+import Icon from '@/components/Icon';
+import Input from '@/components/Input';
+import Image from 'next/image';
 
 export default function DriverDetail() {
   return (
@@ -26,7 +26,7 @@ export default function DriverDetail() {
               </div>
               <div className='py-3 px-6 flex justify-center'>
                 <p className='text-sm font-light'>
-                รามคำแหง ตรงนั้นแหละ สวนหลวง สวนหลวง 10250
+                  รามคำแหง ตรงนั้นแหละ สวนหลวง สวนหลวง 10250
                 </p>
               </div>
             </div>
@@ -37,7 +37,7 @@ export default function DriverDetail() {
               </div>
               <div className='py-3 px-6 flex justify-center'>
                 <p className='font-light text-sm'>
-                รามคำแหง ตรงนั้นแหละ สวนหลวง สวนหลวง 10250
+                  รามคำแหง ตรงนั้นแหละ สวนหลวง สวนหลวง 10250
                 </p>
               </div>
             </div>
@@ -45,15 +45,15 @@ export default function DriverDetail() {
         </div>
         <div className='flex flex-col gap-2'>
           <p className='text-label'>รายละเอียดเพิ่มเติม</p>
-          <Input value='fja;kdjfldjflasjd;fsadfsafsadfsafsf' disabled />
+          <Input value='' disabled />
         </div>
         <div className='flex justify-between gap-2'>
           <Button className='bg-white border-2 border-secondary text-secondary'>
-          ยกเลิก
+            ยกเลิก
           </Button>
           <Button>รับงาน</Button>
         </div>
       </div>
     </div>
-  )
+  );
 }
