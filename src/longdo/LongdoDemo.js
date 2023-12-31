@@ -11,7 +11,7 @@ export default function LongdoDemo({ value, onChange }) {
   const [longdoMap, setLongdoMap] = useState()
   const [query, setQuery] = useState('')
   const [result, setResult] = useState([])
-  const [locations, setLocations] = useState(value)
+  const [locations, setLocations] = useState(value || [])
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -32,13 +32,12 @@ export default function LongdoDemo({ value, onChange }) {
       zoom: 15,
     })
     setTimeout(() => {
-      if (value) {
+      if (value.length !== 0) {
         newMap.Route.add(new longdo.Marker(locations[0]))
         newMap.Route.add(new longdo.Marker(locations[1]))
         newMap.Route.search()
       }
     }, 1500)
-    console.log('start')
     setLongdoMap(newMap)
   }
   async function querySearch() {
