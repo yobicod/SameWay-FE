@@ -7,8 +7,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import Map from '@/longdo/LongdoMap'
-import { useState } from 'react'
+import LongdoDemo from '@/longdo/LongdoDemo'
 
 export default function CurrentLocation() {
   const router = useRouter()
@@ -42,6 +41,7 @@ export default function CurrentLocation() {
       locationStart: '',
       locationEnd: '',
       notes: '',
+      location: [],
     },
   })
 
@@ -53,17 +53,6 @@ export default function CurrentLocation() {
     router.push('loading')
   }
 
-  // const handleAddRoute = (data) => {
-  //   let location = []
-  //   location = data
-  //   if (data.lenght === 2) {
-  //     setValue('locationStart', location[0]?.poi || 'จุดเริ่มต้น')
-  //     setValue('locationEnd', location[1]?.poi || 'จุดสิ้นสุด')
-  //   }
-  //   console.log(getValues('locationStart'), getValues('locationEnd'))
-  // }
-
-  // console.log(location)
   return (
     <>
       <div className='flex items-center justify-center'>
@@ -71,10 +60,11 @@ export default function CurrentLocation() {
           name='location'
           control={control}
           render={({ field: { onChange, value } }) => {
-            return <Map onChange={onChange} value={value} />
+            return <LongdoDemo onChange={onChange} value={value} />
           }}
         />
       </div>
+
       <Button onClick={() => console.log(getValues('location'))}>daw</Button>
       <div
         className='py-8 rounded-t-[50px] flex gap-6 flex-col justify-center items-center bg-white pr-8 h-90'
