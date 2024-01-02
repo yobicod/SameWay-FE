@@ -4,8 +4,6 @@ import Input from '@/components/Input'
 import React, { useEffect, useState } from 'react'
 
 export default function LongdoDemo({ value, onChange }) {
-  let suggest
-
   const [mounted, setMounted] = useState(false)
   const [longdoMap, setLongdoMap] = useState()
   const [query, setQuery] = useState('')
@@ -20,7 +18,6 @@ export default function LongdoDemo({ value, onChange }) {
     }
   }, [longdoMap, mounted])
   function initMap() {
-    suggest = document.getElementById('suggest')
     const newMap = new window.longdo.Map({
       placeholder: document.getElementById('map'),
       layer: [longdo.Layers.GRAY, longdo.Layers.TRAFFIC],
@@ -64,8 +61,6 @@ export default function LongdoDemo({ value, onChange }) {
       setLocations(clonedLocation)
       onChange(clonedLocation)
     }
-    // onChange(console.log(locations))
-    // longdoMap.Route.placeholder(document.getElementById('result'))
   }
 
   return (
