@@ -11,7 +11,7 @@ import LongdoDemo from '@/longdo/LongdoDemo'
 
 export default function CurrentLocation() {
   const router = useRouter()
-  const searchSchema = z.object({
+  const searchDriverSchema = z.object({
     locationStart: z.string().min(1, { message: 'Enter Your location' }),
     locationEnd: z.string().min(1, { message: 'Enter Your destination' }),
     startLat: z.number(),
@@ -27,16 +27,14 @@ export default function CurrentLocation() {
     notes: z.string(),
   })
 
-  type searchData = z.infer<typeof searchSchema>
+  type searchDriverData = z.infer<typeof searchDriverSchema>
   const {
     register,
     handleSubmit,
-    setValue,
-    getValues,
     control,
     formState: { errors },
-  } = useForm<searchData>({
-    resolver: zodResolver(searchSchema),
+  } = useForm<searchDriverData>({
+    resolver: zodResolver(searchDriverSchema),
     defaultValues: {
       locationStart: '',
       locationEnd: '',
@@ -45,16 +43,16 @@ export default function CurrentLocation() {
     },
   })
 
-  const submitForm = async (data: searchData) => {
-    console.log(data)
+  const submitForm = async (data: searchDriverData) => {
+    console.log('daw')
   }
 
-  const handleFindDriver = () => {
+  const handleFindDriver = (data: searchDriverData) => {
     router.push('loading')
   }
 
   return (
-    <>
+    <form onSubmit={handleSubmit(submitForm)}>
       <div className='flex items-center justify-center'>
         <Controller
           name='location'
@@ -64,15 +62,11 @@ export default function CurrentLocation() {
           }}
         />
       </div>
-
-      <Button onClick={() => console.log(getValues('location'))}>daw</Button>
       <div
         className='py-8 rounded-t-[50px] flex gap-6 flex-col justify-center items-center bg-white pr-8 h-90'
         style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}>
         <div className='flex gap-6 flex-col w-80'>
-          <form
-            className='flex flex-col gap-5 w-[354px]'
-            onSubmit={handleSubmit(submitForm)}>
+          <div className='flex flex-col gap-5 w-[354px]'>
             <p className='text-3xl text-secondary font-light'>
               วันนี้คุณปุยปุยอยาก{' '}
               <span className='font-medium'>ไปที่ไหน ?</span>
@@ -141,15 +135,10 @@ export default function CurrentLocation() {
                 placeholder='บอกอะไรก้บอกอิอิ'
               />
             </div>
-            <Button
-              type='submit'
-              className='flex items-center justify-center'
-              onClick={handleFindDriver}>
-              ค้นหาคนขับ
-            </Button>
-          </form>
+            <Button type='submit'>ค้นหาคนขับ</Button>
+          </div>
         </div>
       </div>
-    </>
+    </form>
   )
 }
