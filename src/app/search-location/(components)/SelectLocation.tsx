@@ -1,19 +1,19 @@
-'use client'
-import Input from '@/components/Input'
-import Icon from '@/components/Icon'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import Image from 'next/image'
+'use client';
+import Input from '@/components/Input';
+import Icon from '@/components/Icon';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import Image from 'next/image';
 
 export default function SelectLocation() {
   const searchSchema = z.object({
     location: z.string().min(1, { message: 'Enter Your location' }),
     lat: z.number(),
     lng: z.number(),
-  })
+  });
 
-  type searchData = z.infer<typeof searchSchema>
+  type searchData = z.infer<typeof searchSchema>;
   const {
     register,
     handleSubmit,
@@ -23,15 +23,16 @@ export default function SelectLocation() {
     defaultValues: {
       location: '',
     },
-  })
+  });
   const submitForm = async (data: searchData) => {
-    console.log(data)
-  }
+    console.log(data);
+  };
 
   return (
     <form
       className='w-full flex justify-center gap-4'
-      onSubmit={handleSubmit(submitForm)}>
+      onSubmit={handleSubmit(submitForm)}
+    >
       <div className='w-4/5 rounded-4xl'>
         <Input
           style={{ boxShadow: '0px 4px 4px 0px rgba(164, 159, 159, 0.25)' }}
@@ -56,9 +57,10 @@ export default function SelectLocation() {
       <button
         className='bg-white rounded-2xl flex justify-center items-center w-[45px] h-[46px]'
         type='submit'
-        style={{ boxShadow: '0px 4px 4px 0px rgba(164, 159, 159, 0.25)' }}>
+        style={{ boxShadow: '0px 4px 4px 0px rgba(164, 159, 159, 0.25)' }}
+      >
         <Image src='/image/send.svg' width={27} height={27} alt='app-logo' />
       </button>
     </form>
-  )
+  );
 }
