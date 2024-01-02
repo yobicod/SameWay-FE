@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react'
 
 export default function LongdoDemo({ value, onChange }) {
   let suggest
-  let search
 
   const [mounted, setMounted] = useState(false)
   const [longdoMap, setLongdoMap] = useState()
@@ -31,6 +30,7 @@ export default function LongdoDemo({ value, onChange }) {
       placeholderHtml: '<p>Loading map...</p>',
       zoom: 15,
     })
+    newMap.location(longdo.LocationMode.Geolocation)
     setTimeout(() => {
       if (value.length !== 0) {
         newMap.Route.add(new longdo.Marker(locations[0]))
@@ -51,18 +51,21 @@ export default function LongdoDemo({ value, onChange }) {
     if (locations.length === 2) {
       longdoMap.Route.removeAt(1)
       // remove lastest location
-      const clonedLocation = locations.splice(1, 1)
+      const clonedLocation = locations
+      clonedLocation.splice(1, 1)
+
       onChange(clonedLocation)
       setLocations(clonedLocation)
     } else {
       const clonedLocation = [...locations, mouseLocation]
       longdoMap.Route.add(marker)
+      longdoMap.Route.search()
+
       setLocations(clonedLocation)
       onChange(clonedLocation)
     }
-
     // onChange(console.log(locations))
-    longdoMap.Route.placeholder(document.getElementById('result'))
+    // longdoMap.Route.placeholder(document.getElementById('result'))
   }
 
   return (
