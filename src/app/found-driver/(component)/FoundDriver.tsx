@@ -50,7 +50,7 @@ export default function FoundDriver() {
                 <p>ยูเนี่ยนมอลล์</p>
               </div>
             </div>
-            <div className='border-l-2 border-borderSwitch h-12'></div>
+            <div className='border-l-2 border-[#B5B7B9] h-12'/>
             <div className='text-secondary'>
               <p className='text-xl'>120</p>
               <p>บาท</p>
