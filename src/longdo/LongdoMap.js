@@ -1,21 +1,21 @@
-'use client';
-import Button from '@/components/Button';
-import Input from '@/components/Input';
-import React, { useEffect, useState } from 'react';
+'use client'
+import Button from '@/components/Button'
+import Input from '@/components/Input'
+import React, { useEffect, useState } from 'react'
 
 export default function Map() {
-  let suggest;
-  let search;
-  let map;
+  let suggest
+  let search
+  let map
 
-  const test = [];
+  const test = []
   setTimeout(async () => {
-    await initMap();
-  }, 4500);
+    await initMap()
+  }, 4500)
 
   async function initMap() {
-    suggest = document.getElementById('suggest');
-    search = document.getElementById('search');
+    suggest = document.getElementById('suggest')
+    search = document.getElementById('search')
     map = new window.longdo.Map({
       placeholder: document.getElementById('map'),
       layer: [longdo.Layers.GRAY, longdo.Layers.TRAFFIC],
@@ -26,17 +26,22 @@ export default function Map() {
       language: 'th',
       placeholderHtml: '<p>Loading map...</p>',
       zoom: 15,
-    });
+    })
 
-    map.location(longdo.LocationMode.Geolocation);
-    map.zoomRange({ min: 16, max: 18 });
-    map.Ui.DPad.visible(false);
-    map.Ui.Scale.visible(false);
+    map.location(longdo.LocationMode.Geolocation)
+    map.zoomRange({ min: 16, max: 18 })
+    map.Ui.DPad.visible(false)
+    map.Ui.Scale.visible(false)
     // map.Ui.Crosshair.visible(false);
-    const myLatlng = map.location();
-    console.log('🚀 ~ file: LongdoMap.js:18 ~ Map ~ myLatlng:', myLatlng);
+    const myLatlng = map.location()
+    console.log('🚀 ~ file: LongdoMap.js:18 ~ Map ~ myLatlng:', myLatlng)
     // const currentLocationMarker = new longdo.Marker(myLatlng);
-
+    function addDefaultRoute(value) {
+      const defaultStart = new longdo.Marker(value[0])
+      const defaultEnd = new longdo.Marker(value[1])
+      map.Route.add(defaultStart)
+      map.Route.add(defaultEnd)
+    }
     // setTimeout(() => {
     //   map.Overlays.drop(currentLocationMarker, {
     //     title: 'my current location',
@@ -48,22 +53,22 @@ export default function Map() {
     // }, 1500);
 
     map.Event.bind('location', function () {
-      let selectedLocation = map.location(); // Cross hair location
+      let selectedLocation = map.location() // Cross hair location
       // console.log(selectedLocation);
-    });
+    })
 
     map.Event.bind('click', function () {
-      let mouseLocation = map.location(longdo.LocationMode.Pointer);
-      test.push(mouseLocation);
-      console.log('🚀 ~ file: LongdoMap.js:50 ~ test:', test);
-      console.log('🚀 ~ file: LongdoMap.js:53 ~ mouseLocation:', mouseLocation);
-      const marker = new longdo.Marker(mouseLocation);
-      map.Overlays.drop(marker);
+      let mouseLocation = map.location(longdo.LocationMode.Pointer)
+      test.push(mouseLocation)
+      console.log('🚀 ~ file: LongdoMap.js:50 ~ test:', test)
+      console.log('🚀 ~ file: LongdoMap.js:53 ~ mouseLocation:', mouseLocation)
+      const marker = new longdo.Marker(mouseLocation)
+      map.Overlays.drop(marker)
 
-      map.Route.placeholder(document.getElementById('result'));
-      map.Route.add(marker);
+      map.Route.placeholder(document.getElementById('result'))
+      map.Route.add(marker)
       // map.Overlays.clear();
-    });
+    })
   }
 
   // Customize the map as needed
@@ -86,7 +91,7 @@ export default function Map() {
   // map.Search.placeholder(search);
 
   function querySearch() {
-    map.Search.search(search.value);
+    map.Search.search(search.value)
   }
 
   // function doSuggest(value) {
@@ -104,5 +109,5 @@ export default function Map() {
         <Button onClick={querySearch}>search</Button>
       </div>
     </div>
-  );
+  )
 }
