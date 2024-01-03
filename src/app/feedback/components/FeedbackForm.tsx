@@ -14,7 +14,7 @@ export default function FeedbackForm() {
   const router = useRouter();
   const reportSchema = z.object({
     ratingScore: z.number().max(5),
-    description: z.string()
+    description: z.string(),
   });
 
   type ReportData = z.infer<typeof reportSchema>;
@@ -23,12 +23,12 @@ export default function FeedbackForm() {
     handleSubmit,
     formState: { errors },
     reset,
-    control
+    control,
   } = useForm<ReportData>({
     resolver: zodResolver(reportSchema),
     defaultValues: {
-      description: ''
-    }
+      description: '',
+    },
   });
 
   const submitForm = async (data: ReportData) => {
@@ -36,7 +36,7 @@ export default function FeedbackForm() {
       driverEmail: 'driver@kmitl.ac.th',
       userEmail: userData?.user?.email || '',
       ratingScore: data.ratingScore,
-      description: data.description
+      description: data.description,
     };
     await createFeedback(feedbackData).then(() => {
       router.push('history');

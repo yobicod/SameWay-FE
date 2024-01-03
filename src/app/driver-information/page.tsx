@@ -1,11 +1,10 @@
-import FoundDriver from './(component)/FoundDriver';
-import Navbar from './(component)/Navbar';
 import Image from 'next/image';
+import React from 'react';
+import DriverInfor from './(component)/DriverInformation';
 
-export default async function FoundDriverPage() {
+export default function DriverInformationPage() {
   return (
     <div className='flex flex-col justify-between h-screen w-full'>
-      <Navbar />
       <div className='absolute w-full h-full -z-10'>
         <Image
           src='/imgFoundDriver/bg_foundDriver.svg'
@@ -14,9 +13,8 @@ export default async function FoundDriverPage() {
           alt='app-logo'
           className='w-full object-cover h-full'
         />
-        
       </div>
-      <FoundDriver />
+      <DriverInfor />
     </div>
   );
 }
