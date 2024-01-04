@@ -1,11 +1,11 @@
-'use client'
-import Icon from '@/components/Icon'
-import Switch from '@/components/Switch'
-import Image from 'next/image'
+'use client';
+import Icon from '@/components/Icon';
+import Switch from '@/components/Switch';
+import Image from 'next/image';
 
 export default function NavbarDriver() {
   return (
-    <div className='h-24 flex justify-between items-center px-7 fixed top-0 w-full bg-white'>
+    <div className='h-24 flex justify-between items-center px-7 fixed w-full bg-white'>
       <div>
         <Icon name='menu' className='text-secondary' />
       </div>
@@ -17,5 +17,5 @@ export default function NavbarDriver() {
       />
       <Switch />
     </div>
-  )
+  );
 }

@@ -2,14 +2,15 @@ export interface IDriverInfo {
   fullName: string;
   plate: string;
   carType: string;
-  sex: string;
+  gender: string;
   phoneNumber: string;
   userEmail: string;
 }
-export interface IEnumGender {
+export interface IEnum {
   value: string;
   description?: string;
 }
+
 export interface IDriverSearch {
   nowLocation: string;
   destination: string;
@@ -24,4 +25,23 @@ export interface ICreateUser {
   fullName: string;
   email: string;
   role: string;
+}
+
+export interface ICreateFeedback {
+  driverEmail: string;
+  userEmail: string;
+  ratingScore: number;
+  description: string;
+}
+
+export interface ICreateReport {
+  problemType: string;
+  description: string;
+  userEmail: string;
+  driverEmail: string;
+}
+
+export interface IUserLocation {
+  city: string;
+  zip: string;
 }

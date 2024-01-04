@@ -1,5 +1,6 @@
 'use client';
 import { checkDriver } from '@/app/api-caller/check-driver';
+import { IUserLocation } from '@/app/api-caller/interfaces/interfaces';
 import Icon from '@/components/Icon';
 import Input from '@/components/Input';
 import { useSession } from 'next-auth/react';
@@ -7,23 +8,22 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function Home() {
+interface IProps {
+  location: IUserLocation;
+}
+export default function Home({ location }: IProps) {
   const { data: userData } = useSession();
+  const userFirstName: string = userData?.user?.name?.split(' ')[0] || '';
   const router = useRouter();
   const [driverStatus, setDriverStatus] = useState<boolean | undefined>(false);
 
   useEffect(() => {
     const fetchCheckDriver = async () => {
       if (userData?.user?.email) {
-        try {
-          const isDriverInSystem = await checkDriver(userData.user.email);
-          setDriverStatus(isDriverInSystem);
-        } catch (error) {
-          console.log(
-            '🚀 ~ file: Home.tsx:21 ~ fetchCheckDriver ~ error:',
-            error
-          );
-        }
+        const isDriverInSystem = await checkDriver(
+          userData?.user?.email?.split('@')[0]
+        );
+        setDriverStatus(isDriverInSystem);
       }
     };
     fetchCheckDriver();
@@ -49,7 +49,7 @@ export default function Home() {
     <div className='relative text-secondary'>
       <div className=' font-light text-xl min-h-[294px] py-8 rounded-t-5xl flex gap-6 flex-col items-center bg-[#216A5824] pt-12'>
         <div className='w-4/5'>
-          <p>สวัสดี คุณป๊อบ:) </p>
+          <p>สวัสดี คุณ {userFirstName} :) </p>
           <p>
             ยินดีต้อนรับเข้าสู่ <span className=' font-medium'>SameWay!</span>
           </p>
@@ -64,7 +64,11 @@ export default function Home() {
           />
           <Input
             inputClassName='rounded-2xl border-white py-6'
-            placeholder='หมู่บ้านบิบิ, สวนหลวง, พัฒนาการ 10250'
+            placeholder={
+              location
+                ? `สวัสดี ประเทศไทย, ${location.city}, ${location.zip}`
+                : ''
+            }
             startIcon={
               <Icon
                 name='location_on'
