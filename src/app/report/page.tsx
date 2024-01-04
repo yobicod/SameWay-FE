@@ -1,12 +1,17 @@
-import Image from 'next/image'
-import BackButton from '../../components/BackButton'
-import ReportForm from './(components)/ReportForm'
-import NavbarUser from '../(components)/NavbarUser'
+import Image from 'next/image';
+import BackButton from '../../components/BackButton';
+import ReportForm from './(components)/ReportForm';
+import NavbarUser from '../(components)/NavbarUser';
+import { getEnumProblem } from '../api-caller/get-enum-Problem';
+import { IEnum } from '../api-caller/interfaces/interfaces';
 
-export default function ReportPage() {
+export default async function ReportPage() {
+  const problem: IEnum[] = (await getEnumProblem()) || [];
+  console.log('🚀 ~ file: page.tsx:10 ~ ReportPage ~ problem:', problem);
+
   return (
     <div className='flex flex-col gap-4 py-8'>
-      <NavbarUser/>
+      <NavbarUser />
       <div
         className='inset-x-0 rounded-t-5xl flex flex-col justify-start items-center gap-6  '
         style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}
@@ -18,7 +23,7 @@ export default function ReportPage() {
               รายงาน
             </p>
           </div>
-          <ReportForm />
+          <ReportForm enumProblems={problem} />
         </div>
       </div>
     </div>

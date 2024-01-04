@@ -6,10 +6,11 @@ export interface IDriverInfo {
   phoneNumber: string;
   userEmail: string;
 }
-export interface IEnumGender {
+export interface IEnum {
   value: string;
   description?: string;
 }
+
 export interface IDriverSearch {
   nowLocation: string;
   destination: string;

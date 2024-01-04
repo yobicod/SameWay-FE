@@ -7,6 +7,9 @@ export const getUserHistory = async (email: string) => {
     );
     return result.data;
   } catch (error) {
-    // console.log('🚀 ~ file: get-gender.ts:9 ~ getGender ~ error:', error);
+    console.log(
+      '🚀 ~ file: get-user-history.ts:10 ~ getUserHistory ~ error:',
+      error
+    );
   }
 };
