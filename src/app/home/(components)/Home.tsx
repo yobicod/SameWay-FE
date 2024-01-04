@@ -1,5 +1,7 @@
 'use client';
 import { checkDriver } from '@/app/api-caller/check-driver';
+import { getUserLocation } from '@/app/api-caller/get-user-location';
+import { IUserLocation } from '@/app/api-caller/interfaces/interfaces';
 import Icon from '@/components/Icon';
 import Input from '@/components/Input';
 import { useSession } from 'next-auth/react';
@@ -7,7 +9,10 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function Home() {
+interface IProps {
+  location: IUserLocation;
+}
+export default function Home({ location }: IProps) {
   const { data: userData } = useSession();
   const userFirstName: string = userData?.user?.name?.split(' ')[0] || '';
   const router = useRouter();
@@ -67,7 +72,11 @@ export default function Home() {
           />
           <Input
             inputClassName='rounded-2xl border-white py-6'
-            placeholder='หมู่บ้านบิบิ, สวนหลวง, พัฒนาการ 10250'
+            placeholder={
+              location
+                ? `สวัสดี ประเทศไทย, ${location.city}, ${location.zip}`
+                : ''
+            }
             startIcon={
               <Icon
                 name='location_on'

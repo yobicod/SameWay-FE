@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 
 export default function DriverInfo() {
-  const socket = io('http://localhost:3001', { transports: ['websocket'] });
+  const socket = io('http://54.169.31.65:3001', { transports: ['websocket'] });
+  // const socket = io('http://localhost:3001', { transports: ['websocket'] });
 
   const [driverStatus, setDriverStatus] = useState<any>();
   useEffect(() => {
@@ -21,20 +22,6 @@ export default function DriverInfo() {
     });
 
     socket.emit('waitForPassenger', {
-      fullName: 'Visal Suwanarat',
-      driverEmail: '63070158@kmitl.ac.th',
-      driverLat: 10.0,
-      driverLong: 10.0,
-      time: 12.0,
-      status: 'open',
-      capacity: 4,
-      carType: 'car',
-      plate: 'aasd213',
-      sex: 'Male',
-      phoneNumber: '0658386230',
-    });
-
-    socket.emit('findDriver', {
       fullName: 'Visal Suwanarat',
       driverEmail: '63070158@kmitl.ac.th',
       driverLat: 10.0,
