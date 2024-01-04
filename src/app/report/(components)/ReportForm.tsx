@@ -17,10 +17,6 @@ interface IProps {
   enumProblems: IEnum[];
 }
 export default function ReportForm({ enumProblems }: IProps) {
-  console.log(
-    '🚀 ~ file: ReportForm.tsx:15 ~ ReportForm ~ enumProblems:',
-    enumProblems
-  );
   const { data: userData } = useSession();
   const router = useRouter();
 
