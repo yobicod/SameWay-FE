@@ -1,6 +1,5 @@
 'use client';
 import { checkDriver } from '@/app/api-caller/check-driver';
-import { getUserLocation } from '@/app/api-caller/get-user-location';
 import { IUserLocation } from '@/app/api-caller/interfaces/interfaces';
 import Icon from '@/components/Icon';
 import Input from '@/components/Input';
@@ -21,17 +20,10 @@ export default function Home({ location }: IProps) {
   useEffect(() => {
     const fetchCheckDriver = async () => {
       if (userData?.user?.email) {
-        try {
-          const isDriverInSystem = await checkDriver(
-            userData?.user?.email?.split('@')[0]
-          );
-          setDriverStatus(isDriverInSystem);
-        } catch (error) {
-          console.log(
-            '🚀 ~ file: Home.tsx:21 ~ fetchCheckDriver ~ error:',
-            error
-          );
-        }
+        const isDriverInSystem = await checkDriver(
+          userData?.user?.email?.split('@')[0]
+        );
+        setDriverStatus(isDriverInSystem);
       }
     };
     fetchCheckDriver();
