@@ -45,3 +45,17 @@ export interface IUserLocation {
   city?: string;
   zip?: string;
 }
+
+export interface IDriverInfo {
+  id: string;
+  dob: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  plate: string;
+  carType: string;
+  model: string;
+  phoneNumber: string;
+  userEmail: string;
+  fullName: string;
+  gender: string;
+}

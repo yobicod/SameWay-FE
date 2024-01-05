@@ -1,8 +1,28 @@
 'use client';
+import { getDriverInfo } from '@/app/api-caller/get-driver-info';
+import { IDriverInfo } from '@/app/api-caller/interfaces/interfaces';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function DriverInformation() {
+  // change this later email must be email of driver not logged in acc
+  const { data: userData } = useSession();
+  const [driver, setDriver] = useState<IDriverInfo>();
+  useEffect(() => {
+    const formatUserEmail = userData?.user?.email?.split('@')[0];
+
+    const fecthDriverInfo = async () => {
+      const driverInfo = await getDriverInfo(formatUserEmail || '');
+      if (driverInfo) {
+        setDriver(driverInfo);
+      }
+    };
+
+    fecthDriverInfo();
+  }, [userData]);
+
   return (
     <div
       className='w-full flex flex-end bg-white rounded-t-[3rem] '
@@ -33,23 +53,31 @@ export default function DriverInformation() {
         <div className='flex flex-col space-y-3'>
           <div className='p-4 flex border-2 rounded-3xl space-x-5'>
             <p className='text-[#848181]'>อายุ</p>
-            <p className='text-secondary'>30</p>
+            <p className='text-secondary'>{driver?.dob ? driver?.dob : '-'}</p>
           </div>
           <div className='p-4 flex border-2 rounded-3xl space-x-5'>
             <p className='text-[#848181]'>เพศ</p>
-            <p className='text-secondary'>ผู้หญิง</p>
+            <p className='text-secondary'>
+              {driver?.gender ? driver?.gender : '-'}
+            </p>
           </div>
           <div className='p-4 flex border-2 rounded-3xl space-x-5'>
             <p className='text-[#848181]'>ทะเบียนรถยนต์</p>
-            <p className='text-secondary'>กท3452</p>
+            <p className='text-secondary'>
+              {driver?.plate ? driver?.plate : '-'}
+            </p>
           </div>
           <div className='p-4 flex border-2 rounded-3xl space-x-5'>
             <p className='text-[#848181]'>รุ่นรถยนต์</p>
-            <p className='text-secondary'>Mazda 3</p>
+            <p className='text-secondary'>
+              {driver?.model ? driver.model : '-'}
+            </p>
           </div>
           <div className='p-4 flex border-2 rounded-3xl space-x-5'>
             <p className='text-[#848181]'>เบอร์โทรศัพท์</p>
-            <p className='text-secondary'>0821851893</p>
+            <p className='text-secondary'>
+              {driver?.phoneNumber ? driver.phoneNumber : '-'}
+            </p>
           </div>
         </div>
         <div className='flex py-3 px-4 rounded-2xl bg-fieldGray space-x-6 items-center'>
