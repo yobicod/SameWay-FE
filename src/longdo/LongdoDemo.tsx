@@ -23,8 +23,6 @@ export default function LongdoDemo({
 }: IProps) {
   const [mounted, setMounted] = useState(false)
   const [longdoMap, setLongdoMap] = useState()
-  const [query, setQuery] = useState('')
-  const [result, setResult] = useState([])
   const [locations, setLocations] = useState(value || undefined)
   useEffect(() => {
     setMounted(true)
@@ -57,30 +55,11 @@ export default function LongdoDemo({
     }, 1500)
     setLongdoMap(newMap)
   }
-  async function querySearch() {
-    longdoMap.Search.placeholder(document.getElementById('result'))
-    const searchResult = await longdoMap.Search.search(query)
-    setResult(searchResult.data)
-  }
-  function addRoute() {
-    let mouseLocation = longdoMap.location(longdo.LocationMode.Pointer)
+  function addRoute(location?: any) {
+    let mouseLocation =
+      location || longdoMap.location(longdo.LocationMode.Pointer)
     const marker = new longdo.Marker(mouseLocation)
-    // if (locations.length === 2) {
-    //   longdoMap.Route.removeAt(1)
-    //   // remove lastest location
-    //   const clonedLocation = locations
-    //   clonedLocation.splice(1, 1)
 
-    //   onChange(clonedLocation)
-    //   setLocations(clonedLocation)
-    // } else {
-    //   const clonedLocation = [...locations, mouseLocation]
-    //   longdoMap.Route.add(marker)
-    //   longdoMap.Route.search()
-
-    //   setLocations(clonedLocation)
-    //   onChange(clonedLocation)
-    // }
     if (longdoMap.Overlays.list().length >= 1) {
       longdoMap.Overlays.clear()
       if (onChange) onChange(undefined)
