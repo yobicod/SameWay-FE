@@ -6,15 +6,18 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import LongdoDemo from '@/longdo/LongdoDemo'
 import { useState } from 'react'
+import { debounce } from 'lodash'
+import axios from 'axios'
 
 type Map = 'start' | 'end' | undefined
-
 export default function CurrentLocation() {
-  const router = useRouter()
   const [showMap, setShowMap] = useState<Map>()
+  const [showSuggestion, setShowSuggestion] = useState(false)
+  const [search, setSearch] = useState('')
+  const [suggestLocation, setSuggestLocation] = useState([])
+  const [detailLocation, setDetailLocation] = useState()
   const searchDriverSchema = z.object({
     locationStart: z.object({
       lon: z.number(),
@@ -29,30 +32,60 @@ export default function CurrentLocation() {
 
   type searchDriverData = z.infer<typeof searchDriverSchema>
   const {
-    register,
     handleSubmit,
     control,
     watch,
+    setValue,
+
     formState: { errors },
   } = useForm<searchDriverData>({
     resolver: zodResolver(searchDriverSchema),
     defaultValues: {
-      locationStart: undefined,
-      locationEnd: undefined,
+      locationStart: {},
+      locationEnd: {},
       notes: '',
     },
   })
 
+  function onInputChange(keyword: string) {
+    setSearch(keyword)
+    debounceHandleSearchLocation(keyword)
+  }
+  const watchStartLocation = watch('locationStart')
+  const watchEndLocation = watch('locationEnd')
+  async function querySuggestLocation(keywords: string) {
+    const result = await axios.get(
+      `https://search.longdo.com/mapsearch/json/suggest?keyword=${keywords}&area=10&span=100km&limit=20&key=${process.env.NEXT_LONGDO_MAP}`
+    )
+    setSuggestLocation(result?.data?.data || [])
+  }
+  async function selectedLocation(keywords: string, map: Map) {
+    const result = await axios.get(
+      `https://search.longdo.com/mapsearch/json/search?keyword=${keywords}&area=10&span=100km&key=15f064efea8a51cdfad9503113d16614`
+    )
+    setDetailLocation(result.data.data[0])
+    setSearch(keywords)
+    if (map === 'start' && detailLocation) {
+      setValue(
+        'locationStart',
+        {
+          lat: detailLocation.lat,
+          lon: detailLocation.lon,
+        },
+        { shouldValidate: true }
+      )
+    }
+  }
+  const debounceHandleSearchLocation = debounce(querySuggestLocation, 700)
   const submitForm = async (data: searchDriverData) => {
     console.log('daw', data)
-  }
-
-  const handleFindDriver = (data: searchDriverData) => {
-    router.push('loading')
   }
   if (showMap === 'start') {
     return (
       <div className='h-screen relative'>
+        <button onClick={() => console.log(watchStartLocation)}>
+          dawkdkaw
+        </button>
         <Controller
           control={control}
           name='locationStart'
@@ -60,9 +93,41 @@ export default function CurrentLocation() {
             <LongdoDemo height='h-full' onChange={onChange} value={value} />
           )}
         />
-        <div className='absolute bottom-0'>
-          <Input placeholder='ค้นหาสถานที่ต้นทาง' />
-          <Button onClick={() => setShowMap(undefined)}>ยืนยัน</Button>
+        <div className='absolute top-10 flex justify-center w-full'>
+          <div className='w-fit'>
+            <Input
+              onFocus={() => setShowSuggestion(true)}
+              onChange={(e) => onInputChange(e.target.value)}
+              value={search}
+              placeholder='ค้นหาสถานที่ต้นทาง'
+              endIcon={<Icon name='search' />}
+            />
+            {showSuggestion && (
+              <div className='p-2 flex flex-col bg-white rounded gap-1 max-h-60 overflow-auto'>
+                {suggestLocation?.map((location) => (
+                  <div
+                    key={`location-${location.w}`}
+                    className='p-1 rounded hover:text-white hover:bg-secondary cursor-pointer'
+                    onClick={() => {
+                      selectedLocation(location.w, 'start')
+                      setShowSuggestion(false)
+                    }}>
+                    {location?.w}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        <div className='absolute bottom-10 w-full flex justify-center'>
+          <div>
+            <Button
+              onClick={() => {
+                setShowMap(undefined)
+              }}>
+              ยืนยัน
+            </Button>
+          </div>
         </div>
       </div>
     )
@@ -84,10 +149,7 @@ export default function CurrentLocation() {
       </div>
     )
   }
-  const watchStartLocation = watch('locationStart')
-  const watchEndLocation = watch('locationEnd')
 
-  console.log(watchStartLocation, watchEndLocation)
   return (
     <>
       <form onSubmit={handleSubmit(submitForm)}>
