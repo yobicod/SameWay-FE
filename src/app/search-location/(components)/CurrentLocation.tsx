@@ -10,14 +10,20 @@ import LongdoDemo from '@/longdo/LongdoDemo'
 import { useState } from 'react'
 import { debounce } from 'lodash'
 import axios from 'axios'
-
+import MapTest, { map } from '@/longdo/MapTest'
+interface IGeoLatLon {
+  lat: number
+  lon: number
+}
 type Map = 'start' | 'end' | undefined
 export default function CurrentLocation() {
   const [showMap, setShowMap] = useState<Map>()
   const [showSuggestion, setShowSuggestion] = useState(false)
   const [search, setSearch] = useState('')
   const [suggestLocation, setSuggestLocation] = useState([])
-  const [detailLocation, setDetailLocation] = useState()
+  const [startLocationDetail, setStartLocationDetail] = useState()
+  const [endLocationDetail, setEndLocationDetail] = useState()
+
   const searchDriverSchema = z.object({
     locationStart: z.object({
       lon: z.number(),
@@ -36,7 +42,6 @@ export default function CurrentLocation() {
     control,
     watch,
     setValue,
-
     formState: { errors },
   } = useForm<searchDriverData>({
     resolver: zodResolver(searchDriverSchema),
@@ -59,22 +64,49 @@ export default function CurrentLocation() {
     )
     setSuggestLocation(result?.data?.data || [])
   }
-  async function selectedLocation(keywords: string, map: Map) {
+  async function selectLocation(keywords: string, map: Map) {
     const result = await axios.get(
       `https://search.longdo.com/mapsearch/json/search?keyword=${keywords}&area=10&span=100km&key=15f064efea8a51cdfad9503113d16614`
     )
-    setDetailLocation(result.data.data[0])
     setSearch(keywords)
-    if (map === 'start' && detailLocation) {
+
+    if (map === 'start') {
+      setStartLocationDetail(result.data.data[0])
       setValue(
         'locationStart',
         {
-          lat: detailLocation.lat,
-          lon: detailLocation.lon,
+          lat: result.data.data[0].lat,
+          lon: result.data.data[0].lon,
+        },
+        { shouldValidate: true }
+      )
+    } else if (map === 'end') {
+      setEndLocationDetail(result.data.data[0])
+      setValue(
+        'locationEnd',
+        {
+          lat: result.data.data[0].lat,
+          lon: result.data.data[0].lon,
         },
         { shouldValidate: true }
       )
     }
+  }
+  async function queryLocationDetail(geoLocation: IGeoLatLon) {
+    const geoStartLat = geoLocation.lat
+    const geoStartLon = geoLocation.lon
+    // const geoEndLat = geoLocation.locationEnd.lat
+    // const geoEndLon = geoLocation.locationEnd.lon
+
+    const result = await axios.get(
+      `https://api.longdo.com/map/services/address?lon=${geoStartLon}&lat=${geoStartLat}&noelevation=1&key=15f064efea8a51cdfad9503113d16614`
+    )
+    console.log('start', result.data)
+
+    // const result = await axios.get(
+    //   `https://api.longdo.com/map/services/address?lon=${geoEndLon}&lat=${geoEndLat}&noelevation=1&key=${process.env.NEXT_LONGDO_MAP}`
+    // )
+    // console.log('end', result)
   }
   const debounceHandleSearchLocation = debounce(querySuggestLocation, 700)
   const submitForm = async (data: searchDriverData) => {
@@ -83,14 +115,19 @@ export default function CurrentLocation() {
   if (showMap === 'start') {
     return (
       <div className='h-screen relative'>
-        <button onClick={() => console.log(watchStartLocation)}>
-          dawkdkaw
-        </button>
         <Controller
           control={control}
           name='locationStart'
           render={({ field: { onChange, value } }) => (
-            <LongdoDemo height='h-full' onChange={onChange} value={value} />
+            // <LongdoDemo height='h-full' onChange={onChange} value={value} />
+            <MapTest
+              height='h-full'
+              onChange={(val) => {
+                onChange(val)
+                queryLocationDetail(val, 'start')
+              }}
+              value={value}
+            />
           )}
         />
         <div className='absolute top-10 flex justify-center w-full'>
@@ -102,14 +139,15 @@ export default function CurrentLocation() {
               placeholder='ค้นหาสถานที่ต้นทาง'
               endIcon={<Icon name='search' />}
             />
-            {showSuggestion && (
+            {showSuggestion && suggestLocation.length > 1 && (
               <div className='p-2 flex flex-col bg-white rounded gap-1 max-h-60 overflow-auto'>
                 {suggestLocation?.map((location) => (
                   <div
                     key={`location-${location.w}`}
                     className='p-1 rounded hover:text-white hover:bg-secondary cursor-pointer'
                     onClick={() => {
-                      selectedLocation(location.w, 'start')
+                      console.log(location.w)
+                      selectLocation(location.w, 'start')
                       setShowSuggestion(false)
                     }}>
                     {location?.w}
@@ -139,22 +177,64 @@ export default function CurrentLocation() {
           control={control}
           name='locationEnd'
           render={({ field: { onChange, value } }) => (
-            <LongdoDemo height='h-full' onChange={onChange} value={value} />
+            // <LongdoDemo height='h-full' onChange={onChange} value={value} />
+            <MapTest height='h-full' onChange={onChange} value={value} />
           )}
         />
-        <div className='absolute bottom-0'>
-          <Input placeholder='ค้นหาสถานที่ปลายทาง' />
-          <Button onClick={() => setShowMap(undefined)}>ยืนยัน</Button>
+        <div className='absolute top-10 flex justify-center w-full'>
+          <div className='w-fit'>
+            <Input
+              onFocus={() => setShowSuggestion(true)}
+              onChange={(e) => onInputChange(e.target.value)}
+              value={search}
+              placeholder='ค้นหาสถานที่ปลายทาง'
+              endIcon={<Icon name='search' />}
+            />
+            {showSuggestion && suggestLocation.length > 1 && (
+              <div className='p-2 flex flex-col bg-white rounded gap-1 max-h-60 overflow-auto'>
+                {suggestLocation?.map((location) => (
+                  <div
+                    key={`location-${location.w}`}
+                    className='p-1 rounded hover:text-white hover:bg-secondary cursor-pointer'
+                    onClick={() => {
+                      selectLocation(location.w, 'end')
+                      setShowSuggestion(false)
+                    }}>
+                    {location?.w}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        <div className='absolute bottom-10 w-full flex justify-center'>
+          <div>
+            <Button
+              onClick={() => {
+                setShowMap(undefined)
+              }}>
+              ยืนยัน
+            </Button>
+          </div>
         </div>
       </div>
     )
   }
-
   return (
     <>
       <form onSubmit={handleSubmit(submitForm)}>
         <div className='flex items-center justify-center h-full'>
-          <LongdoDemo value={[watchStartLocation, watchEndLocation]} disabled />
+          {/* <LongdoDemo value={[watchStartLocation, watchEndLocation]} disabled /> */}
+          <MapTest
+            disabled
+            callback={() => {
+              setTimeout(() => {
+                map.Route.add(new longdo.Marker(watchStartLocation))
+                map.Route.add(new longdo.Marker(watchEndLocation))
+                map.Route.search()
+              }, 1000)
+            }}
+          />
         </div>
         <div
           className='py-8 rounded-t-[50px] flex gap-6 flex-col justify-center items-center bg-white pr-8 h-90'
@@ -193,7 +273,7 @@ export default function CurrentLocation() {
                       name='location_on'
                       className='material-symbols-outlined text-fieldOrange md-30'
                     />
-                    <p>เลือกสถานที่ต้นทาง</p>
+                    <p>{startLocationDetail?.name || 'เลือกสถานที่ต้นทาง'}</p>
                   </div>
 
                   {errors.locationStart && (
@@ -210,7 +290,7 @@ export default function CurrentLocation() {
                       name='location_on'
                       className='material-symbols-outlined text-secondary md-30'
                     />
-                    <p>เลือกสถานที่ปลายทาง</p>
+                    <p>{endLocationDetail?.name || 'เลือกสถานที่ปลายทาง'}</p>
                   </div>
                   {errors.locationEnd && (
                     <p className='text-red-500 font-light text-sm'>
