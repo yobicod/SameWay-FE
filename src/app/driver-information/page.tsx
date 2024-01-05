@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React from 'react';
 import DriverInfor from './(component)/DriverInformation';
 import SelectDriver from './(component)/SelectDriver';
