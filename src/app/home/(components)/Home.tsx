@@ -72,7 +72,7 @@ export default function Home({ location }: IProps) {
             className='absolute top-[20px] right-[23px]'
           />
           <Input
-            inputClassName='rounded-2xl border-white py-6'
+            inputClassName='rounded-2xl border-white py-6 px-12'
             placeholder={location ? `${formatLocationString}` : ''}
             startIcon={
               <Icon

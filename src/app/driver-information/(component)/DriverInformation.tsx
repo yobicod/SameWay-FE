@@ -1,8 +1,5 @@
 'use client';
-import Button from '@/components/Button';
 import Image from 'next/image';
-import clsx from 'clsx';
-import { useState } from 'react';
 import Link from 'next/link';
 
 export default function DriverInformation() {
