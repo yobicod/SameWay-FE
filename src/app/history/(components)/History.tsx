@@ -86,7 +86,7 @@ export default function History() {
         <div>
           {userHistory.map((data) => (
             <div className='mt-3' key={data.id}>
-              <div className='w-[367px] min-h-[135px] border border-bgTab rounded-[20px]'>
+              <div className='w-[367px] min-h-[135px] border border-bgTab rounded-2.5xl'>
                 <div className='flex'>
                   <div className='w-2/3 ml-5 mt-5 text-base text-primary'>
                     <div className='flex mb-[-6px]'>
@@ -160,7 +160,7 @@ export default function History() {
         <div>
           {driverHistory.map((data) => (
             <div className='mt-3' key={data.id}>
-              <div className='w-[367px] min-h-[135px] border border-bgTab rounded-[20px]'>
+              <div className='w-[367px] min-h-[135px] border border-bgTab rounded-2.5xl'>
                 <div className='flex'>
                   <div className='w-2/3 ml-5 mt-5 text-base text-primary'>
                     <div className='flex mb-[-6px]'>

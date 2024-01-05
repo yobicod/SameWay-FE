@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function DriverInformation() {
   return (
     <div
-      className="w-full absolute bottom-0 bg-white rounded-t-[3rem] "
+      className="w-full absolute top-14 bg-white rounded-t-[3rem] h-full"
       style={{ boxShadow: "0px -4px 4px 0px rgba(164, 159, 159, 0.25)" }}
     >
       <div className="flex flex-col p-8 space-y-4">
