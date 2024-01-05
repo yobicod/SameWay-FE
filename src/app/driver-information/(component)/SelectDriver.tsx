@@ -8,7 +8,7 @@ export default function SelectDriver() {
   const router = useRouter();
   return (
     <div
-      className='w-full absolute top-16 bg-white rounded-t-[3rem] h-full'
+      className='w-full bg-white rounded-t-5xl'
       style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}
     >
       <div className='flex flex-col p-8 space-y-4'>
@@ -22,8 +22,9 @@ export default function SelectDriver() {
           />
           <p className='text-secondary text-xl'>เลือกคนขับ</p>
         </div>
+
         <div className='border w-full min-h-[117px] rounded-2.5xl flex'>
-          <div className='flex justify-center items-center w-1/3 ml-4'>
+          <div className='flex justify-center items-center w-1/3 pl-4'>
             <Image
               src='/imgDriverInformation/img-driver.svg'
               alt='driver-profile'
@@ -49,7 +50,7 @@ export default function SelectDriver() {
                 </div>
               </div>
             </div>
-            <div className=''>
+            <div>
               <ReactStars
                 count={5}
                 size={18}

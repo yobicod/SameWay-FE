@@ -35,6 +35,9 @@ const config: Config = {
         '2.5xl': "20px",
         "4xl": "30px",
         "5xl": "50px"
+      },
+      screens: {
+        'se': '380px'
       }
     }
   },

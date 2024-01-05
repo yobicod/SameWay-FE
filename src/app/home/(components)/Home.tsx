@@ -84,7 +84,7 @@ export default function Home({ location }: IProps) {
         </div>
       </div>
       <div
-        className='font-semibold text-xl mt-[-32px] py-8 rounded-t-5xl flex gap-6 flex-col justify-center items-center bg-white'
+        className='font-semibold text-xl mt-[-32px] py-8 rounded-t-5xl flex gap-6 flex-col justify-center items-center bg-white h-full'
         style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}
       >
         <div className='flex justify-center items-center  gap-8'>

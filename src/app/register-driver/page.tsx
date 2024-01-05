@@ -8,7 +8,7 @@ export default async function RegisterDriverPage() {
   const genderData = await getGender();
   const genderEnum = genderData?.map((gender) => gender.value) || [];
   return (
-    <div className='flex flex-col gap-4 py-8'>
+    <div className='flex flex-col gap-4'>
       <NavbarUser />
       <div
         className='py-8 rounded-t-5xl flex gap-6 flex-col justify-center items-center'

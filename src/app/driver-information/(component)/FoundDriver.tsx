@@ -3,37 +3,16 @@ import Image from 'next/image';
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import Link from 'next/link';
+import NavbarUser from '@/app/(components)/NavbarUser';
 
 export default function FoundDriver() {
   return (
     <div>
-    <div className="flex ">
-        <div className="flex justify-center items-center w-full h-20 bg-white space-x-5">
-          <Image
-            src="/imgFoundDriver/logo_foundDriver.svg"
-            width={0}
-            height={0}
-            alt="app-logo"
-            className="w-[4.5rem]"
-          />
-          <Image
-            src="/imgFoundDriver/line_navbar.svg"
-            width={0}
-            height={0}
-            alt="app-logo"
-            className="w-44"
-          />
-          <Image
-            src="/imgFoundDriver/user_profile_navbar.svg"
-            width={0}
-            height={0}
-            alt="app-logo"
-            className="w-12"
-          />
-        </div>
-      </div>
+   
+        <NavbarUser/>
+      
 
-    <div className='w-full bg-white rounded-t-[3rem] absolute bottom-0 h-auto'>
+    <div className='w-full bg-white rounded-t-5xl absolute bottom-0 h-auto'>
       <div className='flex justify-center items-center'>
         <div className='flex p-6 flex-col space-y-4'>
           <div className='flex pt-3 justify-between'>
@@ -72,12 +51,12 @@ export default function FoundDriver() {
                 alt='app-logo'
                 className='w-[0.4rem]'
               />
-              <div className='text-[#848181] text-base'>
+              <div className='text-primary text-base'>
                 <p>แอพอร์ตเรลลิ้ง</p>
                 <p>ยูเนี่ยนมอลล์</p>
               </div>
             </div>
-            <div className='border-l-2 border-[#B5B7B9] h-12' />
+            <div className='border-l-2 border-borderSwitch h-12' />
             <div className='text-secondary'>
               <p className='text-xl'>120</p>
               <p>บาท</p>
