@@ -73,15 +73,10 @@ export default function LongdoDemo({
   }
 
   return (
-    <div className='w-full h-full'>
-      <div
-        id='map'
-        className='h-full'
-        onClick={() => !disabled && addRoute()}
-      />
-      <div id='result' />
-      {/* <Input onChange={(e) => setQuery(e.target.value)} />
-      <Button onClick={() => querySearch()}>test</Button> */}
-    </div>
+    <div
+      id='map'
+      className='h-full w-full'
+      onClick={() => !disabled && addRoute()}
+    />
   )
 }
