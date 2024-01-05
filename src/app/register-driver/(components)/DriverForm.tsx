@@ -56,10 +56,6 @@ export default function DriverForm({ genderEnum, carTypeEnum }: IProps) {
     },
   });
   const submitForm = async (formData: DriverData) => {
-    console.log(
-      '🚀 ~ file: DriverForm.tsx:59 ~ submitForm ~ formData:',
-      formData
-    );
     const driverData: ICreateDriverInfo = {
       fullName: `${formData.driverFirstName} ${formData.driverLastName}`,
       carType: formData.carType,
