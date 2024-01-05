@@ -1,7 +1,10 @@
-export interface IDriverInfo {
+export interface ICreateDriverInfo {
   fullName: string;
+  // dob: string;
+  dob: Date;
   plate: string;
   carType: string;
+  model: string;
   gender: string;
   phoneNumber: string;
   userEmail: string;
