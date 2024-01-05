@@ -1,7 +1,7 @@
 import axiosClient from '../lib/axiosClient';
-import { IDriverInfo } from './interfaces/interfaces';
+import { ICreateDriverInfo } from './interfaces/interfaces';
 
-export const createDriver = async (driverInfo: IDriverInfo) => {
+export const createDriver = async (driverInfo: ICreateDriverInfo) => {
   try {
     const { data } = await axiosClient.post<boolean>(
       `${process.env.NEXT_PUBLIC_API_URL}/driver/create`,
