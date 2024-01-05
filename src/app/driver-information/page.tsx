@@ -1,7 +1,8 @@
 import React from 'react';
-import DriverInfor from './(component)/DriverInformation';
+import DriverInformation from './(component)/DriverInformation';
 import SelectDriver from './(component)/SelectDriver';
 import FoundDriver from './(component)/FoundDriver';
+import Image from 'next/image';
 
 export default function DriverInformationPage() {
   return (
@@ -15,8 +16,8 @@ export default function DriverInformationPage() {
           className='w-full object-cover h-full'
         />
       </div>
-      {/* <DriverInfor /> */}
-      <SelectDriver />
+      <DriverInformation />
+      {/* <SelectDriver /> */}
       {/* <FoundDriver /> */}
     </div>
   );
