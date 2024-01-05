@@ -11,12 +11,21 @@ import { useEffect, useState } from 'react';
 interface IProps {
   location: IUserLocation;
 }
+
 export default function Home({ location }: IProps) {
   const { data: userData } = useSession();
   const userFirstName: string = userData?.user?.name?.split(' ')[0] || '';
   const router = useRouter();
   const [driverStatus, setDriverStatus] = useState<boolean | undefined>(false);
 
+  let formatLocationString: string = `สวัสดี ประเทศไทย`;
+  if (location.city) {
+    formatLocationString += `, ${location.city}`;
+  }
+
+  if (location.zip) {
+    formatLocationString += `, ${location.zip}`;
+  }
   useEffect(() => {
     const fetchCheckDriver = async () => {
       if (userData?.user?.email) {
@@ -64,11 +73,7 @@ export default function Home({ location }: IProps) {
           />
           <Input
             inputClassName='rounded-2xl border-white py-6'
-            placeholder={
-              location
-                ? `สวัสดี ประเทศไทย, ${location.city}, ${location.zip}`
-                : ''
-            }
+            placeholder={location ? `${formatLocationString}` : ''}
             startIcon={
               <Icon
                 name='location_on'

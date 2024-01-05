@@ -42,6 +42,6 @@ export interface ICreateReport {
 }
 
 export interface IUserLocation {
-  city: string;
-  zip: string;
+  city?: string;
+  zip?: string;
 }
