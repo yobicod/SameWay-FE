@@ -1,6 +1,5 @@
 'use client'
-import Button from '@/components/Button'
-import Input from '@/components/Input'
+
 import React, { useEffect, useRef, useState } from 'react'
 
 interface IGeoLatLon {
@@ -20,7 +19,6 @@ export let map
 export default function MapTest({
   value,
   onChange,
-  height = '500px',
   disabled = false,
   callback,
 }: IProps) {
@@ -47,11 +45,9 @@ export default function MapTest({
     if (mounted) {
       mapCallback()
       setTimeout(() => {
-        if (value) {
+        if (value?.lat && value.lon) {
           map.Overlays.add(new longdo.Marker(value))
           map.location(value)
-        } else {
-          map.location(longdo.LocationMode.Geolocation)
         }
       }, 500)
     }
@@ -77,7 +73,6 @@ export default function MapTest({
     const marker = new longdo.Marker(mouseLocation)
 
     if (map.Overlays.list().length >= 1) {
-      console.log('more')
       map.Overlays.clear()
       if (onChange) onChange({})
       // setLocations(undefined)
