@@ -1,5 +1,6 @@
 'use client';
 import { checkDriver } from '@/app/api-caller/check-driver';
+import { IUserLocation } from '@/app/api-caller/interfaces/interfaces';
 import Icon from '@/components/Icon';
 import Input from '@/components/Input';
 import { useSession } from 'next-auth/react';
@@ -7,26 +8,31 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function Home() {
+interface IProps {
+  location: IUserLocation;
+}
+
+export default function Home({ location }: IProps) {
   const { data: userData } = useSession();
   const userFirstName: string = userData?.user?.name?.split(' ')[0] || '';
   const router = useRouter();
   const [driverStatus, setDriverStatus] = useState<boolean | undefined>(false);
 
+  let formatLocationString: string = `สวัสดี ประเทศไทย`;
+  if (location.city) {
+    formatLocationString += `, ${location.city}`;
+  }
+
+  if (location.zip) {
+    formatLocationString += `, ${location.zip}`;
+  }
   useEffect(() => {
     const fetchCheckDriver = async () => {
       if (userData?.user?.email) {
-        try {
-          const isDriverInSystem = await checkDriver(
-            userData?.user?.email?.split('@')[0]
-          );
-          setDriverStatus(isDriverInSystem);
-        } catch (error) {
-          console.log(
-            '🚀 ~ file: Home.tsx:21 ~ fetchCheckDriver ~ error:',
-            error
-          );
-        }
+        const isDriverInSystem = await checkDriver(
+          userData?.user?.email?.split('@')[0]
+        );
+        setDriverStatus(isDriverInSystem);
       }
     };
     fetchCheckDriver();
@@ -66,8 +72,8 @@ export default function Home() {
             className='absolute top-[20px] right-[23px]'
           />
           <Input
-            inputClassName='rounded-2xl border-white py-6'
-            placeholder='หมู่บ้านบิบิ, สวนหลวง, พัฒนาการ 10250'
+            inputClassName='rounded-2xl border-white py-6 px-12'
+            placeholder={location ? `${formatLocationString}` : ''}
             startIcon={
               <Icon
                 name='location_on'

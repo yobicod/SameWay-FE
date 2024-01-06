@@ -3,25 +3,26 @@
 import Input from '@/components/Input';
 import { useSession } from 'next-auth/react';
 import { z } from 'zod';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import UploadButton from '@/components/UploadButton';
 import Button from '@/components/Button';
 import { useRouter } from 'next/navigation';
-import { ICreateReport } from '@/app/api-caller/interfaces/interfaces';
+import { ICreateReport, IEnum } from '@/app/api-caller/interfaces/interfaces';
 import { createReport } from '@/app/api-caller/create-report';
+import { getEnumProblem } from '@/app/api-caller/get-enum-Problem';
+import SelectedDropdown from '@/components/SelectedDropdown';
 
-export default function ReportForm() {
+interface IProps {
+  enumProblems: IEnum[];
+}
+export default function ReportForm({ enumProblems }: IProps) {
   const { data: userData } = useSession();
   const router = useRouter();
 
   const reportSchema = z.object({
-    problemType: z
-      .string()
-      .min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
-    description: z
-      .string()
-      .min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' })
+    problemType: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
+    description: z.string().min(5, { message: 'กรุณากรอกข้อมูลให้ถูกต้อง' }),
   });
 
   type ReportData = z.infer<typeof reportSchema>;
@@ -29,13 +30,14 @@ export default function ReportForm() {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
+    control,
   } = useForm<ReportData>({
     resolver: zodResolver(reportSchema),
     defaultValues: {
       problemType: '',
-      description: ''
-    }
+      description: '',
+    },
   });
 
   const submitForm = async (data: ReportData) => {
@@ -43,7 +45,7 @@ export default function ReportForm() {
       problemType: data.problemType,
       description: data.description,
       userEmail: userData?.user?.email || '',
-      driverEmail: 'driver@kmitl.ac.th'
+      driverEmail: 'driver@kmitl.ac.th',
     };
 
     await createReport(feedbackData).then(() => {
@@ -59,13 +61,20 @@ export default function ReportForm() {
     >
       <div className='text-label flex-col flex gap-1 w-80'>
         <p>เลือกปัญหาที่พบเจอ *</p>
-        <Input
-          placeholder='Select Problem'
-          register={register('problemType')}
+        <Controller
+          name='problemType'
+          control={control}
+          render={({ field: { onChange, value } }) => {
+            return (
+              <SelectedDropdown
+                items={enumProblems.map((problem) => problem.value)}
+                onChange={onChange}
+                selectedItem={value}
+                placeholder='--เลือกปัญหา--'
+              />
+            );
+          }}
         />
-        {errors.problemType && (
-          <p className='text-red-500'>{errors.problemType.message}</p>
-        )}
       </div>
       <div className='text-label flex-col flex gap-1 w-80'>
         <p>รายละเอียดเพิ่มเติม *</p>
