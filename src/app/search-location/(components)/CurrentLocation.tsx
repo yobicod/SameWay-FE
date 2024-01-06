@@ -8,7 +8,6 @@ import { z } from 'zod'
 import Image from 'next/image'
 import { useState } from 'react'
 import { debounce } from 'lodash'
-import axios from 'axios'
 import MapTest, { map } from '@/longdo/MapTest'
 import {
   queryLocation,
@@ -27,7 +26,6 @@ export default function CurrentLocation() {
   const [suggestLocation, setSuggestLocation] = useState([])
   const [startLocationDetail, setStartLocationDetail] = useState('')
   const [endLocationDetail, setEndLocationDetail] = useState('')
-
   const searchDriverSchema = z.object({
     locationStart: z.object({
       lon: z.number({
@@ -74,7 +72,24 @@ export default function CurrentLocation() {
   }
   const watchStartLocation = watch('locationStart')
   const watchEndLocation = watch('locationEnd')
-
+  const mapCallback = () => {
+    setTimeout(() => {
+      if (Object.keys(watchStartLocation).length > 0) {
+        map.Route.add(new longdo.Marker(watchStartLocation))
+        map.location(watchStartLocation)
+      }
+      if (Object.keys(watchEndLocation).length > 0) {
+        map.Route.add(new longdo.Marker(watchEndLocation))
+      }
+      if (
+        Object.keys(watchStartLocation).length > 0 &&
+        Object.keys(watchEndLocation).length > 0
+      ) {
+        map.Route.search()
+        console.log(map.Route.list())
+      }
+    }, 500)
+  }
   const getSuggestLocation = async (keyword: string) => {
     const result = await querySuggestLocation(keyword)
     setSuggestLocation(result?.data?.data || [])
@@ -250,23 +265,7 @@ export default function CurrentLocation() {
       </div>
     )
   }
-  const mapCallback = () => {
-    setTimeout(() => {
-      if (Object.keys(watchStartLocation).length > 0) {
-        map.Route.add(new longdo.Marker(watchStartLocation))
-        map.location(watchStartLocation)
-      }
-      if (Object.keys(watchEndLocation).length > 0) {
-        map.Route.add(new longdo.Marker(watchEndLocation))
-      }
-      if (
-        Object.keys(watchStartLocation).length > 0 &&
-        Object.keys(watchEndLocation).length > 0
-      ) {
-        map.Route.search()
-      }
-    }, 500)
-  }
+
   return (
     <>
       <form
