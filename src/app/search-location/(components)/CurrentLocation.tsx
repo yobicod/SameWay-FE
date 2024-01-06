@@ -10,6 +10,11 @@ import { useState } from 'react'
 import { debounce } from 'lodash'
 import axios from 'axios'
 import MapTest, { map } from '@/longdo/MapTest'
+import {
+  queryLocation,
+  queryLocationByGeoLocation,
+  querySuggestLocation,
+} from '../(api)/getLongDoApi'
 interface IGeoLatLon {
   lat: number
   lon: number
@@ -69,49 +74,39 @@ export default function CurrentLocation() {
   }
   const watchStartLocation = watch('locationStart')
   const watchEndLocation = watch('locationEnd')
-  async function querySuggestLocation(keywords: string) {
-    const result = await axios.get(
-      `https://search.longdo.com/mapsearch/json/suggest?keyword=${keywords}&area=10&span=100km&limit=20&key=${process.env.NEXT_LONGDO_MAP}`
-    )
+
+  const getSuggestLocation = async (keyword: string) => {
+    const result = await querySuggestLocation(keyword)
     setSuggestLocation(result?.data?.data || [])
   }
-  async function selectLocation(keywords: string, map: Map) {
-    const result = await axios.get(
-      `https://search.longdo.com/mapsearch/json/search?keyword=${keywords}&area=10&span=100km&key=15f064efea8a51cdfad9503113d16614`
+  const selectSuggestLocationStart = async (keyword: string) => {
+    const result = await queryLocation(keyword)
+    setSearch(keyword)
+    setStartLocationDetail(result.data.data[0].name || 'จุดเริ่มต้น')
+    setValue(
+      'locationStart',
+      {
+        lat: result.data.data[0].lat,
+        lon: result.data.data[0].lon,
+      },
+      { shouldValidate: true }
     )
-    setSearch(keywords)
-
-    if (map === 'start') {
-      setStartLocationDetail(result.data.data[0].name || '')
-      setValue(
-        'locationStart',
-        {
-          lat: result.data.data[0].lat,
-          lon: result.data.data[0].lon,
-        },
-        { shouldValidate: true }
-      )
-    } else if (map === 'end') {
-      setEndLocationDetail(result.data.data[0].name || '')
-      setValue(
-        'locationEnd',
-        {
-          lat: result.data.data[0].lat,
-          lon: result.data.data[0].lon,
-        },
-        { shouldValidate: true }
-      )
-    }
   }
-  async function queryStartLocationDetail(geoLocation: IGeoLatLon) {
-    const geoStartLat = geoLocation.lat
-    const geoStartLon = geoLocation.lon
-    // const geoEndLat = geoLocation.locationEnd.lat
-    // const geoEndLon = geoLocation.locationEnd.lon
-
-    const result = await axios.get(
-      `https://api.longdo.com/map/services/address?lon=${geoStartLon}&lat=${geoStartLat}&noelevation=1&key=15f064efea8a51cdfad9503113d16614`
+  const selectSuggestLocationEnd = async (keyword: string) => {
+    const result = await queryLocation(keyword)
+    setSearch(keyword)
+    setEndLocationDetail(result.data.data[0].name || 'จุดหมายปลายทาง')
+    setValue(
+      'locationEnd',
+      {
+        lat: result.data.data[0].lat,
+        lon: result.data.data[0].lon,
+      },
+      { shouldValidate: true }
     )
+  }
+  const handleOnClickStartMap = async (geoLocation: IGeoLatLon) => {
+    const result = await queryLocationByGeoLocation(geoLocation)
     const data = result.data
     const detail = [
       data?.aoi,
@@ -123,14 +118,8 @@ export default function CurrentLocation() {
     ]
     setStartLocationDetail(detail.join(' '))
   }
-  async function queryEndLocationDetail(geoLocation: IGeoLatLon) {
-    const geoEndLat = geoLocation.lat
-    const geoEndLon = geoLocation.lon
-
-    const result = await axios.get(
-      `https://api.longdo.com/map/services/address?lon=${geoEndLon}&lat=${geoEndLat}&noelevation=1&key=15f064efea8a51cdfad9503113d16614`
-    )
-
+  const handleOnClickEndMap = async (geoLocation: IGeoLatLon) => {
+    const result = await queryLocationByGeoLocation(geoLocation)
     const data = result.data
     const detail = [
       data?.aoi,
@@ -143,7 +132,7 @@ export default function CurrentLocation() {
 
     setEndLocationDetail(detail.join(' '))
   }
-  const debounceHandleSearchLocation = debounce(querySuggestLocation, 700)
+  const debounceHandleSearchLocation = debounce(getSuggestLocation, 700)
   const submitForm = async (data: searchDriverData) => {
     console.log('daw', data)
   }
@@ -159,7 +148,7 @@ export default function CurrentLocation() {
               height='h-full'
               onChange={(geoLocation) => {
                 onChange(geoLocation)
-                queryStartLocationDetail(geoLocation)
+                handleOnClickStartMap(geoLocation)
               }}
               value={value}
             />
@@ -181,7 +170,7 @@ export default function CurrentLocation() {
                     key={`location-${location.w}`}
                     className='p-1 rounded hover:text-white hover:bg-secondary cursor-pointer'
                     onClick={() => {
-                      selectLocation(location.w, 'start')
+                      selectSuggestLocationStart(location.w)
                       setShowSuggestion(false)
                     }}>
                     {location?.w}
@@ -216,7 +205,7 @@ export default function CurrentLocation() {
               height='h-full'
               onChange={(geoLocation) => {
                 onChange(geoLocation)
-                queryEndLocationDetail(geoLocation)
+                handleOnClickEndMap(geoLocation)
               }}
               value={value}
             />
@@ -238,7 +227,7 @@ export default function CurrentLocation() {
                     key={`location-${location.w}`}
                     className='p-1 rounded hover:text-white hover:bg-secondary cursor-pointer'
                     onClick={() => {
-                      selectLocation(location.w, 'end')
+                      selectSuggestLocationEnd(location.w)
                       setShowSuggestion(false)
                     }}>
                     {location?.w}
