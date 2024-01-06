@@ -1,15 +1,14 @@
 import React from 'react';
 import DriverInformation from './(component)/DriverInformation';
-import SelectDriver from './(component)/SelectDriver';
+import DriverList from './(component)/DriverList';
 import FoundDriver from './(component)/FoundDriver';
-import Image from 'next/image';
 
 export default function DriverInformationPage() {
   return (
     <div>
       
       {/* <DriverInformation /> */}
-      <SelectDriver />
+      <DriverList />
       {/* <FoundDriver /> */}
      
      

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import ReactStars from 'react-stars';
 
-export default function SelectDriver() {
+export default function DriverList() {
   const router = useRouter();
   return (
     <div

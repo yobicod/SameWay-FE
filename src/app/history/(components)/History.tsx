@@ -61,7 +61,7 @@ export default function History() {
   }, [userData]);
 
   return (
-    <div>
+    <div className='bg-black'>
       <div className='w-[367px] h-[46px] bg-bgTab rounded-xl flex justify-between items-center gap-1 text-secondary '>
         <Button
           className={clsx(
@@ -83,7 +83,7 @@ export default function History() {
         </Button>
       </div>
       {tab === 'Passenger' ? (
-        <div>
+        <div className='bg-black'>
           {userHistory.map((data) => (
             <div className='mt-3' key={data.id}>
               <div className='w-[367px] min-h-[135px] border border-bgTab rounded-2.5xl'>

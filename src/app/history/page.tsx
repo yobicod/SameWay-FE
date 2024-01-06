@@ -5,7 +5,7 @@ import NavbarUser from '../(components)/NavbarUser';
 
 export default function HistoryPage() {
   return (
-    <div className='flex flex-col gap-4'>
+    <div className='flex flex-col gap-4 bg-black'>
       <NavbarUser />
       <div
         className='inset-x-0  rounded-t-[50px] flex flex-col gap-4 items-center'

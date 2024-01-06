@@ -7,14 +7,14 @@ import NavbarUser from '@/app/(components)/NavbarUser';
 
 export default function FoundDriver() {
   return (
-    <div>
+    <>
    
         <NavbarUser/>
       
 
-    <div className='w-full bg-white rounded-t-5xl absolute bottom-0 h-auto'>
+    <div className='w-full bg-white rounded-t-5xl absolute bottom-0'>
       <div className='flex justify-center items-center'>
-        <div className='flex p-6 flex-col space-y-4'>
+        <div className='flex p-6 flex-col gap-4'>
           <div className='flex pt-3 justify-between'>
             <div className='flex space-x-3'>
               <Image
@@ -71,6 +71,6 @@ export default function FoundDriver() {
         </div>
       </div>
     </div>
-    </div>
+    </>
   );
 }
