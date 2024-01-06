@@ -192,6 +192,16 @@ export default function CurrentLocation() {
     setEndLocationDetail(detail.join(' '))
   }
   const debounceHandleSearchLocation = debounce(getSuggestLocation, 700)
+  const handleSwap = () => {
+    if (startLocationDetail && endLocationDetail) {
+      const clonedStartLocation = watchStartLocation
+      const clonedStartDetail = startLocationDetail
+      setValue('locationStart', watchEndLocation)
+      setValue('locationEnd', clonedStartLocation)
+      setStartLocationDetail(endLocationDetail)
+      setEndLocationDetail(clonedStartDetail)
+    }
+  }
   const submitForm = async (data: searchDriverData) => {
     console.log('daw', data)
     socket.emit('findDriver', {
@@ -325,9 +335,7 @@ export default function CurrentLocation() {
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit(submitForm)}
-        className='flex flex-col h-screen'>
+      <div className='flex flex-col h-screen'>
         <div className='flex items-center justify-center h-full'>
           {/* <LongdoDemo value={[watchStartLocation, watchEndLocation]} disabled /> */}
           <MapTest disabled callback={mapCallback} />
@@ -351,6 +359,7 @@ export default function CurrentLocation() {
               </div>
               <div className='absolute top-[60px] left-[250px] z-10'>
                 <Button
+                  onClick={handleSwap}
                   startIcon={
                     <Icon
                       name='sync_alt'
@@ -405,10 +414,12 @@ export default function CurrentLocation() {
                 placeholder='บอกอะไรกับคนขับสักหน่อย'
               />
             </div>
-            <Button type='submit'>ค้นหาคนขับ</Button>
+            <Button onClick={handleSubmit(submitForm)} type='submit'>
+              ค้นหาคนขับ
+            </Button>
           </div>
         </div>
-      </form>
+      </div>
     </>
   )
 }
