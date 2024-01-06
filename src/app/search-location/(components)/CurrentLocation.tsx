@@ -9,12 +9,13 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { debounce } from 'lodash'
 import MapTest, { map } from '@/longdo/MapTest'
+
+import { io } from 'socket.io-client'
 import {
   queryLocation,
   queryLocationByGeoLocation,
   querySuggestLocation,
 } from '../(api)/getLongDoApi'
-import { io } from 'socket.io-client'
 interface IGeoLatLon {
   lat: number
   lon: number
@@ -101,6 +102,7 @@ export default function CurrentLocation() {
     control,
     watch,
     setValue,
+    register,
     formState: { errors },
   } = useForm<searchDriverData>({
     resolver: zodResolver(searchDriverSchema),
@@ -410,6 +412,7 @@ export default function CurrentLocation() {
             <div className='text-label flex-col flex gap-1'>
               <p>รายละเอียดเพิ่มเติม</p>
               <Input
+                register={register('notes')}
                 inputClassName='h-[56px] w-full border rounded px-4 py-2 text-secondary border-borderGray'
                 placeholder='บอกอะไรกับคนขับสักหน่อย'
               />
