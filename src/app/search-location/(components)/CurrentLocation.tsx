@@ -283,12 +283,12 @@ export default function CurrentLocation() {
       <form
         onSubmit={handleSubmit(submitForm)}
         className='flex flex-col h-screen'>
-        <div className='flex items-center justify-center h-1/2'>
+        <div className='flex items-center justify-center h-full'>
           {/* <LongdoDemo value={[watchStartLocation, watchEndLocation]} disabled /> */}
           <MapTest disabled callback={mapCallback} />
         </div>
         <div
-          className='rounded-t-5xl bg-white flex justify-center px-8 py-9 h-[50%]'
+          className='rounded-t-5xl bg-white flex justify-center px-8 py-9 h-3/5'
           style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}>
           <div className='flex flex-col gap-5 w-80 overflow-auto'>
             <p className='text-3xl text-secondary font-light'>
