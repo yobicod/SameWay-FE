@@ -122,10 +122,6 @@ export default function CurrentLocation() {
       data?.postcode,
     ]
     setStartLocationDetail(detail.join(' '))
-    // const result = await axios.get(
-    //   `https://api.longdo.com/map/services/address?lon=${geoEndLon}&lat=${geoEndLat}&noelevation=1&key=${process.env.NEXT_LONGDO_MAP}`
-    // )
-    // console.log('end', result)
   }
   async function queryEndLocationDetail(geoLocation: IGeoLatLon) {
     const geoEndLat = geoLocation.lat
@@ -144,7 +140,7 @@ export default function CurrentLocation() {
       data?.province,
       data?.postcode,
     ]
-    console.log(data)
+
     setEndLocationDetail(detail.join(' '))
   }
   const debounceHandleSearchLocation = debounce(querySuggestLocation, 700)
@@ -185,7 +181,6 @@ export default function CurrentLocation() {
                     key={`location-${location.w}`}
                     className='p-1 rounded hover:text-white hover:bg-secondary cursor-pointer'
                     onClick={() => {
-                      console.log(location.w)
                       selectLocation(location.w, 'start')
                       setShowSuggestion(false)
                     }}>
@@ -283,7 +278,6 @@ export default function CurrentLocation() {
       }
     }, 500)
   }
-  console.log(watchEndLocation)
   return (
     <>
       <form
