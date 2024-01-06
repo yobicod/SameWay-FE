@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { debounce } from 'lodash'
 import MapTest, { map } from '@/longdo/MapTest'
 import {
@@ -14,12 +14,57 @@ import {
   queryLocationByGeoLocation,
   querySuggestLocation,
 } from '../(api)/getLongDoApi'
+import { io } from 'socket.io-client'
 interface IGeoLatLon {
   lat: number
   lon: number
 }
 type Map = 'start' | 'end' | undefined
 export default function CurrentLocation() {
+  const socket = io(`${process.env.NEXT_PUBLIC_API_URL}`, {
+    transports: ['websocket'],
+  })
+  useEffect(() => {
+    socket.on('connect', () => {
+      console.log('Connect to server successful✅')
+    })
+
+    socket.on('driverStatus', (data) => {
+      console.log('Data from server => ', data)
+    })
+
+    socket.on('waitingForDriver', (data: any) => {
+      console.log(data)
+    })
+
+    //  socket.emit('waitForPassenger', {
+    //    fullName: 'Visal Suwanarat',
+    //    driverEmail: '63070158@kmitl.ac.th',
+    //    driverLat: 10.0,
+    //    driverLong: 10.0,
+    //    time: 12.0,
+    //    status: 'open',
+    //    capacity: 4,
+    //    carType: 'car',
+    //    plate: 'aasd213',
+    //    sex: 'Male',
+    //    phoneNumber: '0658386230',
+    //  })
+
+    //  socket.emit('findDriver', {
+    //    fullName: 'Visal Suwanarat',
+    //    driverEmail: '63070158@kmitl.ac.th',
+    //    driverLat: 10.0,
+    //    driverLong: 10.0,
+    //    time: 12.0,
+    //    status: 'open',
+    //    capacity: 4,
+    //    carType: 'car',
+    //    plate: 'aasd213',
+    //    sex: 'Male',
+    //    phoneNumber: '0658386230',
+    //  })
+  }, [])
   const [showMap, setShowMap] = useState<Map>()
   const [showSuggestion, setShowSuggestion] = useState(false)
   const [search, setSearch] = useState('')
@@ -86,7 +131,6 @@ export default function CurrentLocation() {
         Object.keys(watchEndLocation).length > 0
       ) {
         map.Route.search()
-        console.log(map.Route.list())
       }
     }, 500)
   }
@@ -150,6 +194,19 @@ export default function CurrentLocation() {
   const debounceHandleSearchLocation = debounce(getSuggestLocation, 700)
   const submitForm = async (data: searchDriverData) => {
     console.log('daw', data)
+    socket.emit('findDriver', {
+      fullName: 'Athichart Chusri',
+      driverEmail: '63070181@kmitl.ac.th',
+      driverLat: data.locationStart.lat,
+      driverLong: data.locationStart.lon,
+      time: 12.0,
+      status: 'open',
+      capacity: 4,
+      carType: 'car',
+      plate: 'aasd213',
+      sex: 'Male',
+      phoneNumber: '0658386230',
+    })
   }
   if (showMap === 'start') {
     return (
