@@ -336,93 +336,89 @@ export default function CurrentLocation() {
   }
 
   return (
-    <>
-      <div className='flex flex-col h-screen'>
-        <div className='flex items-center justify-center h-full'>
-          {/* <LongdoDemo value={[watchStartLocation, watchEndLocation]} disabled /> */}
-          <MapTest disabled callback={mapCallback} />
-        </div>
-        <div
-          className='rounded-t-5xl bg-white flex justify-center px-8 py-9 h-3/5'
-          style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}>
-          <div className='flex flex-col gap-5 w-80 overflow-auto'>
-            <p className='text-3xl text-secondary font-light'>
-              วันนี้คุณปุยปุยอยาก{' '}
-              <span className='font-medium'>ไปที่ไหน ?</span>
-            </p>
-            <div className='relative rounded-[25px] p-4 flex gap-3 flex-col justify-center items-center bg-fieldGray pl-10'>
-              <div className='absolute left-6'>
-                <Image
-                  src='/image/line.svg'
-                  width={26}
-                  height={87}
-                  alt='app-logo'
-                />
-              </div>
-              <div className='absolute top-[60px] left-[250px] z-10'>
-                <Button
-                  onClick={handleSwap}
-                  startIcon={
-                    <Icon
-                      name='sync_alt'
-                      className='material-symbols-outlined rotate-90'
-                    />
-                  }
-                  className='w-11 h-11 rounded-full bg-fieldOrange '
-                />
-              </div>
-              <div className='w-full'>
-                <div
-                  onClick={() => setShowMap('start')}
-                  className='flex gap-2 bg-white rounded-4xl h-[58px] items-center p-2 text-stroke'>
-                  <Icon
-                    name='location_on'
-                    className='material-symbols-outlined text-fieldOrange md-30'
-                  />
-                  <p className='truncate'>
-                    {startLocationDetail || 'เลือกสถานที่ต้นทาง'}
-                  </p>
-                </div>
-
-                {errors.locationStart && (
-                  <p className='text-red-500 font-light text-sm px-4'>
-                    {errors.locationStart.lat?.message}
-                  </p>
-                )}
-              </div>
-              <div className='w-full'>
-                <div
-                  onClick={() => setShowMap('end')}
-                  className='flex gap-2 bg-white rounded-4xl h-[58px] items-center p-2 text-stroke'>
-                  <Icon
-                    name='location_on'
-                    className='material-symbols-outlined text-secondary md-30'
-                  />
-                  <p className='truncate'>
-                    {endLocationDetail || 'เลือกสถานที่ปลายทาง'}
-                  </p>
-                </div>
-                {errors.locationEnd && (
-                  <p className='text-red-500 font-light text-sm px-4'>
-                    {errors.locationEnd.lat?.message}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className='text-label flex-col flex gap-1'>
-              <p>รายละเอียดเพิ่มเติม</p>
-              <Input
-                register={register('notes')}
-                inputClassName='h-[56px] w-full border rounded px-4 py-2 text-secondary border-borderGray'
-                placeholder='บอกอะไรกับคนขับสักหน่อย'
+    <div className='flex flex-col h-screen justify-between overflow-auto'>
+      <div className='flex items-center justify-center min-h-[40%] flex-1'>
+        <MapTest disabled callback={mapCallback} />
+      </div>
+      <div
+        className='rounded-t-5xl bg-white flex justify-center px-8 py-9 h-fit'
+        style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}>
+        <div className='flex flex-col gap-5 w-80'>
+          <p className='text-3xl text-secondary font-light'>
+            วันนี้คุณปุยปุยอยาก <span className='font-medium'>ไปที่ไหน ?</span>
+          </p>
+          <div className='relative rounded-[25px] p-4 flex gap-3 flex-col justify-center items-center bg-fieldGray pl-10'>
+            <div className='absolute left-6'>
+              <Image
+                src='/image/line.svg'
+                width={26}
+                height={87}
+                alt='app-logo'
               />
             </div>
-            <Button onClick={handleSubmit(submitForm)} type='submit'>
-              ค้นหาคนขับ
-            </Button>
+            <div className='absolute top-[60px] left-[250px] z-10'>
+              <Button
+                onClick={handleSwap}
+                startIcon={
+                  <Icon
+                    name='sync_alt'
+                    className='material-symbols-outlined rotate-90'
+                  />
+                }
+                className='w-11 h-11 rounded-full bg-fieldOrange '
+              />
+            </div>
+            <div className='w-full'>
+              <div
+                onClick={() => setShowMap('start')}
+                className='flex gap-2 bg-white rounded-4xl h-[58px] items-center p-2 text-stroke'>
+                <Icon
+                  name='location_on'
+                  className='material-symbols-outlined text-fieldOrange md-30'
+                />
+                <p className='truncate'>
+                  {startLocationDetail || 'เลือกสถานที่ต้นทาง'}
+                </p>
+              </div>
+
+              {errors.locationStart && (
+                <p className='text-red-500 font-light text-sm px-4'>
+                  {errors.locationStart.lat?.message}
+                </p>
+              )}
+            </div>
+            <div className='w-full'>
+              <div
+                onClick={() => setShowMap('end')}
+                className='flex gap-2 bg-white rounded-4xl h-[58px] items-center p-2 text-stroke'>
+                <Icon
+                  name='location_on'
+                  className='material-symbols-outlined text-secondary md-30'
+                />
+                <p className='truncate'>
+                  {endLocationDetail || 'เลือกสถานที่ปลายทาง'}
+                </p>
+              </div>
+              {errors.locationEnd && (
+                <p className='text-red-500 font-light text-sm px-4'>
+                  {errors.locationEnd.lat?.message}
+                </p>
+              )}
+            </div>
           </div>
+          <div className='text-label flex-col flex gap-1'>
+            <p>รายละเอียดเพิ่มเติม</p>
+            <Input
+              register={register('notes')}
+              inputClassName='h-[56px] w-full border rounded px-4 py-2 text-secondary border-borderGray'
+              placeholder='บอกอะไรกับคนขับสักหน่อย'
+            />
+          </div>
+          <Button onClick={handleSubmit(submitForm)} type='submit'>
+            ค้นหาคนขับ
+          </Button>
         </div>
       </div>
-    </>
+    </div>
   )
 }
