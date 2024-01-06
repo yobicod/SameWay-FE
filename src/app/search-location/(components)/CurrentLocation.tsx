@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import Image from 'next/image'
-import LongdoDemo from '@/longdo/LongdoDemo'
 import { useState } from 'react'
 import { debounce } from 'lodash'
 import axios from 'axios'
@@ -21,17 +20,29 @@ export default function CurrentLocation() {
   const [showSuggestion, setShowSuggestion] = useState(false)
   const [search, setSearch] = useState('')
   const [suggestLocation, setSuggestLocation] = useState([])
-  const [startLocationDetail, setStartLocationDetail] = useState()
-  const [endLocationDetail, setEndLocationDetail] = useState()
+  const [startLocationDetail, setStartLocationDetail] = useState('')
+  const [endLocationDetail, setEndLocationDetail] = useState('')
 
   const searchDriverSchema = z.object({
     locationStart: z.object({
-      lon: z.number(),
-      lat: z.number(),
+      lon: z.number({
+        invalid_type_error: 'กรุณาระบุสถานที่ต้นทาง',
+        required_error: 'กรุณาระบุสถานที่ต้นทาง',
+      }),
+      lat: z.number({
+        invalid_type_error: 'กรุณาระบุสถานที่ต้นทาง',
+        required_error: 'กรุณาระบุสถานที่ต้นทาง',
+      }),
     }),
     locationEnd: z.object({
-      lon: z.number(),
-      lat: z.number(),
+      lon: z.number({
+        invalid_type_error: 'กรุณาระบุสถานที่ต้นทาง',
+        required_error: 'กรุณาระบุสถานที่ต้นทาง',
+      }),
+      lat: z.number({
+        invalid_type_error: 'กรุณาระบุสถานที่ต้นทาง',
+        required_error: 'กรุณาระบุสถานที่ต้นทาง',
+      }),
     }),
     notes: z.string(),
   })
@@ -71,7 +82,7 @@ export default function CurrentLocation() {
     setSearch(keywords)
 
     if (map === 'start') {
-      setStartLocationDetail(result.data.data[0])
+      setStartLocationDetail(result.data.data[0].name || '')
       setValue(
         'locationStart',
         {
@@ -81,7 +92,7 @@ export default function CurrentLocation() {
         { shouldValidate: true }
       )
     } else if (map === 'end') {
-      setEndLocationDetail(result.data.data[0])
+      setEndLocationDetail(result.data.data[0].name || '')
       setValue(
         'locationEnd',
         {
@@ -92,7 +103,7 @@ export default function CurrentLocation() {
       )
     }
   }
-  async function queryLocationDetail(geoLocation: IGeoLatLon) {
+  async function queryStartLocationDetail(geoLocation: IGeoLatLon) {
     const geoStartLat = geoLocation.lat
     const geoStartLon = geoLocation.lon
     // const geoEndLat = geoLocation.locationEnd.lat
@@ -101,12 +112,40 @@ export default function CurrentLocation() {
     const result = await axios.get(
       `https://api.longdo.com/map/services/address?lon=${geoStartLon}&lat=${geoStartLat}&noelevation=1&key=15f064efea8a51cdfad9503113d16614`
     )
-    console.log('start', result.data)
-
+    const data = result.data
+    const detail = [
+      data?.aoi,
+      data?.road,
+      data?.district,
+      data?.subdistrict,
+      data?.province,
+      data?.postcode,
+    ]
+    setStartLocationDetail(detail.join(' '))
     // const result = await axios.get(
     //   `https://api.longdo.com/map/services/address?lon=${geoEndLon}&lat=${geoEndLat}&noelevation=1&key=${process.env.NEXT_LONGDO_MAP}`
     // )
     // console.log('end', result)
+  }
+  async function queryEndLocationDetail(geoLocation: IGeoLatLon) {
+    const geoEndLat = geoLocation.lat
+    const geoEndLon = geoLocation.lon
+
+    const result = await axios.get(
+      `https://api.longdo.com/map/services/address?lon=${geoEndLon}&lat=${geoEndLat}&noelevation=1&key=15f064efea8a51cdfad9503113d16614`
+    )
+
+    const data = result.data
+    const detail = [
+      data?.aoi,
+      data?.road,
+      data?.district,
+      data?.subdistrict,
+      data?.province,
+      data?.postcode,
+    ]
+    console.log(data)
+    setEndLocationDetail(detail.join(' '))
   }
   const debounceHandleSearchLocation = debounce(querySuggestLocation, 700)
   const submitForm = async (data: searchDriverData) => {
@@ -122,9 +161,9 @@ export default function CurrentLocation() {
             // <LongdoDemo height='h-full' onChange={onChange} value={value} />
             <MapTest
               height='h-full'
-              onChange={(val) => {
-                onChange(val)
-                queryLocationDetail(val, 'start')
+              onChange={(geoLocation) => {
+                onChange(geoLocation)
+                queryStartLocationDetail(geoLocation)
               }}
               value={value}
             />
@@ -178,7 +217,14 @@ export default function CurrentLocation() {
           name='locationEnd'
           render={({ field: { onChange, value } }) => (
             // <LongdoDemo height='h-full' onChange={onChange} value={value} />
-            <MapTest height='h-full' onChange={onChange} value={value} />
+            <MapTest
+              height='h-full'
+              onChange={(geoLocation) => {
+                onChange(geoLocation)
+                queryEndLocationDetail(geoLocation)
+              }}
+              value={value}
+            />
           )}
         />
         <div className='absolute top-10 flex justify-center w-full'>
@@ -220,94 +266,107 @@ export default function CurrentLocation() {
       </div>
     )
   }
+  const mapCallback = () => {
+    setTimeout(() => {
+      if (Object.keys(watchStartLocation).length > 0) {
+        map.Route.add(new longdo.Marker(watchStartLocation))
+        map.location(watchStartLocation)
+      }
+      if (Object.keys(watchEndLocation).length > 0) {
+        map.Route.add(new longdo.Marker(watchEndLocation))
+      }
+      if (
+        Object.keys(watchStartLocation).length > 0 &&
+        Object.keys(watchEndLocation).length > 0
+      ) {
+        map.Route.search()
+      }
+    }, 500)
+  }
+  console.log(watchEndLocation)
   return (
     <>
-      <form onSubmit={handleSubmit(submitForm)}>
-        <div className='flex items-center justify-center h-full'>
+      <form
+        onSubmit={handleSubmit(submitForm)}
+        className='flex flex-col h-screen'>
+        <div className='flex items-center justify-center h-1/2'>
           {/* <LongdoDemo value={[watchStartLocation, watchEndLocation]} disabled /> */}
-          <MapTest
-            disabled
-            callback={() => {
-              setTimeout(() => {
-                map.Route.add(new longdo.Marker(watchStartLocation))
-                map.Route.add(new longdo.Marker(watchEndLocation))
-                map.Route.search()
-              }, 1000)
-            }}
-          />
+          <MapTest disabled callback={mapCallback} />
         </div>
         <div
-          className='py-8 rounded-t-[50px] flex gap-6 flex-col justify-center items-center bg-white pr-8 h-90'
+          className='rounded-t-5xl bg-white flex justify-center px-8 py-9 h-[50%]'
           style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}>
-          <div className='flex gap-6 flex-col w-80'>
-            <div className='flex flex-col gap-5 w-[354px]'>
-              <p className='text-3xl text-secondary font-light'>
-                วันนี้คุณปุยปุยอยาก{' '}
-                <span className='font-medium'>ไปที่ไหน ?</span>
-              </p>
-              <div className='relative h-[162px] rounded-[25px] flex gap-3 flex-col justify-center items-center bg-fieldGray pl-10 px-4'>
-                <div className='absolute left-[23px]'>
-                  <Image
-                    src='/image/line.svg'
-                    width={26}
-                    height={87}
-                    alt='app-logo'
-                  />
-                </div>
-                <div className='absolute top-[60px] left-[260px] z-10'>
-                  <Button
-                    startIcon={
-                      <Icon
-                        name='sync_alt'
-                        className='material-symbols-outlined rotate-90'
-                      />
-                    }
-                    className='w-[44px] h-[44px] rounded-full flex justify-center bg-fieldOrange '
-                  />
-                </div>
-                <div className='w-full'>
-                  <div
-                    onClick={() => setShowMap('start')}
-                    className='flex gap-2 bg-white rounded-4xl h-[58px] items-center p-2 text-stroke'>
-                    <Icon
-                      name='location_on'
-                      className='material-symbols-outlined text-fieldOrange md-30'
-                    />
-                    <p>{startLocationDetail?.name || 'เลือกสถานที่ต้นทาง'}</p>
-                  </div>
-
-                  {errors.locationStart && (
-                    <p className='text-red-500 font-light text-sm'>
-                      {errors.locationStart.message}
-                    </p>
-                  )}
-                </div>
-                <div className='w-full'>
-                  <div
-                    onClick={() => setShowMap('end')}
-                    className='flex gap-2 bg-white rounded-4xl h-[58px] items-center p-2 text-stroke'>
-                    <Icon
-                      name='location_on'
-                      className='material-symbols-outlined text-secondary md-30'
-                    />
-                    <p>{endLocationDetail?.name || 'เลือกสถานที่ปลายทาง'}</p>
-                  </div>
-                  {errors.locationEnd && (
-                    <p className='text-red-500 font-light text-sm'>
-                      {errors.locationEnd.message}
-                    </p>
-                  )}
-                </div>
-              </div>
-              <div className='text-label  flex-col flex gap-1'>
-                <p>รายละเอียดเพิ่มเติม</p>
-                <Input
-                  inputClassName='h-[56px] w-full border rounded px-4 py-2 text-secondary border-borderGray'
-                  placeholder='บอกอะไรก้บอกอิอิ'
+          <div className='flex flex-col gap-5 w-80 overflow-auto'>
+            <p className='text-3xl text-secondary font-light'>
+              วันนี้คุณปุยปุยอยาก{' '}
+              <span className='font-medium'>ไปที่ไหน ?</span>
+            </p>
+            <div className='relative rounded-[25px] p-4 flex gap-3 flex-col justify-center items-center bg-fieldGray pl-10'>
+              <div className='absolute left-6'>
+                <Image
+                  src='/image/line.svg'
+                  width={26}
+                  height={87}
+                  alt='app-logo'
                 />
               </div>
-              <Button type='submit'>ค้นหาคนขับ</Button>
+              <div className='absolute top-[60px] left-[250px] z-10'>
+                <Button
+                  startIcon={
+                    <Icon
+                      name='sync_alt'
+                      className='material-symbols-outlined rotate-90'
+                    />
+                  }
+                  className='w-11 h-11 rounded-full bg-fieldOrange '
+                />
+              </div>
+              <div className='w-full'>
+                <div
+                  onClick={() => setShowMap('start')}
+                  className='flex gap-2 bg-white rounded-4xl h-[58px] items-center p-2 text-stroke'>
+                  <Icon
+                    name='location_on'
+                    className='material-symbols-outlined text-fieldOrange md-30'
+                  />
+                  <p className='truncate'>
+                    {startLocationDetail || 'เลือกสถานที่ต้นทาง'}
+                  </p>
+                </div>
+
+                {errors.locationStart && (
+                  <p className='text-red-500 font-light text-sm px-4'>
+                    {errors.locationStart.lat?.message}
+                  </p>
+                )}
+              </div>
+              <div className='w-full'>
+                <div
+                  onClick={() => setShowMap('end')}
+                  className='flex gap-2 bg-white rounded-4xl h-[58px] items-center p-2 text-stroke'>
+                  <Icon
+                    name='location_on'
+                    className='material-symbols-outlined text-secondary md-30'
+                  />
+                  <p className='truncate'>
+                    {endLocationDetail || 'เลือกสถานที่ปลายทาง'}
+                  </p>
+                </div>
+                {errors.locationEnd && (
+                  <p className='text-red-500 font-light text-sm px-4'>
+                    {errors.locationEnd.lat?.message}
+                  </p>
+                )}
+              </div>
             </div>
+            <div className='text-label flex-col flex gap-1'>
+              <p>รายละเอียดเพิ่มเติม</p>
+              <Input
+                inputClassName='h-[56px] w-full border rounded px-4 py-2 text-secondary border-borderGray'
+                placeholder='บอกอะไรกับคนขับสักหน่อย'
+              />
+            </div>
+            <Button type='submit'>ค้นหาคนขับ</Button>
           </div>
         </div>
       </form>
