@@ -23,7 +23,7 @@ interface IGeoLatLon {
 }
 type Map = 'start' | 'end' | undefined;
 export default function CurrentLocation() {
-  const [driverList, setDriverList] = useState<any>();
+  const [driverList, setDriverList] = useState<any>([]);
 
   const [socket, setSocket] = useState<any>(null);
   useEffect(() => {
