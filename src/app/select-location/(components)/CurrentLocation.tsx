@@ -24,6 +24,7 @@ interface IGeoLatLon {
 type Map = 'start' | 'end' | undefined;
 export default function CurrentLocation() {
   const [driverList, setDriverList] = useState<any>();
+
   const [socket, setSocket] = useState<any>(null);
   useEffect(() => {
     const newSocket = io(`${process.env.NEXT_PUBLIC_API_URL}`, {
@@ -315,6 +316,7 @@ export default function CurrentLocation() {
 
   return (
     <div className='flex flex-col h-screen justify-between overflow-auto'>
+      {!driverList.length ? 'not found' : 'found'}
       <div className='flex items-center justify-center min-h-[40%] flex-1'>
         <MapTest disabled callback={mapCallback} />
       </div>
