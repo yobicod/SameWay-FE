@@ -47,7 +47,7 @@ export default function Home({ location }: IProps) {
   };
 
   const handleClickPassengerButton = () => {
-    router.push('search-location');
+    router.push('select-location');
   };
 
   const handleClickHistoryButton = () => {
