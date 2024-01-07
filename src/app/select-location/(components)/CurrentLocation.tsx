@@ -16,6 +16,7 @@ import {
   queryLocationByGeoLocation,
   querySuggestLocation,
 } from '../(api)/getLongDoApi';
+
 interface IGeoLatLon {
   lat: number;
   lon: number;
@@ -33,8 +34,9 @@ export default function CurrentLocation() {
       console.log('Connect to server successful✅');
     });
 
-    newSocket.on('waitingForDriver', (data) => {
-      console.log('Waiting for driver:', data);
+    newSocket.on('waitingForDriver', (dataList) => {
+      console.log('Waiting for driver:', dataList);
+      setDriverList(dataList);
     });
 
     setSocket(newSocket);
@@ -185,19 +187,9 @@ export default function CurrentLocation() {
   };
   const submitForm = async (data: searchDriverData) => {
     if (socket) {
-      console.log('Emit -> ', data);
       socket.emit('findDriver', {
-        fullName: 'Athichart Chusri',
-        driverEmail: '63070181@kmitl.ac.th',
-        driverLat: data.locationStart.lat,
-        driverLong: data.locationStart.lon,
-        time: 12.0,
-        status: 'open',
-        capacity: 4,
-        carType: 'car',
-        plate: 'aasd213',
-        sex: 'Male',
-        phoneNumber: '0658386230',
+        userLat: data.locationStart.lat,
+        userLong: data.locationStart.lon,
       });
     }
   };
