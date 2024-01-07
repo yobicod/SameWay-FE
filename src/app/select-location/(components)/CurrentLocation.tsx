@@ -104,6 +104,9 @@ export default function CurrentLocation() {
   const watchEndLocation = watch('locationEnd')
   const mapCallback = () => {
     setTimeout(() => {
+      if (Object.keys(watchStartLocation).length == 0) {
+        Object.keys(watchStartLocation).length
+      }
       if (Object.keys(watchStartLocation).length > 0) {
         map.Route.add(new longdo.Marker(watchStartLocation))
         map.location(watchStartLocation)
@@ -313,7 +316,7 @@ export default function CurrentLocation() {
                 startIcon={
                   <Icon
                     name='sync_alt'
-                    className='material-symbols-outlined rotate-90'
+                    className='material-symbols-outlined rotate-90 cursor-pointer'
                   />
                 }
                 className='w-11 h-11 rounded-full bg-fieldOrange '

@@ -44,6 +44,8 @@ export default function MapTest({
   useEffect(() => {
     if (mounted) {
       mapCallback()
+    }
+    if (mounted && value) {
       setTimeout(() => {
         if (value?.lat && value.lon) {
           map.Overlays.add(new longdo.Marker(value))
@@ -67,7 +69,6 @@ export default function MapTest({
       placeholderHtml: '<p>Loading map...</p>',
       zoom: 15,
     })
-    if (!value) map.location(longdo.LocationMode.Geolocation)
   }
   function addRoute() {
     let mouseLocation = map.location(longdo.LocationMode.Pointer)
@@ -82,7 +83,6 @@ export default function MapTest({
       if (onChange) onChange(mouseLocation)
       // setLocations(mouseLocation)
     }
-    console.log(value)
   }
   return (
     <>
