@@ -67,7 +67,7 @@ export default function MapTest({
       placeholderHtml: '<p>Loading map...</p>',
       zoom: 15,
     })
-    map.location(longdo.LocationMode.Geolocation)
+    if (!value) map.location(longdo.LocationMode.Geolocation)
   }
   function addRoute() {
     let mouseLocation = map.location(longdo.LocationMode.Pointer)
