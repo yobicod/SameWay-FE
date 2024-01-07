@@ -25,7 +25,7 @@ export default function DriverInformation() {
 
   return (
     <div
-      className='w-full flex flex-end bg-white rounded-t-[3rem] '
+      className='w-full bg-white rounded-t-5xl '
       style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}
     >
       <div className='flex flex-col p-8 space-y-4'>

@@ -7,10 +7,9 @@ import { IEnum } from '../api-caller/interfaces/interfaces';
 
 export default async function ReportPage() {
   const problem: IEnum[] = (await getEnumProblem()) || [];
-  console.log('🚀 ~ file: page.tsx:10 ~ ReportPage ~ problem:', problem);
 
   return (
-    <div className='flex flex-col gap-4 py-8'>
+    <div className='flex flex-col gap-4 bg-white'>
       <NavbarUser />
       <div
         className='inset-x-0 rounded-t-5xl flex flex-col justify-start items-center gap-6  '

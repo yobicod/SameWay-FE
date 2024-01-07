@@ -12,7 +12,7 @@ export default async function RegisterDriverPage() {
   const carTypeData = await getEnumCarTypes();
   const carTypeEnum = carTypeData?.map((type) => type.value) || [];
   return (
-    <div className='flex flex-col gap-4 py-8'>
+    <div className='flex flex-col gap-4 bg-white'>
       <NavbarUser />
       <div
         className='py-8 rounded-t-5xl flex gap-6 flex-col justify-center items-center'

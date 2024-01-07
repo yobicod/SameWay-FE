@@ -1,10 +1,17 @@
 import React from 'react';
 import DriverInformation from './(component)/DriverInformation';
+import DriverList from './(component)/DriverList';
+import FoundDriver from './(component)/FoundDriver';
 
 export default function DriverInformationPage() {
   return (
-    <div className='flex flex-col justify-between h-screen w-full'>
-      <DriverInformation />
+    <div>
+      
+      {/* <DriverInformation /> */}
+      <DriverList />
+      {/* <FoundDriver /> */}
+     
+     
     </div>
   );
 }
