@@ -42,7 +42,7 @@ export default function DriverList() {
                   <p className='break-words w-full'>Airport rail link</p>
                 </div>
 
-                <div className='w-0.5 min-h-[11px] bg-borderSwitch mt-[-3px]'></div>
+                <div className='w-0.5 min-h-[11px] bg-borderSwitch mt-[-3px] ml-[0.7px]'/>
 
                 <div className='flex gap-2 justify-items-center items-center mt-[-3px]'>
                   <div className='rounded-full bg-secondary w-1 h-1' />

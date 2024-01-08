@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import ReactStars from 'react-stars';
 
 export default function DriverInformation() {
   // change this later email must be email of driver not logged in acc
@@ -48,7 +49,14 @@ export default function DriverInformation() {
             className='w-32'
           />
           <p className='text-secondary text-2xl font-medium'>สมศรี หมีอ้วน</p>
-          <div>⭐️⭐️⭐️⭐️⭐️</div>
+          <div><ReactStars
+                count={5}
+                size={18}
+                value={4}
+                color2='#ffd700'
+                half={false}
+                edit={false}
+              /></div>
         </div>
         <div className='flex flex-col space-y-3'>
           <div className='p-4 flex border-2 rounded-3xl space-x-5'>
