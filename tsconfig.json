@@ -28,7 +28,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/longdo/LongdoMap.js",
-    "src/longdo/LongdoDemo.js"
+    "src/longdo/LongdoDemo.tsx"
   ],
   "exclude": ["node_modules"]
 }

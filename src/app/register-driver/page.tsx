@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React from 'react';
 import DriverForm from './(components)/DriverForm';
 import { getGender } from '../api-caller/get-enum-gender';
