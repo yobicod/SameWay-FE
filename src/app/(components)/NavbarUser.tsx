@@ -1,6 +1,9 @@
+'use client';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 
 export default function NavbarUser() {
+  const { data: userData } = useSession();
   return (
     <div className='flex justify-center items-center w-full h-20 bg-white gap-x-5 px-7'>
       <Image
@@ -10,13 +13,13 @@ export default function NavbarUser() {
         alt='app-logo'
         className='w-[72px]'
       />
-      <div className='border border-secondary w-full'/>
+      <div className='border border-secondary w-full' />
       <Image
-        src='/imgFoundDriver/user_profile_navbar.svg'
+        src={userData?.user?.image || 'imgFoundDriver/user_profile_navbar.svg'}
         width={0}
         height={0}
         alt='app-logo'
-        className='w-12'
+        className='w-12 rounded-full'
       />
     </div>
   );
