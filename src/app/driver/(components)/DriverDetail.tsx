@@ -19,7 +19,7 @@ export default function DriverDetail() {
             <div className='rounded-full bg-secondary w-2 h-2' />
           </div>
           <div className='flex flex-col gap-3'>
-            <div className='bg-white rounded-[20px] '>
+            <div className='bg-white rounded-2.5xl '>
               <div className='border-b-2 border-fieldGray flex justify-center py-3 px-4 gap-1 items-center '>
                 <Icon name='location_on' className='text-fieldOrange' />
                 <p>แอพอร์ตเรลลิ้ง</p>
@@ -30,7 +30,7 @@ export default function DriverDetail() {
                 </p>
               </div>
             </div>
-            <div className='bg-white rounded-[20px] '>
+            <div className='bg-white rounded-2.5xl '>
               <div className='border-b-2 border-fieldGray flex justify-center py-3 px-4 gap-1 items-center '>
                 <Icon name='location_on' className='text-secondary' />
                 <p>ยูเนี่ยนมอลล์</p>

@@ -61,7 +61,7 @@ export default function History() {
   }, [userData]);
 
   return (
-    <div>
+    <div className='bg-black'>
       <div className='w-[367px] h-[46px] bg-bgTab rounded-xl flex justify-between items-center gap-1 text-secondary '>
         <Button
           className={clsx(
@@ -83,10 +83,10 @@ export default function History() {
         </Button>
       </div>
       {tab === 'Passenger' ? (
-        <div>
+        <div className='bg-black'>
           {userHistory.map((data) => (
             <div className='mt-3' key={data.id}>
-              <div className='w-[367px] min-h-[135px] border border-bgTab rounded-[20px]'>
+              <div className='w-[367px] min-h-[135px] border border-bgTab rounded-2.5xl'>
                 <div className='flex'>
                   <div className='w-2/3 ml-5 mt-5 text-base text-primary'>
                     <div className='flex mb-[-6px]'>
@@ -160,7 +160,7 @@ export default function History() {
         <div>
           {driverHistory.map((data) => (
             <div className='mt-3' key={data.id}>
-              <div className='w-[367px] min-h-[135px] border border-bgTab rounded-[20px]'>
+              <div className='w-[367px] min-h-[135px] border border-bgTab rounded-2.5xl'>
                 <div className='flex'>
                   <div className='w-2/3 ml-5 mt-5 text-base text-primary'>
                     <div className='flex mb-[-6px]'>

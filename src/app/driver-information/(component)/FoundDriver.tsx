@@ -3,12 +3,18 @@ import Image from 'next/image';
 import Button from '@/components/Button';
 import Icon from '@/components/Icon';
 import Link from 'next/link';
+import NavbarUser from '@/app/(components)/NavbarUser';
 
 export default function FoundDriver() {
   return (
-    <div className='w-full bg-white rounded-t-[3rem]'>
+    <>
+   
+        <NavbarUser/>
+      
+
+    <div className='w-full bg-white rounded-t-5xl absolute bottom-0'>
       <div className='flex justify-center items-center'>
-        <div className='flex p-6 flex-col space-y-4'>
+        <div className='flex p-6 flex-col gap-4'>
           <div className='flex pt-3 justify-between'>
             <div className='flex space-x-3'>
               <Image
@@ -45,12 +51,12 @@ export default function FoundDriver() {
                 alt='app-logo'
                 className='w-[0.4rem]'
               />
-              <div className='text-[#848181] text-base'>
+              <div className='text-primary text-base'>
                 <p>แอพอร์ตเรลลิ้ง</p>
                 <p>ยูเนี่ยนมอลล์</p>
               </div>
             </div>
-            <div className='border-l-2 border-[#B5B7B9] h-12'/>
+            <div className='border-l-2 border-borderSwitch h-12' />
             <div className='text-secondary'>
               <p className='text-xl'>120</p>
               <p>บาท</p>
@@ -65,5 +71,6 @@ export default function FoundDriver() {
         </div>
       </div>
     </div>
+    </>
   );
 }

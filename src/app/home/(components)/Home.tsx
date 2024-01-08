@@ -56,14 +56,15 @@ export default function Home({ location }: IProps) {
 
   return (
     <div className='relative text-secondary'>
-      <div className=' font-light text-xl min-h-[294px] py-8 rounded-t-5xl flex gap-6 flex-col items-center bg-[#216A5824] pt-12'>
+      {/* <div className=' font-light text-xl min-h-[294px] py-8 rounded-t-5xl flex gap-6 flex-col items-center bg-[#216A5824] pt-12'> */}
+      <div className=' font-light text-xl rounded-t-5xl flex gap-6 flex-col items-center bg-[#216A5824] pt-12'>
         <div className='w-4/5'>
           <p>สวัสดี คุณ {userFirstName} :) </p>
           <p>
             ยินดีต้อนรับเข้าสู่ <span className=' font-medium'>SameWay!</span>
           </p>
         </div>
-        <div className='w-4/5'>
+        <div className='w-4/5 '>
           <Image
             src='/image/lineHome.svg'
             width={108.734}
@@ -82,9 +83,8 @@ export default function Home({ location }: IProps) {
             }
           />
         </div>
-      </div>
-      <div
-        className='font-semibold text-xl mt-[-32px] py-8 rounded-t-5xl flex gap-6 flex-col justify-center items-center bg-white'
+        <div
+        className='w-full font-semibold text-xl py-8 rounded-t-5xl flex gap-6 flex-col justify-center items-center bg-white'
         style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}
       >
         <div className='flex justify-center items-center  gap-8'>
@@ -166,6 +166,8 @@ export default function Home({ location }: IProps) {
           />
         </div>
       </div>
+      </div>
+     
     </div>
   );
 }
