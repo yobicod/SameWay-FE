@@ -79,7 +79,6 @@ export default function CurrentLocation() {
     }),
     notes: z.string(),
   })
-
   type searchDriverData = z.infer<typeof searchDriverSchema>
   const {
     handleSubmit,
@@ -104,8 +103,11 @@ export default function CurrentLocation() {
   const watchEndLocation = watch('locationEnd')
   const mapCallback = () => {
     setTimeout(() => {
-      if (Object.keys(watchStartLocation).length == 0) {
-        Object.keys(watchStartLocation).length
+      if (
+        Object.keys(watchStartLocation).length == 0 &&
+        Object.keys(watchEndLocation).length == 0
+      ) {
+        map.location(longdo.LocationMode.Geolocation)
       }
       if (Object.keys(watchStartLocation).length > 0) {
         map.Route.add(new longdo.Marker(watchStartLocation))
@@ -195,8 +197,10 @@ export default function CurrentLocation() {
         userLong: data.locationStart.lon,
       })
     }
+    console.log(data.locationStart.lat, data.locationStart.lon)
   }
-  console.log(searchStart)
+  console.log(watchStartLocation)
+
   if (showMap === 'start') {
     return (
       <div className='h-screen relative'>
