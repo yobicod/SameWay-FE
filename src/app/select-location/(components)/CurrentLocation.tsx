@@ -1,61 +1,61 @@
-'use client'
-import Button from '@/components/Button'
-import Input from '@/components/Input'
-import Icon from '@/components/Icon'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Controller, useForm } from 'react-hook-form'
-import { z } from 'zod'
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
-import { debounce } from 'lodash'
-import MapTest, { map } from '@/longdo/MapTest'
+'use client';
+import Button from '@/components/Button';
+import Input from '@/components/Input';
+import Icon from '@/components/Icon';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Controller, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { debounce } from 'lodash';
+import MapTest, { longdo, map } from '@/longdo/MapTest';
 
-import { io } from 'socket.io-client'
+import { io } from 'socket.io-client';
 import {
   queryLocation,
   queryLocationByGeoLocation,
   querySuggestLocation,
-} from '../(api)/getLongDoApi'
-import SearchSelect from '@/components/SearchSelect'
+} from '../(api)/getLongDoApi';
+import SearchSelect from '@/components/SearchSelect';
 
 interface IGeoLatLon {
-  lat: number
-  lon: number
+  lat: number;
+  lon: number;
 }
-type Map = 'start' | 'end' | undefined
+type Map = 'start' | 'end' | undefined;
 export default function CurrentLocation() {
-  const [driverList, setDriverList] = useState<any>([])
+  const [driverList, setDriverList] = useState<any>([]);
 
-  const [socket, setSocket] = useState<any>(null)
+  const [socket, setSocket] = useState<any>(null);
   useEffect(() => {
     const newSocket = io(`${process.env.NEXT_PUBLIC_API_URL}`, {
       transports: ['websocket'],
-    })
+    });
 
     newSocket.on('connect', () => {
-      console.log('Connect to server successful✅')
-    })
+      console.log('Connect to server successful✅');
+    });
 
     newSocket.on('waitingForDriver', (dataList) => {
-      console.log('Waiting for driver:', dataList)
-      setDriverList(dataList)
-    })
+      console.log('Waiting for driver:', dataList);
+      setDriverList(dataList);
+    });
 
-    setSocket(newSocket)
+    setSocket(newSocket);
 
     return () => {
       if (newSocket) {
-        newSocket.disconnect()
+        newSocket.disconnect();
       }
-    }
-  }, [])
-  const [showMap, setShowMap] = useState<Map>()
-  const [suggestLocation, setSuggestLocation] = useState([])
-  const [searchStart, setSearchStart] = useState('')
-  const [searchEnd, setSearchEnd] = useState('')
+    };
+  }, []);
+  const [showMap, setShowMap] = useState<Map>();
+  const [suggestLocation, setSuggestLocation] = useState([]);
+  const [searchStart, setSearchStart] = useState('');
+  const [searchEnd, setSearchEnd] = useState('');
 
-  const [startLocationDetail, setStartLocationDetail] = useState('')
-  const [endLocationDetail, setEndLocationDetail] = useState('')
+  const [startLocationDetail, setStartLocationDetail] = useState('');
+  const [endLocationDetail, setEndLocationDetail] = useState('');
   const searchDriverSchema = z.object({
     locationStart: z.object({
       lon: z.number({
@@ -78,8 +78,8 @@ export default function CurrentLocation() {
       }),
     }),
     notes: z.string(),
-  })
-  type searchDriverData = z.infer<typeof searchDriverSchema>
+  });
+  type searchDriverData = z.infer<typeof searchDriverSchema>;
   const {
     handleSubmit,
     control,
@@ -94,43 +94,43 @@ export default function CurrentLocation() {
       locationEnd: {},
       notes: '',
     },
-  })
+  });
 
   function onInputChange(keyword: string) {
-    debounceHandleSearchLocation(keyword)
+    debounceHandleSearchLocation(keyword);
   }
-  const watchStartLocation = watch('locationStart')
-  const watchEndLocation = watch('locationEnd')
+  const watchStartLocation = watch('locationStart');
+  const watchEndLocation = watch('locationEnd');
   const mapCallback = () => {
     setTimeout(() => {
       if (
         Object.keys(watchStartLocation).length == 0 &&
         Object.keys(watchEndLocation).length == 0
       ) {
-        map.location(longdo.LocationMode.Geolocation)
+        map.location(longdo.LocationMode.Geolocation);
       }
       if (Object.keys(watchStartLocation).length > 0) {
-        map.Route.add(new longdo.Marker(watchStartLocation))
-        map.location(watchStartLocation)
+        map.Route.add(new longdo.Marker(watchStartLocation));
+        map.location(watchStartLocation);
       }
       if (Object.keys(watchEndLocation).length > 0) {
-        map.Route.add(new longdo.Marker(watchEndLocation))
+        map.Route.add(new longdo.Marker(watchEndLocation));
       }
       if (
         Object.keys(watchStartLocation).length > 0 &&
         Object.keys(watchEndLocation).length > 0
       ) {
-        map.Route.search()
+        map.Route.search();
       }
-    }, 500)
-  }
+    }, 500);
+  };
   const getSuggestLocation = async (keyword: string) => {
-    const result = await querySuggestLocation(keyword)
-    setSuggestLocation(result?.data?.data || [])
-  }
+    const result = await querySuggestLocation(keyword);
+    setSuggestLocation(result?.data?.data || []);
+  };
   const selectSuggestLocationStart = async (keyword: string) => {
-    const result = await queryLocation(keyword)
-    setStartLocationDetail(result.data.data[0].name || 'จุดเริ่มต้น')
+    const result = await queryLocation(keyword);
+    setStartLocationDetail(result.data.data[0].name || 'จุดเริ่มต้น');
     setValue(
       'locationStart',
       {
@@ -138,11 +138,11 @@ export default function CurrentLocation() {
         lon: result.data.data[0].lon,
       },
       { shouldValidate: true }
-    )
-  }
+    );
+  };
   const selectSuggestLocationEnd = async (keyword: string) => {
-    const result = await queryLocation(keyword)
-    setEndLocationDetail(result.data.data[0].name || 'จุดหมายปลายทาง')
+    const result = await queryLocation(keyword);
+    setEndLocationDetail(result.data.data[0].name || 'จุดหมายปลายทาง');
     setValue(
       'locationEnd',
       {
@@ -150,11 +150,11 @@ export default function CurrentLocation() {
         lon: result.data.data[0].lon,
       },
       { shouldValidate: true }
-    )
-  }
+    );
+  };
   const handleOnClickStartMap = async (geoLocation: IGeoLatLon) => {
-    const result = await queryLocationByGeoLocation(geoLocation)
-    const data = result.data
+    const result = await queryLocationByGeoLocation(geoLocation);
+    const data = result.data;
     const detail = [
       data?.aoi,
       data?.road,
@@ -162,12 +162,12 @@ export default function CurrentLocation() {
       data?.subdistrict,
       data?.province,
       data?.postcode,
-    ]
-    setStartLocationDetail(detail.join(' '))
-  }
+    ];
+    setStartLocationDetail(detail.join(' '));
+  };
   const handleOnClickEndMap = async (geoLocation: IGeoLatLon) => {
-    const result = await queryLocationByGeoLocation(geoLocation)
-    const data = result.data
+    const result = await queryLocationByGeoLocation(geoLocation);
+    const data = result.data;
     const detail = [
       data?.aoi,
       data?.road,
@@ -175,31 +175,31 @@ export default function CurrentLocation() {
       data?.subdistrict,
       data?.province,
       data?.postcode,
-    ]
+    ];
 
-    setEndLocationDetail(detail.join(' '))
-  }
-  const debounceHandleSearchLocation = debounce(getSuggestLocation, 700)
+    setEndLocationDetail(detail.join(' '));
+  };
+  const debounceHandleSearchLocation = debounce(getSuggestLocation, 700);
   const handleSwap = () => {
     if (startLocationDetail && endLocationDetail) {
-      const clonedStartLocation = watchStartLocation
-      const clonedStartDetail = startLocationDetail
-      setValue('locationStart', watchEndLocation)
-      setValue('locationEnd', clonedStartLocation)
-      setStartLocationDetail(endLocationDetail)
-      setEndLocationDetail(clonedStartDetail)
+      const clonedStartLocation = watchStartLocation;
+      const clonedStartDetail = startLocationDetail;
+      setValue('locationStart', watchEndLocation);
+      setValue('locationEnd', clonedStartLocation);
+      setStartLocationDetail(endLocationDetail);
+      setEndLocationDetail(clonedStartDetail);
     }
-  }
+  };
   const submitForm = async (data: searchDriverData) => {
     if (socket) {
       socket.emit('findDriver', {
         userLat: data.locationStart.lat,
         userLong: data.locationStart.lon,
-      })
+      });
     }
-    console.log(data.locationStart.lat, data.locationStart.lon)
-  }
-  console.log(watchStartLocation)
+    console.log(data.locationStart.lat, data.locationStart.lon);
+  };
+  console.log(watchStartLocation);
 
   if (showMap === 'start') {
     return (
@@ -212,8 +212,8 @@ export default function CurrentLocation() {
             <MapTest
               height='h-full'
               onChange={(geoLocation) => {
-                onChange(geoLocation)
-                handleOnClickStartMap(geoLocation)
+                onChange(geoLocation);
+                handleOnClickStartMap(geoLocation);
               }}
               value={value}
             />
@@ -225,8 +225,8 @@ export default function CurrentLocation() {
               items={suggestLocation.map((location) => location.w)}
               onInputChange={onInputChange}
               onChange={(location) => {
-                selectSuggestLocationStart(location)
-                setSearchStart(location)
+                selectSuggestLocationStart(location);
+                setSearchStart(location);
               }}
               defaultValue={searchStart}
               placeholder='ค้นหาสถานที่ต้นทาง'
@@ -237,14 +237,15 @@ export default function CurrentLocation() {
           <div>
             <Button
               onClick={() => {
-                setShowMap(undefined)
-              }}>
+                setShowMap(undefined);
+              }}
+            >
               ยืนยัน
             </Button>
           </div>
         </div>
       </div>
-    )
+    );
   }
   if (showMap === 'end') {
     return (
@@ -257,8 +258,8 @@ export default function CurrentLocation() {
             <MapTest
               height='h-full'
               onChange={(geoLocation) => {
-                onChange(geoLocation)
-                handleOnClickEndMap(geoLocation)
+                onChange(geoLocation);
+                handleOnClickEndMap(geoLocation);
               }}
               value={value}
             />
@@ -270,8 +271,8 @@ export default function CurrentLocation() {
               items={suggestLocation.map((location) => location.w)}
               onInputChange={onInputChange}
               onChange={(location) => {
-                selectSuggestLocationEnd(location)
-                setSearchEnd(location)
+                selectSuggestLocationEnd(location);
+                setSearchEnd(location);
               }}
               defaultValue={searchEnd}
               placeholder='ค้นหาสถานที่ปลายทาง'
@@ -282,14 +283,15 @@ export default function CurrentLocation() {
           <div>
             <Button
               onClick={() => {
-                setShowMap(undefined)
-              }}>
+                setShowMap(undefined);
+              }}
+            >
               ยืนยัน
             </Button>
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -300,7 +302,8 @@ export default function CurrentLocation() {
       </div>
       <div
         className='rounded-t-5xl bg-white flex justify-center px-8 py-9 h-fit'
-        style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}>
+        style={{ boxShadow: '0px -4px 4px 0px rgba(164, 159, 159, 0.25)' }}
+      >
         <div className='flex flex-col gap-5 w-80'>
           <p className='text-3xl text-secondary font-light'>
             วันนี้คุณปุยปุยอยาก <span className='font-medium'>ไปที่ไหน ?</span>
@@ -329,7 +332,8 @@ export default function CurrentLocation() {
             <div className='w-full'>
               <div
                 onClick={() => setShowMap('start')}
-                className='flex gap-2 bg-white rounded-4xl h-[58px] items-center p-2 text-stroke'>
+                className='flex gap-2 bg-white rounded-4xl h-[58px] items-center p-2 text-stroke'
+              >
                 <Icon
                   name='location_on'
                   className='material-symbols-outlined text-fieldOrange md-30'
@@ -348,7 +352,8 @@ export default function CurrentLocation() {
             <div className='w-full'>
               <div
                 onClick={() => setShowMap('end')}
-                className='flex gap-2 bg-white rounded-4xl h-[58px] items-center p-2 text-stroke'>
+                className='flex gap-2 bg-white rounded-4xl h-[58px] items-center p-2 text-stroke'
+              >
                 <Icon
                   name='location_on'
                   className='material-symbols-outlined text-secondary md-30'
@@ -379,5 +384,5 @@ export default function CurrentLocation() {
         </div>
       </div>
     </div>
-  )
+  );
 }
