@@ -4,8 +4,6 @@ import Image from 'next/image';
 
 export default function NavbarUser() {
   const { data: userData } = useSession();
-  console.log('🚀 ~ file: NavbarUser.tsx:7 ~ NavbarUser ~ user:', userData);
-
   return (
     <div className='flex justify-center items-center w-full h-20 bg-white gap-x-5 px-7'>
       <Image
