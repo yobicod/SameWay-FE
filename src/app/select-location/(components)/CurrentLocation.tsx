@@ -69,12 +69,12 @@ export default function CurrentLocation() {
     }),
     locationEnd: z.object({
       lon: z.number({
-        invalid_type_error: 'กรุณาระบุสถานที่ต้นทาง',
-        required_error: 'กรุณาระบุสถานที่ต้นทาง',
+        invalid_type_error: 'กรุณาระบุสถานที่ปลายทาง',
+        required_error: 'กรุณาระบุสถานที่ปลายทาง',
       }),
       lat: z.number({
-        invalid_type_error: 'กรุณาระบุสถานที่ต้นทาง',
-        required_error: 'กรุณาระบุสถานที่ต้นทาง',
+        invalid_type_error: 'กรุณาระบุสถานที่ปลายทาง',
+        required_error: 'กรุณาระบุสถานที่ปลายทาง',
       }),
     }),
     notes: z.string(),
@@ -334,16 +334,16 @@ export default function CurrentLocation() {
                   name='location_on'
                   className='material-symbols-outlined text-fieldOrange md-30'
                 />
-                <p className='truncate'>
-                  {startLocationDetail || 'เลือกสถานที่ต้นทาง'}
-                </p>
+                {errors.locationStart ? (
+                  <p className='text-red-500 font-light text-sm p-1'>
+                    {errors.locationStart.lat?.message}
+                  </p>
+                ) : (
+                  <p className='truncate'>
+                    {startLocationDetail || 'เลือกสถานที่ต้นทาง'}
+                  </p>
+                )}
               </div>
-
-              {errors.locationStart && (
-                <p className='text-red-500 font-light text-sm px-4 py-2'>
-                  {errors.locationStart.lat?.message}
-                </p>
-              )}
             </div>
             <div className='w-full'>
               <div
@@ -353,15 +353,16 @@ export default function CurrentLocation() {
                   name='location_on'
                   className='material-symbols-outlined text-secondary md-30'
                 />
-                <p className='truncate'>
-                  {endLocationDetail || 'เลือกสถานที่ปลายทาง'}
-                </p>
+                {errors.locationEnd ? (
+                  <p className='text-red-500 font-light text-sm p-1'>
+                    {errors.locationEnd.lat?.message}
+                  </p>
+                ) : (
+                  <p className='truncate'>
+                    {endLocationDetail || 'เลือกสถานที่ปลายทาง'}
+                  </p>
+                )}
               </div>
-              {errors.locationEnd && (
-                <p className='text-red-500 font-light text-sm px-4 py-2'>
-                  {errors.locationEnd.lat?.message}
-                </p>
-              )}
             </div>
           </div>
           <div className='text-label flex-col flex gap-1'>
